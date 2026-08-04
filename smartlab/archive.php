@@ -54,7 +54,7 @@ get_header( 'blog' ); ?>
   <section class="wrap noposts">
     <h2 class="h2 grad">Nessun articolo qui</h2>
     <p>In questa sezione non ci sono ancora contenuti. Dai un'occhiata agli altri articoli del blog.</p>
-    <a class="btn-teal" style="color:#fff !important" href="<?php echo esc_url( get_permalink( get_option('page_for_posts') ) ?: home_url('/') ); ?>">Vai al blog</a>
+    <a class="btn-teal" style="color:#fff !important" href="<?php echo esc_url( home_url( '/category/case-studies/' ) ); ?>">Vai al blog</a>
   </section>
 
 <?php endif; ?>

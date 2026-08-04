@@ -46,7 +46,7 @@ get_header( 'blog' ); ?>
   <section class="wrap noposts">
     <h2 class="h2 grad">Nessun risultato</h2>
     <p>Prova con un'altra parola chiave, oppure torna al blog per sfogliare tutti gli articoli.</p>
-    <a class="btn-teal" style="color:#fff !important" href="<?php echo esc_url( get_permalink( get_option('page_for_posts') ) ?: home_url('/') ); ?>">Vai al blog</a>
+    <a class="btn-teal" style="color:#fff !important" href="<?php echo esc_url( home_url( '/category/case-studies/' ) ); ?>">Vai al blog</a>
   </section>
 
 <?php endif; ?>

@@ -53,7 +53,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="<?php echo esc_url( $slb_home ); ?>#chi-siamo">Chi siamo</a>
         <a href="<?php echo esc_url( $slb_home ); ?>#processo">Processo</a>
         <a href="<?php echo esc_url( $slb_home ); ?>#prodotti">Case history</a>
-        <a class="active" href="<?php echo esc_url( get_permalink( get_option('page_for_posts') ) ?: $slb_home . 'blog/' ); ?>">Blog</a>
+        <a class="active" href="<?php echo esc_url( $slb_home . 'category/case-studies/' ); ?>">Blog</a>
         <a href="<?php echo esc_url( $slb_home ); ?>#contatti">Contatti</a>
       </nav>
       <a class="navbtn" style="color:#fff !important" href="<?php echo esc_url( $slb_home ); ?>#contatti">Consulenza</a>
@@ -66,7 +66,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a href="<?php echo esc_url( $slb_home ); ?>#chi-siamo" style="--i:0">Chi siamo</a>
   <a href="<?php echo esc_url( $slb_home ); ?>#processo" style="--i:1">Processo</a>
   <a href="<?php echo esc_url( $slb_home ); ?>#prodotti" style="--i:2">Case history</a>
-  <a href="<?php echo esc_url( get_permalink( get_option('page_for_posts') ) ?: $slb_home . 'blog/' ); ?>" style="--i:3">Blog</a>
+  <a href="<?php echo esc_url( $slb_home . 'category/case-studies/' ); ?>" style="--i:3">Blog</a>
   <a href="<?php echo esc_url( $slb_home ); ?>#contatti" style="--i:4">Contatti</a>
   <a class="mini" href="<?php echo esc_url( $slb_home ); ?>#contatti" style="--i:5; color:#fff !important">Prenota una consulenza →</a>
 </nav>
