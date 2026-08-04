@@ -1,0 +1,28 @@
+<?php get_header(); ?>
+<div class="box_img-hm-1 mb-2 py-5">
+    <div class="contTxtPrd text-center">
+        <span>Novità stampanti 3D</span>
+        <h2>Industria 45</h2>
+        <a href="http://localhost/smartlab/stampanti-3d/"><span>Scopri di più ></span></a>
+    </div>
+    <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/industria-45.png" alt="" class="img-fluid">
+</div>
+
+<div class="box_img-hm-1 mb-2 py-5">
+    <div class="contTxtPrd text-center">
+        <span>Novità Applicazioni 3D</span>
+        <h2>Case in Carbonio</h2>
+        <a href="http://localhost/smartlab/applicazioni/"><span>Scopri di più ></span></a>
+    </div>
+    <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/case-carbonio.png" alt="" class="img-fluid">
+</div>
+
+<div class="box_img-hm-2 mb-2 text-center py-5">
+    <div class="contTxtPrd text-center">
+        <span>Novità Stampanti UV</span>
+        <h2 class="bgScuro">Eagle 50</h2>
+        <a href="http://localhost/smartlab/stampanti-uv/"><span>Scopri di più ></span></a>
+    </div>
+    <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/eagle-50.png" alt="" class="img-fluid">
+</div>
+<?php get_footer(); ?>
