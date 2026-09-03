@@ -177,6 +177,26 @@ liberamente in rete.
 
 ---
 
+## 10. La pagina con tutti i case study
+
+Metti in una pagina qualsiasi lo shortcode:
+
+```
+[ll_case_studies]
+```
+
+Compare l'elenco a scorrimento di tutte le landing pubblicate: copertina del PDF, titolo,
+sottotitolo e pulsante "Leggi il case study completo". Si aggiorna da solo ogni volta che pubblichi
+una nuova landing, non c'è niente da mantenere.
+
+Se vuoi cambiare l'etichetta o quante schede mostrare:
+
+```
+[ll_case_studies label="Case study" cta="Leggi tutto" limit="8"]
+```
+
+---
+
 ## Problemi frequenti
 
 **"Chiave Gemini non configurata"** — la generazione delle immagini è spenta. Il resto funziona:
@@ -192,3 +212,13 @@ decina di secondi, soprattutto con 4 pagine. Aspetta il messaggio verde, non ric
 
 **Sulla landing vedo il raccordo blu invece del mio pezzo** — le immagini hero sono rimaste vuote:
 torna nella scheda Landing, caricale e ripubblica.
+
+**Dietro al pezzo si vede un rettangolo bianco** — l'immagine non è scontornata. Premi
+**✂ Scontorna** accanto al campo immagine: toglie il fondo uniforme partendo dai bordi, senza
+intaccare le zone chiare dentro al pezzo. Le immagini estratte da un PDF vengono già scontornate
+in automatico all'importazione.
+
+**Una pagina dell'anteprima è tagliata** — sotto il foglio compare una fascia rossa
+"il contenuto sborda". L'impaginazione A4 ha altezza fissa: accorcia i testi di quella pagina
+finché la fascia sparisce. Se stai allegando un PDF già pronto la cosa non tocca il file
+consegnato, ma conviene comunque sistemare l'anteprima.

@@ -74,6 +74,26 @@ i whitepaper. Non tocca articoli, pagine, temi, plugin o utenti.
 
 ---
 
+## Shortcode disponibili
+
+| Shortcode | Dove va |
+|---|---|
+| `[layerloop_studio]` | La pagina del generatore, es. `/pdf-generator/` |
+| `[ll_landing]` | Dentro una pagina Elementor, per la landing (sui whitepaper è automatico) |
+| `[ll_case_studies]` | Una pagina qualsiasi: carosello dei case study pubblicati |
+
+Il carosello accetta `label` (etichetta della sezione, default `Case study`), `cta` (testo del
+pulsante), `limit` (quanti mostrarne, default 12), `ids` (elenco di ID per sceglierli e ordinarli
+a mano) e `orderby` (`date` o `menu_order`). Per esempio:
+
+```
+[ll_case_studies label="Case study" limit="8"]
+```
+
+La copertina di ogni scheda è la prima pagina del PDF, generata automaticamente alla pubblicazione.
+
+---
+
 ## Come funziona il flusso completo
 
 ```
@@ -144,6 +164,7 @@ layerloop-landing/
 │   ├── settings.php          ← opzioni e pagina "Impostazioni Studio"
 │   ├── roles.php             ← ruolo Layerloop Studio, capability, blocco bacheca
 │   ├── gemini.php            ← client Gemini per le immagini
+│   ├── case-studies.php      ← shortcode [ll_case_studies]
 │   ├── mapper.php            ← da documento dello Studio a campi ACF, immagini e PDF
 │   ├── leads.php             ← Ninja Forms, link firmati, consegna del whitepaper
 │   ├── rest.php              ← /wp-json/layerloop/v1/…
@@ -152,7 +173,8 @@ layerloop-landing/
 ├── assets/
 │   ├── landing.css|js        ← grafica e animazioni della landing (invariati)
 │   ├── studio.css|js         ← editor, anteprima A4, generazione PDF
-│   └── pdf-import.js         ← lettura di un whitepaper PDF già impaginato
+│   ├── pdf-import.js         ← lettura di un whitepaper PDF già impaginato
+│   └── case-studies.css|js   ← carosello [ll_case_studies]
 └── vendor/                   ← jsPDF, html2canvas e pdf.js (licenze MIT/Apache, incluse)
 ```
 

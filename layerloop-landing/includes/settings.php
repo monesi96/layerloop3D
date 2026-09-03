@@ -27,6 +27,8 @@ class LL_Studio_Settings {
 			'gemini_model'   => 'gemini-2.5-flash-image',
 			'ninja_form_id'  => 0,
 			'studio_page_id' => 0,
+			'closing_block'  => '[elementor-template id="6038"]',
+			'hide_title'     => 1,
 			'delivery_mode'  => 'both',
 			'attach_pdf'     => 0,
 			'link_ttl_hours' => 168,
@@ -148,6 +150,9 @@ class LL_Studio_Settings {
 
 		$clean['attach_pdf']     = empty( $input['attach_pdf'] ) ? 0 : 1;
 		$clean['lock_backend']   = empty( $input['lock_backend'] ) ? 0 : 1;
+		$clean['hide_title']     = empty( $input['hide_title'] ) ? 0 : 1;
+		// Shortcode del blocco di chiusura: niente tag HTML, le parentesi restano.
+		$clean['closing_block']  = isset( $input['closing_block'] ) ? trim( wp_strip_all_tags( (string) $input['closing_block'] ) ) : $current['closing_block'];
 		$clean['link_ttl_hours'] = isset( $input['link_ttl_hours'] ) ? max( 1, min( 8760, absint( $input['link_ttl_hours'] ) ) ) : 168;
 		$clean['email_subject']  = isset( $input['email_subject'] ) ? sanitize_text_field( $input['email_subject'] ) : $current['email_subject'];
 		$clean['email_body']     = isset( $input['email_body'] ) ? wp_strip_all_tags( (string) $input['email_body'] ) : $current['email_body'];
@@ -221,6 +226,19 @@ class LL_Studio_Settings {
 							);
 							?>
 							<p class="description">Serve per il login e per riportare fuori dalla bacheca gli utenti dello Studio.</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="ll-closing">Blocco di chiusura</label></th>
+						<td>
+							<input type="text" class="large-text code" id="ll-closing" name="<?php echo esc_attr( $name ); ?>[closing_block]" value="<?php echo esc_attr( $options['closing_block'] ); ?>" />
+							<p class="description">Shortcode inserito in fondo a ogni landing, con l’ancora <code>#contatti</code> a cui puntano tutti i pulsanti. Qui va il template Elementor che contiene modulo contatti e piè di pagina, uguale su tutte le landing.</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">Titolo della pagina</th>
+						<td>
+							<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>[hide_title]" value="1" <?php checked( $options['hide_title'], 1 ); ?> /> Nascondi il titolo del post sulle landing (la landing ha già il proprio titolo nell’hero)</label>
 						</td>
 					</tr>
 					<tr>

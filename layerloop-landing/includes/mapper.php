@@ -19,6 +19,7 @@ class LL_Studio_Mapper {
 	const META_PDF_EN  = '_ll_studio_pdf_en';
 	const META_FORM    = '_ll_studio_form_id';
 	const META_LEADS   = '_ll_studio_leads';
+	const META_COVER   = '_ll_studio_cover';
 
 	const PROTECTED_DIR = 'layerloop-whitepapers';
 
@@ -581,16 +582,31 @@ class LL_Studio_Mapper {
 			delete_post_meta( $post_id, self::META_FORM );
 		}
 
-		// Il modulo di contatto viaggia sui "blocchi di chiusura" già previsti dal
-		// template: così la landing mostra il form senza toccare Elementor.
-		$closing = (string) get_post_meta( $post_id, 'll_closing_lines', true );
-		if ( $form_id && ! preg_match( '/\[ninja_form\b/i', $closing ) ) {
-			$line    = '[ninja_form id=' . $form_id . '] | contatti';
-			$closing = '' === trim( $closing ) ? $line : $line . "\n" . $closing;
-			self::set_field( $post_id, 'll_closing_lines', $closing );
-		} elseif ( ! $form_id && preg_match( '/^\[ninja_form\b[^\]]*\]\s*\|\s*contatti\s*$/im', $closing ) ) {
-			$cleaned = trim( preg_replace( '/^\[ninja_form\b[^\]]*\]\s*\|\s*contatti\s*$/im', '', $closing ) );
-			self::set_field( $post_id, 'll_closing_lines', $cleaned );
+		// Chiusura della landing: un unico blocco Elementor uguale su tutte le pagine,
+		// che porta con sé modulo contatti e piè di pagina. Riceve l'ancora #contatti,
+		// quella a cui puntano tutti i pulsanti della landing.
+		$closing = trim( (string) get_post_meta( $post_id, 'll_closing_lines', true ) );
+		if ( '' === $closing ) {
+			$default = trim( (string) LL_Studio_Settings::get( 'closing_block', '' ) );
+			if ( '' !== $default ) {
+				self::set_field( $post_id, 'll_closing_lines', $default . ' | contatti' );
+			}
+		}
+
+		// Copertina per l'elenco dei case study: la prima pagina del PDF.
+		if ( ! empty( $payload['coverPreview'] ) && self::is_image_data_url( $payload['coverPreview'] ) ) {
+			$preview = self::store_image( $payload['coverPreview'], $post_id . '-copertina', $post_id );
+			if ( is_wp_error( $preview ) ) {
+				$warnings[] = $preview->get_error_message();
+			} else {
+				$previous = (int) get_post_thumbnail_id( $post_id );
+				set_post_thumbnail( $post_id, $preview );
+				update_post_meta( $post_id, self::META_COVER, $preview );
+				if ( $previous && $previous !== $preview && (int) get_post_meta( $previous, '_ll_cover_preview', true ) ) {
+					wp_delete_attachment( $previous, true );
+				}
+				update_post_meta( $preview, '_ll_cover_preview', 1 );
+			}
 		}
 
 		// Documento completo per riaprire il progetto dallo Studio.

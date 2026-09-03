@@ -287,7 +287,18 @@
 				{ name: 'll_final_text', label: 'Testo', type: 'textarea', rows: 3, max: 480, from: function ( cs ) { return firstParagraph( cs.whyText ); } },
 				{ name: 'll_final_cta1', label: 'Bottone 1', max: 60, from: function ( cs ) { return cs.boxButton; } },
 				{ name: 'll_final_cta2', label: 'Bottone 2 (vuoto = nascosto)', max: 60, from: function () { return 'Scarica il whitepaper'; } },
-				{ name: 'll_anchor', label: 'Ancora dei bottoni', max: 200, from: function () { return '#contatti'; } }
+				{ name: 'll_anchor', label: 'Ancora dei bottoni', max: 200, from: function () { return '#contatti'; } },
+				{
+					name: 'll_closing_lines',
+					label: 'Blocco di chiusura — modulo contatti e piè di pagina',
+					type: 'textarea',
+					rows: 2,
+					max: 600,
+					from: function () {
+						var block = ( window.LLStudioConfig && window.LLStudioConfig.closingBlock ) || '';
+						return block ? block + ' | contatti' : '';
+					}
+				}
 			]
 		}
 	];
@@ -323,7 +334,7 @@
 		ai: { preset: 'wireframe', prompt: '', ratio: 'auto', cutout: true, target: 'coverImage' },
 		// PDF già impaginati caricati dall'utente: restano in memoria, non in localStorage.
 		pdfSource: 'generate',
-		pdfFiles: { it: '', en: '', itName: '', enName: '' }
+		pdfFiles: { it: '', en: '', itName: '', enName: '', itFile: null }
 	};
 	state.fields = landingDefaults( state.data );
 
@@ -539,6 +550,62 @@
 	}
 
 	/**
+	 * Limiti di lunghezza dei campi, gli stessi imposti dall'editor: l'impaginazione
+	 * A4 ha altezza fissa, quindi un testo più lungo sborda dalla pagina.
+	 */
+	var CASE_LIMITS = {
+		brand: 32, document: 32, title: 96, subtitle: 180, tags: 100,
+		section1Title: 48, section1Text: 520, section2Title: 56, section2Text: 700,
+		boxTitle: 48, boxText: 650, boxQuestion: 110, boxButton: 36,
+		whyTitle: 42, whyText: 360,
+		materialTitle: 28, materialName: 40, materialDescription: 180
+	};
+
+	/**
+	 * Accorcia un testo all'ultimo confine di parola utile.
+	 */
+	function trimToLimit( value, limit ) {
+		var text = String( value || '' );
+		if ( text.length <= limit ) {
+			return text;
+		}
+		var cut = text.slice( 0, limit );
+		var space = cut.lastIndexOf( ' ' );
+		if ( space > limit * 0.6 ) {
+			cut = cut.slice( 0, space );
+		}
+		return cut.replace( /[\s,;:.]+$/, '' ) + '…';
+	}
+
+	/**
+	 * Riporta un case study dentro i limiti dell'impaginazione A4.
+	 *
+	 * @return {Array} Etichette dei campi accorciati.
+	 */
+	function fitToLayout( data ) {
+		var shortened = [];
+
+		Object.keys( CASE_LIMITS ).forEach( function ( key ) {
+			var value = String( data[ key ] || '' );
+			if ( value.length > CASE_LIMITS[ key ] ) {
+				data[ key ] = trimToLimit( value, CASE_LIMITS[ key ] );
+				shortened.push( key );
+			}
+		} );
+
+		( data.specs || [] ).forEach( function ( spec ) {
+			spec.label = trimToLimit( spec.label, 34 );
+			spec.value = trimToLimit( spec.value, 44 );
+		} );
+		if ( data.specs && data.specs.length > 6 ) {
+			data.specs = data.specs.slice( 0, 6 );
+			shortened.push( 'specifiche' );
+		}
+
+		return shortened;
+	}
+
+	/**
 	 * Legge un PDF impaginato con il generatore e ne ricava il case study,
 	 * tenendo da parte il file stesso come allegato pronto per la landing.
 	 */
@@ -557,12 +624,32 @@
 			status( message );
 		} ).then( function ( result ) {
 			state.data = normalizeCaseStudy( Object.assign( {}, state.data, result.data ) );
-			if ( result.images.cover ) {
-				state.data.coverImage = result.images.cover;
+
+			var shortened = fitToLayout( state.data );
+			if ( shortened.length ) {
+				result.notes.push( 'Alcuni testi superavano lo spazio della pagina A4 e sono stati accorciati (' + shortened.length + ' campi).' );
 			}
-			if ( result.images.piece ) {
-				state.data.pieceImage = result.images.piece;
-			}
+
+			// Le immagini estratte dal PDF portano con sé il fondo bianco della pagina:
+			// senza scontorno la landing mostrerebbe un rettangolo bianco dietro al pezzo.
+			status( 'Scontorno delle immagini estratte…' );
+			return Promise.all( [
+				result.images.cover ? removeFlatBackground( result.images.cover, 46 ).catch( function () {
+					return result.images.cover;
+				} ) : Promise.resolve( '' ),
+				result.images.piece ? removeFlatBackground( result.images.piece, 46 ).catch( function () {
+					return result.images.piece;
+				} ) : Promise.resolve( '' )
+			] ).then( function ( images ) {
+				if ( images[ 0 ] ) {
+					state.data.coverImage = images[ 0 ];
+				}
+				if ( images[ 1 ] ) {
+					state.data.pieceImage = images[ 1 ];
+				}
+				return result;
+			} );
+		} ).then( function ( result ) {
 			state.fields = landingDefaults( state.data );
 			state.postId = 0;
 			state.title = String( state.data.title || '' ).replace( /\n+/g, ' ' ).trim();
@@ -572,6 +659,7 @@
 				if ( base64 ) {
 					state.pdfFiles.it = base64;
 					state.pdfFiles.itName = file.name;
+					state.pdfFiles.itFile = file;
 					state.pdfSource = 'upload';
 				}
 				buildPanel();
@@ -789,9 +877,35 @@
 			} );
 		} );
 
+		var actions = [ pick ];
+		if ( config.cutout ) {
+			var cut = el( 'button', { type: 'button', text: '✂ Scontorna' } );
+			cut.addEventListener( 'click', function () {
+				var value = String( config.get() || '' );
+				if ( ! value ) {
+					return;
+				}
+				error.textContent = '';
+				cut.disabled = true;
+				cut.textContent = 'Scontorno…';
+				removeFlatBackground( value, 46 ).then( function ( output ) {
+					config.set( output );
+					refresh();
+					onChange();
+				} ).catch( function () {
+					error.textContent = 'Scontorno non riuscito su questa immagine.';
+				} ).then( function () {
+					cut.disabled = false;
+					cut.textContent = '✂ Scontorna';
+				} );
+			} );
+			actions.push( cut );
+		}
+		actions.push( remove );
+
 		var wrapper = el( 'div', { class: 'll-image-field' }, [
 			el( 'span', { text: config.label } ),
-			el( 'div', { class: 'll-image-actions' }, [ pick, remove ] ),
+			el( 'div', { class: 'll-image-actions' }, actions ),
 			preview,
 			el( 'small', { class: 'll-image-note', text: 'Ridimensionamento automatico; la trasparenza viene preservata.' } ),
 			error,
@@ -842,6 +956,7 @@
 			imageField( {
 				label: 'Foto sorgente / immagine copertina',
 				maxDimension: 2200,
+				cutout: true,
 				get: get( 'coverImage' ),
 				set: set( 'coverImage' )
 			} ),
@@ -910,7 +1025,7 @@
 		renderSpecs();
 
 		nodes.push( fieldset( 'Pagina 2 — Colonna destra', [
-			imageField( { label: 'Foto del pezzo', maxDimension: 1800, get: get( 'pieceImage' ), set: set( 'pieceImage' ) } ),
+			imageField( { label: 'Foto del pezzo', maxDimension: 1800, cutout: true, get: get( 'pieceImage' ), set: set( 'pieceImage' ) } ),
 			el( 'div', { class: 'll-field-label' }, [ el( 'span', { text: 'Specifiche (etichetta + valore)' } ) ] ),
 			specList,
 			addSpec,
@@ -1257,6 +1372,7 @@
 					return imageField( {
 						label: def.label,
 						maxDimension: def.maxDimension || 1600,
+						cutout: true,
 						get: function () {
 							var value = state.fields[ def.name ] || {};
 							if ( value.dataUrl || value.url ) {
@@ -1452,6 +1568,29 @@
 		} );
 	}
 
+	/**
+	 * Immagine di copertina per le schede dell'elenco: la prima pagina del PDF
+	 * allegato quando esiste, altrimenti la prima pagina dell'anteprima.
+	 *
+	 * @return {Promise<string>} Data URL, stringa vuota se non ottenibile.
+	 */
+	function coverPreviewImage() {
+		if ( state.pdfFiles.itFile && window.LLPdfImport && window.LLPdfImport.firstPageImage ) {
+			return window.LLPdfImport.firstPageImage( state.pdfFiles.itFile, 900 ).then( function ( image ) {
+				return image || '';
+			} );
+		}
+		var sheet = sheetsInDom()[ 0 ];
+		if ( ! sheet ) {
+			return Promise.resolve( '' );
+		}
+		return renderSheet( sheet ).then( function ( canvas ) {
+			return canvas.toDataURL( 'image/webp', 0.88 );
+		} ).catch( function () {
+			return '';
+		} );
+	}
+
 	function pdfFileName( language ) {
 		var base = ( state.title || String( state.data.title || 'case-study' ).replace( /\n+/g, ' ' ) )
 			.toLowerCase()
@@ -1605,6 +1744,12 @@
 			payload.pdfIT = italian;
 			if ( state.pdfFiles.en ) {
 				payload.pdfEN = state.pdfFiles.en;
+			}
+			status( 'Preparazione della copertina…' );
+			return coverPreviewImage();
+		} ).then( function ( cover ) {
+			if ( cover ) {
+				payload.coverPreview = cover;
 			}
 			status( 'Pubblicazione della landing page…' );
 			return api( '/whitepapers', { method: 'POST', body: payload } );
@@ -1806,6 +1951,29 @@
 			class: 'll-preview-note',
 			text: 'Anteprima in scala 1:1 del PDF A4. Le pagine 3 e 4 compaiono solo con il benchmark attivo.'
 		} ) );
+
+		flagOverflow();
+	}
+
+	/**
+	 * Le pagine A4 hanno altezza fissa e tagliano ciò che eccede: qui si segnala
+	 * quali stanno sbordando, così il testo si accorcia prima di generare il PDF.
+	 */
+	function flagOverflow() {
+		requestAnimationFrame( function () {
+			// L'avviso vive accanto al foglio, mai dentro: il PDF si compone clonando
+			// il foglio e si porterebbe dietro anche il badge.
+			sheetsInDom().forEach( function ( sheet, index ) {
+				if ( sheet.scrollHeight <= sheet.clientHeight + 4 ) {
+					return;
+				}
+				var badge = el( 'div', {
+					class: 'll-overflow',
+					text: 'Pagina ' + ( index + 1 ) + ': il contenuto sborda e verrà tagliato. Accorcia i testi.'
+				} );
+				sheet.parentNode.insertBefore( badge, sheet.nextSibling );
+			} );
+		} );
 	}
 
 	function onChange() {
@@ -1995,6 +2163,9 @@
 				fileToBase64( file ).then( function ( base64 ) {
 					state.pdfFiles[ language ] = base64;
 					state.pdfFiles[ language + 'Name' ] = file.name;
+					if ( 'it' === language ) {
+						state.pdfFiles.itFile = file;
+					}
 					state.pdfSource = 'upload';
 					select.value = 'upload';
 					refresh();

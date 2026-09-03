@@ -713,5 +713,46 @@
 		} );
 	}
 
-	window.LLPdfImport = { parse: parse };
+	/**
+	 * Renderizza la prima pagina di un PDF: è la copertina usata nelle schede
+	 * dell'elenco dei case study.
+	 *
+	 * @param {File}   file  File PDF.
+	 * @param {number} width Larghezza desiderata in pixel.
+	 * @return {Promise<string>} Data URL, stringa vuota in caso di errore.
+	 */
+	function firstPageImage( file, width ) {
+		var lib = window.pdfjsLib;
+		if ( ! lib ) {
+			return Promise.resolve( '' );
+		}
+		if ( window.LLStudioConfig && window.LLStudioConfig.pdfWorker ) {
+			lib.GlobalWorkerOptions.workerSrc = window.LLStudioConfig.pdfWorker;
+		}
+
+		return file.arrayBuffer().then( function ( buffer ) {
+			return lib.getDocument( { data: new Uint8Array( buffer ) } ).promise;
+		} ).then( function ( pdf ) {
+			return pdf.getPage( 1 );
+		} ).then( function ( page ) {
+			var base = page.getViewport( { scale: 1 } );
+			var viewport = page.getViewport( { scale: ( width || 900 ) / base.width } );
+			var canvas = document.createElement( 'canvas' );
+			canvas.width = Math.ceil( viewport.width );
+			canvas.height = Math.ceil( viewport.height );
+			var context = canvas.getContext( '2d' );
+			if ( ! context ) {
+				return '';
+			}
+			context.fillStyle = '#ffffff';
+			context.fillRect( 0, 0, canvas.width, canvas.height );
+			return page.render( { canvasContext: context, viewport: viewport } ).promise.then( function () {
+				return canvas.toDataURL( 'image/webp', 0.88 );
+			} );
+		} ).catch( function () {
+			return '';
+		} );
+	}
+
+	window.LLPdfImport = { parse: parse, firstPageImage: firstPageImage };
 } )();

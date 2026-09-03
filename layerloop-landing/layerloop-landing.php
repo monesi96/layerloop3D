@@ -39,6 +39,7 @@ require_once LL_LANDING_PATH . 'includes/mapper.php';
 require_once LL_LANDING_PATH . 'includes/leads.php';
 require_once LL_LANDING_PATH . 'includes/rest.php';
 require_once LL_LANDING_PATH . 'includes/studio.php';
+require_once LL_LANDING_PATH . 'includes/case-studies.php';
 
 /**
  * Custom Post Type "Whitepaper": una voce di menu dedicata in bacheca.
@@ -103,6 +104,42 @@ add_filter( 'the_content', function ( $content ) {
 } );
 
 /**
+ * Sulle landing il titolo del post non va mostrato: l'hero ha già il proprio titolo,
+ * e il tema stamperebbe una seconda intestazione sopra la pagina.
+ *
+ * Si interviene solo sul titolo stampato dentro il loop principale della singola
+ * landing: menu, breadcrumb, titolo del browser e bacheca restano intatti.
+ */
+add_filter( 'the_title', function ( $title, $post_id = 0 ) {
+	if ( is_admin() || ! is_singular( LL_LANDING_CPT ) ) {
+		return $title;
+	}
+	if ( ! in_the_loop() || ! is_main_query() ) {
+		return $title;
+	}
+	if ( (int) $post_id !== (int) get_queried_object_id() ) {
+		return $title;
+	}
+	if ( ! LL_Studio_Settings::get( 'hide_title', 1 ) ) {
+		return $title;
+	}
+	return '';
+}, 10, 2 );
+
+/**
+ * Alcuni temi stampano il titolo fuori dal loop: qui lo si nasconde anche via CSS,
+ * limitando la regola alla singola landing.
+ */
+add_action( 'wp_head', function () {
+	if ( ! is_singular( LL_LANDING_CPT ) || ! LL_Studio_Settings::get( 'hide_title', 1 ) ) {
+		return;
+	}
+	echo '<style id="ll-hide-title">body.single-' . esc_attr( LL_LANDING_CPT ) . ' .entry-title,'
+		. 'body.single-' . esc_attr( LL_LANDING_CPT ) . ' .page-title,'
+		. 'body.single-' . esc_attr( LL_LANDING_CPT ) . ' .post-title{display:none!important}</style>';
+}, 99 );
+
+/**
  * Registra gli asset. Vengono accodati solo quando lo shortcode è in pagina.
  */
 add_action( 'wp_enqueue_scripts', function () {
@@ -152,4 +189,5 @@ add_action( 'plugins_loaded', function () {
 	( new LL_Studio_Rest() )->register();
 	( new LL_Studio_Leads() )->register();
 	( new LL_Studio_Shortcode() )->register();
+	( new LL_Studio_Case_Studies() )->register();
 } );

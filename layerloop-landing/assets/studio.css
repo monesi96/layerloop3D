@@ -738,6 +738,18 @@ html.ll-studio-open body {
 	text-align: center;
 }
 
+.ll-overflow {
+	width: 794px;
+	max-width: 100%;
+	margin-top: -22px;
+	padding: 8px 14px;
+	border-radius: 0 0 4px 4px;
+	background: var(--ll-red);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 600;
+}
+
 /* ---------------------------------------------------------- fogli A4 */
 
 .ll-sheet {
