@@ -80,6 +80,10 @@ i whitepaper. Non tocca articoli, pagine, temi, plugin o utenti.
 /pdf-generator/  →  case study  →  PDF A4  →  landing /whitepaper/nome/  →  Ninja Forms  →  PDF al contatto
 ```
 
+0. **Se il whitepaper esiste già in PDF** — «Importa da un PDF già impaginato» lo legge con pdf.js
+   e compila brand, documento, titolo, sottotitolo, tag, le sezioni della colonna sinistra, il box
+   della soluzione, «perché conviene» e le specifiche, recuperando anche copertina e foto del pezzo.
+   Il file importato resta agganciato e viene allegato alla landing così com'è.
 1. **Tab "Case study"** — si compilano i testi, si caricano le foto, si regolano gli indicatori
    del materiale, si attivano le due pagine benchmark. L'anteprima a destra è il PDF 1:1.
 2. **"Genera immagine con Gemini"** — dalla foto del pezzo si ottiene il fil di ferro industriale.
@@ -147,8 +151,9 @@ layerloop-landing/
 ├── templates/landing.php     ← markup della landing (invariato)
 ├── assets/
 │   ├── landing.css|js        ← grafica e animazioni della landing (invariati)
-│   └── studio.css|js         ← editor, anteprima A4, generazione PDF
-└── vendor/                   ← jsPDF e html2canvas (licenza MIT, incluse)
+│   ├── studio.css|js         ← editor, anteprima A4, generazione PDF
+│   └── pdf-import.js         ← lettura di un whitepaper PDF già impaginato
+└── vendor/                   ← jsPDF, html2canvas e pdf.js (licenze MIT/Apache, incluse)
 ```
 
 - **Colori del design system della landing**: variabili CSS in cima a `landing.css`.

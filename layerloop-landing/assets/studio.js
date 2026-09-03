@@ -320,7 +320,10 @@
 		language: 'it',
 		displayData: null,
 		whitepapers: [],
-		ai: { preset: 'wireframe', prompt: '', ratio: 'auto', cutout: true, target: 'coverImage' }
+		ai: { preset: 'wireframe', prompt: '', ratio: 'auto', cutout: true, target: 'coverImage' },
+		// PDF già impaginati caricati dall'utente: restano in memoria, non in localStorage.
+		pdfSource: 'generate',
+		pdfFiles: { it: '', en: '', itName: '', enName: '' }
 	};
 	state.fields = landingDefaults( state.data );
 
@@ -516,6 +519,75 @@
 
 			context.putImageData( pixels, 0, 0 );
 			return canvas.toDataURL( 'image/webp', 0.9 );
+		} );
+	}
+
+	/* --------------------------------------------------------- file PDF */
+
+	function fileToBase64( file ) {
+		return new Promise( function ( resolve, reject ) {
+			var reader = new FileReader();
+			reader.onload = function () {
+				var value = String( reader.result || '' );
+				resolve( value.slice( value.indexOf( ',' ) + 1 ) );
+			};
+			reader.onerror = function () {
+				reject( new Error( 'Lettura del file non riuscita.' ) );
+			};
+			reader.readAsDataURL( file );
+		} );
+	}
+
+	/**
+	 * Legge un PDF impaginato con il generatore e ne ricava il case study,
+	 * tenendo da parte il file stesso come allegato pronto per la landing.
+	 */
+	function importFromPdf( file ) {
+		if ( ! window.LLPdfImport ) {
+			status( 'Il lettore PDF non è stato caricato: ricarica la pagina.', 'error' );
+			return;
+		}
+
+		status( 'Apertura del PDF…' );
+		var keepFile = fileToBase64( file ).catch( function () {
+			return '';
+		} );
+
+		window.LLPdfImport.parse( file, function ( message ) {
+			status( message );
+		} ).then( function ( result ) {
+			state.data = normalizeCaseStudy( Object.assign( {}, state.data, result.data ) );
+			if ( result.images.cover ) {
+				state.data.coverImage = result.images.cover;
+			}
+			if ( result.images.piece ) {
+				state.data.pieceImage = result.images.piece;
+			}
+			state.fields = landingDefaults( state.data );
+			state.postId = 0;
+			state.title = String( state.data.title || '' ).replace( /\n+/g, ' ' ).trim();
+			state.metaDescription = state.data.subtitle;
+
+			return keepFile.then( function ( base64 ) {
+				if ( base64 ) {
+					state.pdfFiles.it = base64;
+					state.pdfFiles.itName = file.name;
+					state.pdfSource = 'upload';
+				}
+				buildPanel();
+				onChange();
+
+				var message = 'Case study importato dal PDF.';
+				if ( base64 ) {
+					message += ' Il file caricato verrà allegato alla landing così com’è.';
+				}
+				if ( result.notes.length ) {
+					message += ' ' + result.notes.join( ' ' );
+				}
+				status( message + ' Ricontrolla i campi prima di pubblicare.' );
+			} );
+		} ).catch( function ( error ) {
+			status( error.message || 'Importazione dal PDF non riuscita.', 'error' );
 		} );
 	}
 
@@ -1516,14 +1588,24 @@
 			caseStudy: state.data
 		};
 
-		// Il PDF allegato alla landing è sempre la versione italiana.
-		state.language = 'it';
-		state.displayData = null;
-		renderPreview();
-		status( 'Generazione del PDF italiano…' );
+		var italianPdf;
+		if ( 'upload' === state.pdfSource && state.pdfFiles.it ) {
+			status( 'Uso il PDF caricato: ' + state.pdfFiles.itName );
+			italianPdf = Promise.resolve( state.pdfFiles.it );
+		} else {
+			// Il PDF composto e allegato alla landing è sempre la versione italiana.
+			state.language = 'it';
+			state.displayData = null;
+			renderPreview();
+			status( 'Generazione del PDF italiano…' );
+			italianPdf = pdfAsBase64();
+		}
 
-		pdfAsBase64().then( function ( italian ) {
+		italianPdf.then( function ( italian ) {
 			payload.pdfIT = italian;
+			if ( state.pdfFiles.en ) {
+				payload.pdfEN = state.pdfFiles.en;
+			}
 			status( 'Pubblicazione della landing page…' );
 			return api( '/whitepapers', { method: 'POST', body: payload } );
 		} ).then( function ( response ) {
@@ -1778,6 +1860,25 @@
 			}
 		} ) );
 
+		var pdfInput = el( 'input', { type: 'file', accept: 'application/pdf,.pdf', hidden: true } );
+		pdfInput.addEventListener( 'change', function () {
+			var file = pdfInput.files && pdfInput.files[ 0 ];
+			pdfInput.value = '';
+			if ( file ) {
+				importFromPdf( file );
+			}
+		} );
+
+		bar.appendChild( el( 'button', {
+			type: 'button',
+			class: 'll-wide',
+			text: '⇪ Importa da un PDF già impaginato',
+			onclick: function () {
+				pdfInput.click();
+			}
+		} ) );
+		bar.appendChild( pdfInput );
+
 		bar.appendChild( el( 'button', {
 			type: 'button',
 			text: 'Esporta JSON',
@@ -1845,6 +1946,79 @@
 		} ) );
 
 		return bar;
+	}
+
+	/**
+	 * Scelta del PDF da allegare alla landing: composto dall'anteprima
+	 * oppure un file già impaginato caricato dall'utente.
+	 */
+	function pdfSourceFieldset() {
+		var info = el( 'p', { class: 'll-help' } );
+
+		function refresh() {
+			var parts = [];
+			if ( state.pdfFiles.itName ) {
+				parts.push( 'IT: ' + state.pdfFiles.itName );
+			}
+			if ( state.pdfFiles.enName ) {
+				parts.push( 'EN: ' + state.pdfFiles.enName );
+			}
+			info.textContent = parts.length ? 'File caricati — ' + parts.join( ' · ' ) : 'Nessun file caricato: verrà composto il PDF dall’anteprima.';
+		}
+
+		var select = el( 'select' );
+		[
+			{ id: 'generate', label: 'Componi il PDF dall’anteprima' },
+			{ id: 'upload', label: 'Allega un PDF già pronto' }
+		].forEach( function ( option ) {
+			select.appendChild( el( 'option', { value: option.id, text: option.label } ) );
+		} );
+		select.value = state.pdfSource;
+		select.addEventListener( 'change', function () {
+			state.pdfSource = select.value;
+		} );
+
+		function uploader( language, label ) {
+			var input = el( 'input', { type: 'file', accept: 'application/pdf,.pdf', hidden: true } );
+			var button = el( 'button', { type: 'button', class: 'll-add', text: label } );
+			input.addEventListener( 'change', function () {
+				var file = input.files && input.files[ 0 ];
+				input.value = '';
+				if ( ! file ) {
+					return;
+				}
+				if ( file.size > 24 * 1024 * 1024 ) {
+					status( 'Il PDF supera 24 MB: comprimilo prima di caricarlo.', 'error' );
+					return;
+				}
+				button.disabled = true;
+				fileToBase64( file ).then( function ( base64 ) {
+					state.pdfFiles[ language ] = base64;
+					state.pdfFiles[ language + 'Name' ] = file.name;
+					state.pdfSource = 'upload';
+					select.value = 'upload';
+					refresh();
+					status( 'PDF “' + file.name + '” pronto per essere allegato alla landing.' );
+				} ).catch( function ( error ) {
+					status( error.message, 'error' );
+				} ).then( function () {
+					button.disabled = false;
+				} );
+			} );
+			button.addEventListener( 'click', function () {
+				input.click();
+			} );
+			return el( 'div', {}, [ button, input ] );
+		}
+
+		refresh();
+
+		return fieldset( 'PDF da allegare', [
+			el( 'label', { class: 'll-field' }, [ el( 'span', { class: 'll-field-label' }, [ el( 'span', { text: 'Come ottenerlo' } ) ] ), select ] ),
+			uploader( 'it', '⇪ Carica il PDF italiano' ),
+			uploader( 'en', '⇪ Carica il PDF inglese (facoltativo)' ),
+			info
+		], 'Se il PDF è già stato impaginato altrove, caricalo qui: viene allegato così com’è, senza ricomporlo.' );
 	}
 
 	function publishBar() {
@@ -1922,6 +2096,7 @@
 			landingPanel().forEach( function ( node ) {
 				panel.appendChild( node );
 			} );
+			panel.appendChild( pdfSourceFieldset() );
 			panel.appendChild( publishBar() );
 		} else {
 			panel.appendChild( el( 'h1', { text: 'Landing pubblicate' } ) );

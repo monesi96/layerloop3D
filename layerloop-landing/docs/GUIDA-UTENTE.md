@@ -32,7 +32,26 @@ tutto com'era.
 
 ---
 
-## 3. Compilare il case study
+## 3. Partire da un PDF già fatto
+
+Se il whitepaper esiste già in PDF, non serve riscriverlo: nella scheda **Case study** premi
+**⇪ Importa da un PDF già impaginato** e scegli il file.
+
+Lo Studio legge il PDF e compila da solo: brand e numero del documento, titolo, sottotitolo, tag,
+"la sfida", "il limite delle tecnologie tradizionali", il box della soluzione, "perché conviene" e
+tutte le specifiche della colonna destra. Recupera anche l'immagine grande della copertina e la
+foto del pezzo.
+
+Il file che hai importato resta agganciato: sarà quello allegato alla landing, senza ricomporlo.
+Lo vedi indicato nella scheda **Landing**, riquadro "PDF da allegare".
+
+> L'importazione è una scorciatoia, non una garanzia: **ricontrolla sempre i campi** prima di
+> pubblicare. Se un testo è finito nel posto sbagliato, correggilo a mano — il PDF allegato non
+> cambia.
+
+---
+
+## 4. Compilare il case study
 
 Scrivi **sempre in italiano**. I campi sono nell'ordine delle pagine:
 
@@ -56,7 +75,7 @@ la trasparenza viene mantenuta. Formati accettati: PNG, JPG, WebP.
 
 ---
 
-## 4. Il fil di ferro con l'intelligenza artificiale
+## 5. Il fil di ferro con l'intelligenza artificiale
 
 Nel riquadro verde sotto l'immagine di copertina:
 
@@ -78,7 +97,7 @@ con una descrizione diversa.
 
 ---
 
-## 5. Ottenere il PDF
+## 6. Ottenere il PDF
 
 Due pulsanti, due risultati:
 
@@ -97,7 +116,7 @@ Con **Esporta JSON** salvi il documento come file da conservare o passare a un c
 
 ---
 
-## 6. Pubblicare la landing page
+## 7. Pubblicare la landing page
 
 Passa alla scheda **Landing**.
 
@@ -132,7 +151,7 @@ dalla foto che usi come render.
 
 ---
 
-## 7. Modificare una landing già pubblicata
+## 8. Modificare una landing già pubblicata
 
 Scheda **Archivio** → **Apri** sulla landing che ti interessa. Testi e immagini tornano
 nell'editor. Correggi quello che serve e ripubblica: viene aggiornata la stessa pagina, con lo
@@ -144,7 +163,7 @@ le landing già pubblicate non vengono toccate.
 
 ---
 
-## 8. Cosa succede ai contatti
+## 9. Cosa succede ai contatti
 
 Chi compila il modulo sulla landing:
 
