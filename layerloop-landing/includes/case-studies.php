@@ -27,8 +27,8 @@ class LL_Studio_Case_Studies {
 	 * Asset del carosello.
 	 */
 	public function register_assets() {
-		wp_register_style( 'll-case-studies', LL_LANDING_URL . 'assets/case-studies.css', array( 'll-landing-font' ), LL_LANDING_VERSION );
-		wp_register_script( 'll-case-studies', LL_LANDING_URL . 'assets/case-studies.js', array(), LL_LANDING_VERSION, true );
+		wp_register_style( 'll-case-studies', LL_LANDING_URL . 'assets/case-studies.css', array( 'll-landing-font' ), ll_landing_asset_version( 'assets/case-studies.css' ) );
+		wp_register_script( 'll-case-studies', LL_LANDING_URL . 'assets/case-studies.js', array(), ll_landing_asset_version( 'assets/case-studies.js' ), true );
 	}
 
 	/**

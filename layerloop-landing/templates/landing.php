@@ -46,8 +46,24 @@ $hero_lead    = $ll( 'll_hero_lead', 'In Layflex e Foam, direttamente in stampa 
 $hero_hint    = $ll( 'll_hero_hint', 'Passa il mouse →' );
 $hero_cta1    = $ll( 'll_hero_cta1', 'Richiedi una demo live' );
 $hero_cta2    = $ll( 'll_hero_cta2', 'Scarica il whitepaper' );
-$img_render   = $ll( 'll_hero_img_render', 'https://www.layerloop3d.com/wp-content/uploads/2026/07/raccordo.png' );
-$img_wire     = $ll( 'll_hero_img_wire', 'https://www.layerloop3d.com/wp-content/uploads/2026/07/wireframe_raccordo.png' );
+/*
+ * Le landing create dallo Studio non ereditano le immagini di esempio: mostrerebbero
+ * il prodotto di un'altra scheda. Le pagine precedenti mantengono il ripiego storico.
+ */
+$ll_from_studio = (bool) get_post_meta( get_the_ID(), '_ll_studio_payload', true );
+$img_render     = $ll( 'll_hero_img_render', $ll_from_studio ? '' : 'https://www.layerloop3d.com/wp-content/uploads/2026/07/raccordo.png' );
+$img_wire       = $ll( 'll_hero_img_wire', $ll_from_studio ? '' : 'https://www.layerloop3d.com/wp-content/uploads/2026/07/wireframe_raccordo.png' );
+
+/*
+ * L'effetto render → wireframe richiede due immagini scontornate con la stessa
+ * inquadratura. Con una sola immagine si mostra quella, senza maschera: sovrapporre
+ * un wireframe con il fondo pieno coprirebbe il render invece di rivelarlo.
+ */
+$hero_base    = $img_render ? $img_render : $img_wire;
+$hero_overlay = ( $img_render && $img_wire ) ? $img_wire : '';
+if ( ! $hero_overlay ) {
+	$hero_hint = '';
+}
 $meta_parts   = explode( '|', $ll( 'll_meta', 'LayerLoop 3D|Whitepaper 01 / 2026|Manifattura & Automazione' ) );
 
 $hero_stats = array();
@@ -75,7 +91,7 @@ $sol_text    = $ll( 'll_sol_text', '<p>Con <b>Layerloop NEXT</b> il soffietto si
 $case_index   = $ll( 'll_case_index', '03 / 05' );
 $case_eyebrow = $ll( 'll_case_eyebrow', 'Il risultato' );
 $case_title   = $ll( 'll_case_title', 'Dal file al pezzo, stampato' );
-$case_photo   = $ll( 'll_case_photo', 'https://www.layerloop3d.com/wp-content/uploads/2026/07/case_raccordo.jpg' );
+$case_photo   = $ll( 'll_case_photo', $ll_from_studio ? '' : 'https://www.layerloop3d.com/wp-content/uploads/2026/07/case_raccordo.jpg' );
 $case_lead    = $ll( 'll_case_lead', 'Un soffietto reale, prodotto senza stampo: stessa geometria a fisarmonica del file CAD, pronto all\'uso appena finita la stampa. Ogni misura parte da un nuovo file, non da un nuovo stampo.' );
 $case_cta     = $ll( 'll_case_cta', 'Richiedi un campione' );
 $case_specs   = array();
@@ -183,7 +199,7 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
       <div class="stage" id="stage">
         <div class="ll-reveal" id="llReveal">
           <?php if ( $hero_hint ) : ?><span class="ll-tag-live"><?php echo esc_html( $hero_hint ); ?></span><?php endif; ?>
-          <div class="stage__cursor" id="cursorGlow"></div>
+          <?php if ( $hero_overlay ) : ?><div class="stage__cursor" id="cursorGlow"></div><?php endif; ?>
           <svg class="ll-svg" id="llSvg" viewBox="0 0 1280 680" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <defs>
               <filter id="liquidFilter" x="-50%" y="-50%" width="200%" height="200%">
@@ -194,13 +210,17 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
               </filter>
               <mask id="liquidMask">
                 <rect width="100%" height="100%" fill="black"/>
-                <circle id="blob" cx="50%" cy="50%" r="0" fill="white" filter="url(#liquidFilter)"/>
+                <?php if ( $hero_overlay ) : ?><circle id="blob" cx="50%" cy="50%" r="0" fill="white" filter="url(#liquidFilter)"/><?php endif; ?>
               </mask>
             </defs>
-            <image href="<?php echo esc_url( $img_render ); ?>" xlink:href="<?php echo esc_url( $img_render ); ?>"
-                   x="0" y="0" width="1280" height="680" preserveAspectRatio="xMidYMid meet"/>
-            <image href="<?php echo esc_url( $img_wire ); ?>" xlink:href="<?php echo esc_url( $img_wire ); ?>"
-                   x="0" y="0" width="1280" height="680" preserveAspectRatio="xMidYMid meet" mask="url(#liquidMask)"/>
+            <?php if ( $hero_base ) : ?>
+              <image href="<?php echo esc_url( $hero_base ); ?>" xlink:href="<?php echo esc_url( $hero_base ); ?>"
+                     x="0" y="0" width="1280" height="680" preserveAspectRatio="xMidYMid meet"/>
+            <?php endif; ?>
+            <?php if ( $hero_overlay ) : ?>
+              <image href="<?php echo esc_url( $hero_overlay ); ?>" xlink:href="<?php echo esc_url( $hero_overlay ); ?>"
+                     x="0" y="0" width="1280" height="680" preserveAspectRatio="xMidYMid meet" mask="url(#liquidMask)"/>
+            <?php endif; ?>
           </svg>
         </div>
       </div>
@@ -261,9 +281,11 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
     </div>
     <div class="case-grid">
       <div class="case-figure">
+        <?php if ( $case_photo ) : ?>
         <div class="case-photo">
           <img src="<?php echo esc_url( $case_photo ); ?>" alt="<?php echo esc_attr( $case_title ); ?>">
         </div>
+        <?php endif; ?>
         <?php if ( ! empty( $case_specs ) ) : ?>
         <div class="case-glass">
           <?php foreach ( $case_specs as $s ) : ?>

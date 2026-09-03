@@ -149,6 +149,12 @@ Se le lasci vuote vengono prese in automatico da quelle del case study. Se le du
 coincidono, l'effetto al passaggio del mouse "salta": genera il wireframe partendo esattamente
 dalla foto che usi come render.
 
+**Entrambe devono essere scontornate.** Sovrapporre un wireframe con il fondo pieno copre il render
+invece di rivelarlo: si vede un rettangolo bianco. Premi **✂ Scontorna** su tutte e due.
+
+**Vuoi una sola immagine?** Premi **Rimuovi** sull'immagine WIREFRAME: resta solo quella sotto, senza
+effetto al passaggio del mouse. È la scelta giusta quando non hai un wireframe pulito da abbinare.
+
 ---
 
 ## 8. Modificare una landing già pubblicata
@@ -214,9 +220,13 @@ decina di secondi, soprattutto con 4 pagine. Aspetta il messaggio verde, non ric
 torna nella scheda Landing, caricale e ripubblica.
 
 **Dietro al pezzo si vede un rettangolo bianco** — l'immagine non è scontornata. Premi
-**✂ Scontorna** accanto al campo immagine: toglie il fondo uniforme partendo dai bordi, senza
-intaccare le zone chiare dentro al pezzo. Le immagini estratte da un PDF vengono già scontornate
-in automatico all'importazione.
+**✂ Scontorna**: sta accanto a "Carica immagine", sotto ogni campo immagine. Toglie il fondo
+uniforme partendo dai bordi, senza intaccare le zone chiare dentro al pezzo. Le immagini estratte
+da un PDF vengono già scontornate in automatico all'importazione.
+
+**Non trovo il pulsante ✂ Scontorna** — il browser sta usando la versione vecchia dello Studio.
+Ricarica la pagina tenendo premuto Maiusc (o Ctrl+F5). Se ancora non compare, chiedi a un
+amministratore di verificare di aver caricato l'ultima versione del plugin.
 
 **Una pagina dell'anteprima è tagliata** — sotto il foglio compare una fascia rossa
 "il contenuto sborda". L'impaginazione A4 ha altezza fissa: accorcia i testi di quella pagina

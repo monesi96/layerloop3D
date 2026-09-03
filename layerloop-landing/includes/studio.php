@@ -33,12 +33,12 @@ class LL_Studio_Shortcode {
 			array(),
 			null
 		);
-		wp_register_style( 'll-studio', LL_LANDING_URL . 'assets/studio.css', array( 'll-studio-font' ), LL_LANDING_VERSION );
+		wp_register_style( 'll-studio', LL_LANDING_URL . 'assets/studio.css', array( 'll-studio-font' ), ll_landing_asset_version( 'assets/studio.css' ) );
 		wp_register_script( 'll-jspdf', LL_LANDING_URL . 'vendor/jspdf.umd.min.js', array(), '2.5.2', true );
 		wp_register_script( 'll-html2canvas', LL_LANDING_URL . 'vendor/html2canvas.min.js', array(), '1.4.1', true );
 		wp_register_script( 'll-pdfjs', LL_LANDING_URL . 'vendor/pdf.min.js', array(), '3.11.174', true );
-		wp_register_script( 'll-pdf-import', LL_LANDING_URL . 'assets/pdf-import.js', array( 'll-pdfjs' ), LL_LANDING_VERSION, true );
-		wp_register_script( 'll-studio', LL_LANDING_URL . 'assets/studio.js', array( 'll-jspdf', 'll-html2canvas', 'll-pdf-import' ), LL_LANDING_VERSION, true );
+		wp_register_script( 'll-pdf-import', LL_LANDING_URL . 'assets/pdf-import.js', array( 'll-pdfjs' ), ll_landing_asset_version( 'assets/pdf-import.js' ), true );
+		wp_register_script( 'll-studio', LL_LANDING_URL . 'assets/studio.js', array( 'll-jspdf', 'll-html2canvas', 'll-pdf-import' ), ll_landing_asset_version( 'assets/studio.js' ), true );
 	}
 
 	/**

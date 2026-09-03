@@ -2,7 +2,7 @@
 /**
  * Plugin Name: LayerLoop Landing Settore + Studio
  * Description: Landing "settore" standardizzata (hero render→wireframe, confronto, case study, materiali, stampanti, CTA) e Studio pubblico per generare il PDF del case study, le immagini fil di ferro con Gemini e la landing page collegata, senza mai entrare in bacheca. Shortcode: [ll_landing] per la landing, [layerloop_studio] per lo Studio.
- * Version:     2.0.0
+ * Version:     2.1.0
  * Author:      LayerLoop 3D
  * Text Domain: layerloop-landing
  *
@@ -20,9 +20,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LL_LANDING_VERSION', '2.0.0' );
+define( 'LL_LANDING_VERSION', '2.1.0' );
 define( 'LL_LANDING_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LL_LANDING_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * Versione di un file statico, comprensiva della data di modifica.
+ *
+ * Serve a invalidare la cache del browser anche quando si aggiornano i file via FTP
+ * senza toccare il numero di versione del plugin: senza, il browser continua a servire
+ * il vecchio JavaScript e le novità sembrano non esserci.
+ *
+ * @param string $relative Percorso relativo alla cartella del plugin.
+ * @return string
+ */
+function ll_landing_asset_version( $relative ) {
+	$path = LL_LANDING_PATH . ltrim( $relative, '/' );
+	$time = file_exists( $path ) ? filemtime( $path ) : 0;
+	return $time ? LL_LANDING_VERSION . '.' . $time : LL_LANDING_VERSION;
+}
 
 /** Tipo di contenuto delle landing whitepaper. */
 define( 'LL_LANDING_CPT', 'whitepaper' );
@@ -153,13 +169,13 @@ add_action( 'wp_enqueue_scripts', function () {
 		'll-landing',
 		LL_LANDING_URL . 'assets/landing.css',
 		array( 'll-landing-font' ),
-		LL_LANDING_VERSION
+		ll_landing_asset_version( 'assets/landing.css' )
 	);
 	wp_register_script(
 		'll-landing',
 		LL_LANDING_URL . 'assets/landing.js',
 		array(),
-		LL_LANDING_VERSION,
+		ll_landing_asset_version( 'assets/landing.js' ),
 		true // footer
 	);
 } );
