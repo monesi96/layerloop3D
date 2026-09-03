@@ -45,6 +45,9 @@ foto del pezzo.
 Il file che hai importato resta agganciato: sarà quello allegato alla landing, senza ricomporlo.
 Lo vedi indicato nella scheda **Landing**, riquadro "PDF da allegare".
 
+I testi arrivano interi: non vengono tagliati. Se sono più lunghi dello spazio disponibile,
+l'impaginazione riduce da sola il corpo del carattere finché tutto rientra nella pagina.
+
 > L'importazione è una scorciatoia, non una garanzia: **ricontrolla sempre i campi** prima di
 > pubblicare. Se un testo è finito nel posto sbagliato, correggilo a mano — il PDF allegato non
 > cambia.
@@ -65,8 +68,13 @@ Scrivi **sempre in italiano**. I campi sono nell'ordine delle pagine:
 - **Pagine 3–4 · Benchmark** — spuntando la casella si aggiungono due pagine di confronto.
   Il PDF ha sempre un numero pari di pagine: 2 senza benchmark, 4 con benchmark.
 
-Sotto ogni campo c'è il contatore dei caratteri: quando diventa rosso hai raggiunto il limite
-pensato per non far scoppiare l'impaginazione.
+Sotto ogni campo c'è il contatore dei caratteri. Puoi scrivere liberamente: **più testo scrivi,
+più il corpo del carattere di quel blocco si riduce da solo** per far stare tutto nella pagina, senza
+tagliare niente e mantenendo le proporzioni fra titoletti e testo. Il contatore segnala solo il
+tetto massimo del campo.
+
+Se il testo è davvero troppo — oltre il corpo minimo leggibile — sotto il foglio compare una fascia
+rossa: quella è l'unica situazione in cui va accorciato a mano.
 
 ### Le immagini
 
@@ -228,7 +236,8 @@ da un PDF vengono già scontornate in automatico all'importazione.
 Ricarica la pagina tenendo premuto Maiusc (o Ctrl+F5). Se ancora non compare, chiedi a un
 amministratore di verificare di aver caricato l'ultima versione del plugin.
 
-**Una pagina dell'anteprima è tagliata** — sotto il foglio compare una fascia rossa
-"il contenuto sborda". L'impaginazione A4 ha altezza fissa: accorcia i testi di quella pagina
-finché la fascia sparisce. Se stai allegando un PDF già pronto la cosa non tocca il file
-consegnato, ma conviene comunque sistemare l'anteprima.
+**Il testo di una pagina è diventato più piccolo** — è voluto: il blocco si è adattato per far
+stare tutto nella pagina. Se lo vuoi più grande, accorcia il testo.
+
+**Sotto il foglio c'è una fascia rossa "troppo testo anche al corpo minimo"** — hai superato il
+limite oltre il quale il testo diventerebbe illeggibile. Taglia qualche riga in quella pagina.

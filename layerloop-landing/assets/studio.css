@@ -764,6 +764,8 @@ html.ll-studio-open body {
 
 .ll-sheet-p1 {
 	background: var(--ll-paper);
+	/* Base per l'adattamento automatico del corpo del testo (vedi autoFit in studio.js). */
+	font-size: 16px;
 }
 
 .ll-sheet-p2 {
@@ -796,7 +798,7 @@ html.ll-studio-open body {
 	min-height: 175px;
 	margin: 8px 0 16px;
 	padding: 83px 45px 0;
-	font-size: 43.5px;
+	font-size: 2.71875em;
 	font-weight: 600;
 	letter-spacing: -0.025em;
 	line-height: 1.06;
@@ -808,7 +810,7 @@ html.ll-studio-open body {
 	min-height: 68px;
 	margin: 0 0 14px;
 	padding: 19px 45px 0;
-	font-size: 17.4px;
+	font-size: 1.0875em;
 	font-weight: 300;
 	line-height: 1.4;
 	white-space: pre-line;
@@ -830,7 +832,7 @@ html.ll-studio-open body {
 	border-radius: 999px;
 	background: var(--ll-mint);
 	color: #22796c;
-	font-size: 11px;
+	font-size: 0.6875em;
 	line-height: 1;
 	white-space: nowrap;
 }
@@ -880,10 +882,12 @@ html.ll-studio-open body {
 
 .ll-two-left {
 	padding: 0 30px 0 45px;
+	font-size: 16px;
 }
 
 .ll-two-right {
 	padding: 0 45px 0 30px;
+	font-size: 16px;
 }
 
 .ll-content-section {
@@ -893,14 +897,14 @@ html.ll-studio-open body {
 .ll-section-title {
 	margin-bottom: 9px;
 	color: var(--ll-green);
-	font-size: 11px;
+	font-size: 0.6875em;
 	font-weight: 700;
 	line-height: 1.5;
 }
 
 .ll-section-text {
 	margin: 0 0 14px;
-	font-size: 13.6px;
+	font-size: 0.85em;
 	font-weight: 300;
 	line-height: 1.5;
 	white-space: pre-line;
@@ -919,7 +923,7 @@ html.ll-studio-open body {
 
 .ll-solution-question {
 	margin: 30px 0 19px;
-	font-size: 19.7px;
+	font-size: 1.23125em;
 	font-weight: 600;
 	line-height: 1.25;
 	white-space: pre-line;
@@ -931,7 +935,7 @@ html.ll-studio-open body {
 	border-radius: 999px;
 	background: var(--ll-green);
 	color: #fff;
-	font-size: 12.5px;
+	font-size: 0.78125em;
 	font-weight: 500;
 }
 
@@ -963,13 +967,13 @@ html.ll-studio-open body {
 
 .ll-spec-item > div {
 	color: var(--ll-green);
-	font-size: 8.4px;
+	font-size: 0.525em;
 	line-height: 1.5;
 }
 
 .ll-spec-item strong {
 	display: block;
-	font-size: 11.1px;
+	font-size: 0.69375em;
 	font-weight: 400;
 	line-height: 1.45;
 	white-space: pre-line;
@@ -992,7 +996,7 @@ html.ll-studio-open body {
 
 .ll-material-kicker {
 	color: var(--ll-green);
-	font-size: 8.2px;
+	font-size: 0.5125em;
 	font-weight: 700;
 	letter-spacing: 0.04em;
 }
@@ -1000,7 +1004,7 @@ html.ll-studio-open body {
 .ll-material-name {
 	display: block;
 	margin-top: 3px;
-	font-size: 12.4px;
+	font-size: 0.775em;
 	font-weight: 650;
 	line-height: 1.25;
 	overflow-wrap: anywhere;
@@ -1008,7 +1012,7 @@ html.ll-studio-open body {
 
 .ll-material > p {
 	margin: 5px 0 10px;
-	font-size: 7.8px;
+	font-size: 0.4875em;
 	font-weight: 300;
 	line-height: 1.35;
 }
@@ -1027,7 +1031,7 @@ html.ll-studio-open body {
 
 .ll-perf-item span {
 	overflow: hidden;
-	font-size: 6.8px;
+	font-size: 0.425em;
 	line-height: 1.15;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -1036,7 +1040,7 @@ html.ll-studio-open body {
 .ll-perf-item strong {
 	flex: 0 0 auto;
 	color: var(--ll-green);
-	font-size: 7.2px;
+	font-size: 0.45em;
 	font-weight: 700;
 }
 
@@ -1065,13 +1069,13 @@ html.ll-studio-open body {
 .ll-why > div {
 	margin-bottom: 8px;
 	color: var(--ll-green);
-	font-size: 9.5px;
+	font-size: 0.59375em;
 	line-height: 1.5;
 }
 
 .ll-why p {
 	margin: 0;
-	font-size: 11.8px;
+	font-size: 0.7375em;
 	font-weight: 300;
 	line-height: 1.45;
 	white-space: pre-line;
@@ -1083,11 +1087,12 @@ html.ll-studio-open body {
 
 .ll-comparison-content {
 	padding: 58px 45px 45px;
+	font-size: 16px;
 }
 
 .ll-comparison-eyebrow {
 	color: var(--ll-green);
-	font-size: 10px;
+	font-size: 0.625em;
 	font-weight: 700;
 	letter-spacing: 0.06em;
 	line-height: 1;
@@ -1096,7 +1101,7 @@ html.ll-studio-open body {
 .ll-comparison-content > h2 {
 	width: 630px;
 	margin: 14px 0 12px;
-	font-size: 41px;
+	font-size: 2.5625em;
 	font-weight: 600;
 	letter-spacing: -0.025em;
 	line-height: 1.08;
@@ -1106,7 +1111,7 @@ html.ll-studio-open body {
 .ll-comparison-intro {
 	width: 590px;
 	margin: 0;
-	font-size: 14px;
+	font-size: 0.875em;
 	font-weight: 300;
 	line-height: 1.5;
 	white-space: pre-line;
@@ -1134,7 +1139,7 @@ html.ll-studio-open body {
 	top: 25px;
 	left: 27px;
 	color: #9ba3a1;
-	font-size: 9px;
+	font-size: 0.5625em;
 	font-weight: 700;
 }
 
@@ -1166,14 +1171,14 @@ html.ll-studio-open body {
 
 .ll-tech-cards h3 {
 	margin: 25px 0 12px;
-	font-size: 14px;
+	font-size: 0.875em;
 	font-weight: 700;
 	line-height: 1.3;
 }
 
 .ll-tech-cards p {
 	margin: 0;
-	font-size: 11.8px;
+	font-size: 0.7375em;
 	font-weight: 300;
 	line-height: 1.55;
 	white-space: pre-line;
@@ -1206,19 +1211,19 @@ html.ll-studio-open body {
 .ll-comparison-head {
 	min-height: 42px;
 	color: var(--ll-green);
-	font-size: 7.9px;
+	font-size: 0.494em;
 	font-weight: 700;
 	line-height: 1.25;
 }
 
 .ll-comparison-row strong {
-	font-size: 9px;
+	font-size: 0.5625em;
 	font-weight: 650;
 	line-height: 1.3;
 }
 
 .ll-comparison-row span {
-	font-size: 10.4px;
+	font-size: 0.65em;
 	font-weight: 300;
 	line-height: 1.35;
 	white-space: pre-line;
@@ -1233,7 +1238,7 @@ html.ll-studio-open body {
 
 .ll-comparison-conclusion span {
 	color: #78c8ba;
-	font-size: 8.5px;
+	font-size: 0.53125em;
 	font-weight: 700;
 	letter-spacing: 0.04em;
 }
@@ -1241,7 +1246,7 @@ html.ll-studio-open body {
 .ll-comparison-conclusion p {
 	width: 590px;
 	margin: 10px 0 0;
-	font-size: 14px;
+	font-size: 0.875em;
 	font-weight: 300;
 	line-height: 1.5;
 	white-space: pre-line;

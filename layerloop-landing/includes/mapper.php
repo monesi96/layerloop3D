@@ -35,7 +35,7 @@ class LL_Studio_Mapper {
 		return array(
 			'll_hero_eyebrow' => 90,
 			'll_hero_title'   => 160,
-			'll_hero_lead'    => 320,
+			'll_hero_lead'    => 420,
 			'll_hero_hint'    => 60,
 			'll_hero_stats'   => 400,
 			'll_meta'         => 160,
@@ -45,7 +45,7 @@ class LL_Studio_Mapper {
 			'll_prob_index'   => 20,
 			'll_prob_eyebrow' => 60,
 			'll_prob_title'   => 140,
-			'll_prob_lead'    => 480,
+			'll_prob_lead'    => 1500,
 			'll_cmp_old_title' => 60,
 			'll_cmp_old'      => 600,
 			'll_cmp_new_title' => 60,
@@ -58,7 +58,7 @@ class LL_Studio_Mapper {
 			'll_case_eyebrow' => 60,
 			'll_case_title'   => 140,
 			'll_case_specs'   => 400,
-			'll_case_lead'    => 600,
+			'll_case_lead'    => 900,
 			'll_case_cta'     => 60,
 
 			'll_why_eyebrow'  => 60,
@@ -89,7 +89,7 @@ class LL_Studio_Mapper {
 
 			'll_final_eyebrow' => 60,
 			'll_final_title'  => 140,
-			'll_final_text'   => 480,
+			'll_final_text'   => 700,
 			'll_final_cta1'   => 60,
 			'll_final_cta2'   => 60,
 
@@ -105,8 +105,8 @@ class LL_Studio_Mapper {
 	 */
 	public static function html_fields() {
 		return array(
-			'll_sol_text' => 2400,
-			'll_why_text' => 1200,
+			'll_sol_text' => 3200,
+			'll_why_text' => 1600,
 		);
 	}
 

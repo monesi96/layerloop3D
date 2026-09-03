@@ -550,62 +550,6 @@
 	}
 
 	/**
-	 * Limiti di lunghezza dei campi, gli stessi imposti dall'editor: l'impaginazione
-	 * A4 ha altezza fissa, quindi un testo più lungo sborda dalla pagina.
-	 */
-	var CASE_LIMITS = {
-		brand: 32, document: 32, title: 96, subtitle: 180, tags: 100,
-		section1Title: 48, section1Text: 520, section2Title: 56, section2Text: 700,
-		boxTitle: 48, boxText: 650, boxQuestion: 110, boxButton: 36,
-		whyTitle: 42, whyText: 360,
-		materialTitle: 28, materialName: 40, materialDescription: 180
-	};
-
-	/**
-	 * Accorcia un testo all'ultimo confine di parola utile.
-	 */
-	function trimToLimit( value, limit ) {
-		var text = String( value || '' );
-		if ( text.length <= limit ) {
-			return text;
-		}
-		var cut = text.slice( 0, limit );
-		var space = cut.lastIndexOf( ' ' );
-		if ( space > limit * 0.6 ) {
-			cut = cut.slice( 0, space );
-		}
-		return cut.replace( /[\s,;:.]+$/, '' ) + '…';
-	}
-
-	/**
-	 * Riporta un case study dentro i limiti dell'impaginazione A4.
-	 *
-	 * @return {Array} Etichette dei campi accorciati.
-	 */
-	function fitToLayout( data ) {
-		var shortened = [];
-
-		Object.keys( CASE_LIMITS ).forEach( function ( key ) {
-			var value = String( data[ key ] || '' );
-			if ( value.length > CASE_LIMITS[ key ] ) {
-				data[ key ] = trimToLimit( value, CASE_LIMITS[ key ] );
-				shortened.push( key );
-			}
-		} );
-
-		( data.specs || [] ).forEach( function ( spec ) {
-			spec.label = trimToLimit( spec.label, 34 );
-			spec.value = trimToLimit( spec.value, 44 );
-		} );
-		if ( data.specs && data.specs.length > 6 ) {
-			data.specs = data.specs.slice( 0, 6 );
-			shortened.push( 'specifiche' );
-		}
-
-		return shortened;
-	}
-
-	/**
 	 * Legge un PDF impaginato con il generatore e ne ricava il case study,
 	 * tenendo da parte il file stesso come allegato pronto per la landing.
 	 */
@@ -624,11 +568,6 @@
 			status( message );
 		} ).then( function ( result ) {
 			state.data = normalizeCaseStudy( Object.assign( {}, state.data, result.data ) );
-
-			var shortened = fitToLayout( state.data );
-			if ( shortened.length ) {
-				result.notes.push( 'Alcuni testi superavano lo spazio della pagina A4 e sono stati accorciati (' + shortened.length + ' campi).' );
-			}
 
 			// Le immagini estratte dal PDF portano con sé il fondo bianco della pagina:
 			// senza scontorno la landing mostrerebbe un rettangolo bianco dietro al pezzo.
@@ -950,8 +889,8 @@
 		] ) );
 
 		nodes.push( fieldset( 'Pagina 1 — Copertina', [
-			text( 'Titolo (invio = a capo)', 'title', 96, true, 3 ),
-			text( 'Sottotitolo', 'subtitle', 180, true, 3 ),
+			text( 'Titolo (invio = a capo)', 'title', 140, true, 3 ),
+			text( 'Sottotitolo', 'subtitle', 300, true, 3 ),
 			text( 'Tag (max 4, separati da virgola)', 'tags', 100 ),
 			imageField( {
 				label: 'Foto sorgente / immagine copertina',
@@ -970,13 +909,13 @@
 		] ) );
 
 		nodes.push( fieldset( 'Pagina 2 — Colonna sinistra', [
-			text( 'Sezione 1 — titoletto', 'section1Title', 48 ),
-			text( 'Sezione 1 — testo', 'section1Text', 520, true, 7 ),
-			text( 'Sezione 2 — titoletto', 'section2Title', 56 ),
-			text( 'Sezione 2 — testo', 'section2Text', 700, true, 8 ),
-			text( 'Box — titoletto', 'boxTitle', 48 ),
-			text( 'Box — testo', 'boxText', 650, true, 9 ),
-			text( 'Box — domanda finale', 'boxQuestion', 110, true, 3 ),
+			text( 'Sezione 1 — titoletto', 'section1Title', 70 ),
+			text( 'Sezione 1 — testo', 'section1Text', 1200, true, 8 ),
+			text( 'Sezione 2 — titoletto', 'section2Title', 90 ),
+			text( 'Sezione 2 — testo', 'section2Text', 1400, true, 9 ),
+			text( 'Box — titoletto', 'boxTitle', 70 ),
+			text( 'Box — testo', 'boxText', 1400, true, 10 ),
+			text( 'Box — domanda finale', 'boxQuestion', 200, true, 3 ),
 			text( 'Box — etichetta bottone', 'boxButton', 36 )
 		] ) );
 
@@ -1029,8 +968,8 @@
 			el( 'div', { class: 'll-field-label' }, [ el( 'span', { text: 'Specifiche (etichetta + valore)' } ) ] ),
 			specList,
 			addSpec,
-			text( 'Perché conviene — titoletto', 'whyTitle', 42 ),
-			text( 'Perché conviene — testo', 'whyText', 360, true, 6 )
+			text( 'Perché conviene — titoletto', 'whyTitle', 70 ),
+			text( 'Perché conviene — testo', 'whyText', 700, true, 7 )
 		] ) );
 
 		var perfList = el( 'div', { class: 'll-list' } );
@@ -1064,7 +1003,7 @@
 		nodes.push( fieldset( 'Pagina 2 — Materiale', [
 			text( 'Titolo sezione materiale', 'materialTitle', 28 ),
 			text( 'Nome materiale', 'materialName', 40 ),
-			text( 'Descrizione tecnica', 'materialDescription', 180, true, 4 ),
+			text( 'Descrizione tecnica', 'materialDescription', 300, true, 4 ),
 			perfList
 		] ) );
 
@@ -1134,7 +1073,7 @@
 		return fieldset( legend, [
 			text( 'Sovratitolo', 'eyebrow', 42 ),
 			text( 'Titolo', 'title', 84, true, 2 ),
-			text( 'Introduzione', 'intro', 220, true, 4 ),
+			text( 'Introduzione', 'intro', 400, true, 4 ),
 			text( 'Tecnologia sinistra — titolo', 'leftTitle', 44 ),
 			imageField( {
 				label: 'Tecnologia sinistra — immagine facoltativa',
@@ -1146,7 +1085,7 @@
 					page.leftImage = value;
 				}
 			} ),
-			text( 'Tecnologia sinistra — descrizione', 'leftText', 280, true, 5 ),
+			text( 'Tecnologia sinistra — descrizione', 'leftText', 480, true, 5 ),
 			text( 'Tecnologia destra — titolo', 'rightTitle', 44 ),
 			imageField( {
 				label: 'Tecnologia destra — immagine facoltativa',
@@ -1158,11 +1097,11 @@
 					page.rightImage = value;
 				}
 			} ),
-			text( 'Tecnologia destra — descrizione', 'rightText', 280, true, 5 ),
+			text( 'Tecnologia destra — descrizione', 'rightText', 480, true, 5 ),
 			el( 'div', { class: 'll-field-label' }, [ el( 'span', { text: 'Righe di confronto' } ) ] ),
 			metricList,
 			text( 'Conclusione — titolo', 'conclusionTitle', 44 ),
-			text( 'Conclusione — testo', 'conclusionText', 260, true, 5 )
+			text( 'Conclusione — testo', 'conclusionText', 460, true, 5 )
 		] );
 	}
 
@@ -1952,27 +1891,90 @@
 			text: 'Anteprima in scala 1:1 del PDF A4. Le pagine 3 e 4 compaiono solo con il benchmark attivo.'
 		} ) );
 
-		flagOverflow();
+		fitSheets();
+	}
+
+	/*
+	 * Adattamento automatico del corpo del testo.
+	 *
+	 * Le pagine A4 hanno altezza fissa e tagliano ciò che eccede. Invece di troncare
+	 * i testi si riduce il corpo del carattere del blocco che sborda, finché rientra:
+	 * nel CSS i figli sono espressi in em, quindi cambiare il corpo del contenitore
+	 * rimpicciolisce titoletti, testi e valori nella stessa proporzione, mantenendo
+	 * intatte le gerarchie tipografiche.
+	 *
+	 * Il limite inferiore evita testi illeggibili: oltre quello si torna a segnalare
+	 * lo sbordo, perché a quel punto il problema è la quantità di testo.
+	 */
+	var FIT_BASE = 16;
+	var FIT_TARGETS = [
+		{ selector: '.ll-two-left', min: 0.68 },
+		{ selector: '.ll-two-right', min: 0.74 },
+		{ selector: '.ll-comparison-content', min: 0.72 }
+	];
+
+	/**
+	 * Spazio verticale disponibile dal bordo superiore del blocco alla fine del foglio.
+	 */
+	function availableHeight( sheet, node ) {
+		if ( node === sheet ) {
+			return sheet.clientHeight;
+		}
+		return sheet.getBoundingClientRect().bottom - node.getBoundingClientRect().top;
 	}
 
 	/**
-	 * Le pagine A4 hanno altezza fissa e tagliano ciò che eccede: qui si segnala
-	 * quali stanno sbordando, così il testo si accorcia prima di generare il PDF.
+	 * Riduce il corpo del testo del blocco finché rientra nel foglio.
+	 *
+	 * @return {boolean} true se il blocco rientra.
 	 */
-	function flagOverflow() {
-		requestAnimationFrame( function () {
+	function shrinkToFit( sheet, node, min ) {
+		var scale = 1;
+		node.style.fontSize = FIT_BASE + 'px';
+
+		for ( var step = 0; step < 40; step++ ) {
+			if ( node.scrollHeight <= availableHeight( sheet, node ) + 1 ) {
+				return true;
+			}
+			if ( scale <= min ) {
+				return false;
+			}
+			scale = Math.max( min, scale - 0.02 );
+			node.style.fontSize = ( FIT_BASE * scale ).toFixed( 2 ) + 'px';
+		}
+
+		return node.scrollHeight <= availableHeight( sheet, node ) + 1;
+	}
+
+	/**
+	 * Adatta tutte le pagine e segnala quelle che, anche al corpo minimo, sbordano.
+	 */
+	function fitSheets() {
+		sheetsInDom().forEach( function ( sheet, index ) {
+			var fitted = true;
+
+			if ( sheet.classList.contains( 'll-sheet-p1' ) ) {
+				fitted = shrinkToFit( sheet, sheet, 0.74 );
+			} else {
+				FIT_TARGETS.forEach( function ( target ) {
+					var node = sheet.querySelector( target.selector );
+					if ( node && ! shrinkToFit( sheet, node, target.min ) ) {
+						fitted = false;
+					}
+				} );
+			}
+
+			if ( fitted ) {
+				return;
+			}
+
 			// L'avviso vive accanto al foglio, mai dentro: il PDF si compone clonando
 			// il foglio e si porterebbe dietro anche il badge.
-			sheetsInDom().forEach( function ( sheet, index ) {
-				if ( sheet.scrollHeight <= sheet.clientHeight + 4 ) {
-					return;
-				}
-				var badge = el( 'div', {
-					class: 'll-overflow',
-					text: 'Pagina ' + ( index + 1 ) + ': il contenuto sborda e verrà tagliato. Accorcia i testi.'
-				} );
-				sheet.parentNode.insertBefore( badge, sheet.nextSibling );
+			var badge = el( 'div', {
+				class: 'll-overflow',
+				text: 'Pagina ' + ( index + 1 ) + ': troppo testo anche al corpo minimo. Accorcialo un po’.'
 			} );
+			sheet.parentNode.insertBefore( badge, sheet.nextSibling );
 		} );
 	}
 
