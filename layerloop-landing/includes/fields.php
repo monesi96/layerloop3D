@@ -94,9 +94,16 @@ add_action( 'acf/init', function () {
 			ll_ta( 'f_ll_cmp_new', 'll_cmp_new', 'Colonna destra — voci (✓)', "Nessuno stampo\nProduzione da 1 pezzo\n~1h15 a pezzo, produzione 24/7\nIteri il file CAD e ristampi subito", 5, 'Una voce per riga.' ),
 
 			/* ---------------- 02 SOLUZIONE ---------------- */
+			/* ---------------- IL LIMITE ---------------- */
+			array( 'key' => 'f_ll_tab_limit', 'label' => 'Il limite', 'type' => 'tab' ),
+			ll_f( 'f_ll_limit_eyebrow', 'll_limit_eyebrow', 'Occhiello', 'text', 'Il limite' ),
+			ll_f( 'f_ll_limit_title', 'll_limit_title', 'Titolo', 'text', 'Il limite delle tecnologie tradizionali' ),
+			ll_ta( 'f_ll_limit_text', 'll_limit_text', 'Testo', '', 8, 'Il testo del case study, per intero.' ),
+
 			array( 'key' => 'f_ll_tab_sol', 'label' => '02 · Soluzione', 'type' => 'tab' ),
 			ll_f( 'f_ll_sol_index', 'll_sol_index', 'Numerazione sezione', 'text', '02 / 05' ),
 			ll_f( 'f_ll_sol_eyebrow', 'll_sol_eyebrow', 'Occhiello', 'text', 'La soluzione' ),
+			ll_f( 'f_ll_sol_title', 'll_sol_title', 'Titolo', 'text', '' ),
 			array(
 				'key' => 'f_ll_sol_text', 'name' => 'll_sol_text', 'label' => 'Testo centrale', 'type' => 'wysiwyg',
 				'toolbar' => 'basic', 'media_upload' => 0, 'tabs' => 'visual',
@@ -133,6 +140,7 @@ add_action( 'acf/init', function () {
 			ll_f( 'f_ll_mat1_name', 'll_mat1_name', 'Materiale 1 — Nome', 'text', 'Layflex (TPU 95A)' ),
 			ll_f( 'f_ll_mat1_sub', 'll_mat1_sub', 'Materiale 1 — Sottotitolo', 'text', 'TPU 95A · elastomero' ),
 			ll_img( 'f_ll_mat1_img', 'll_mat1_img', 'Materiale 1 — Immagine tonda', 'Vuota = usa il campione standard.' ),
+			ll_ta( 'f_ll_mat_bars', 'll_mat_bars', 'Indicatori del materiale', '', 8, 'Una riga per indicatore, formato: ETICHETTA | VALORE da 1 a 10. Sono le barre della scheda materiale del PDF.' ),
 			ll_ta( 'f_ll_mat1_points', 'll_mat1_points', 'Materiale 1 — Caratteristiche', "Elastomero flessibile ad alta resistenza\nOttimo ritorno elastico e tenuta\nIdeale per soffietti e guarnizioni dinamiche", 4, 'Una caratteristica per riga.' ),
 
 			ll_msg( 'f_ll_mat2_msg', '<strong>Materiale 2</strong>' ),

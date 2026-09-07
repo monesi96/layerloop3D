@@ -93,9 +93,15 @@ $cmp_new_title = $ll( 'll_cmp_new_title', 'LayerLoop NEXT' );
 $cmp_old       = $ll_lines( $ll( 'll_cmp_old', "Stampo dedicato costoso\nMOQ (quantità minima) elevato\nSettimane di attesa per l'attrezzatura\nOgni modifica = nuovo stampo" ) );
 $cmp_new       = $ll_lines( $ll( 'll_cmp_new', "Nessuno stampo\nProduzione da 1 pezzo\n~1h15 a pezzo, produzione 24/7\nIteri il file CAD e ristampi subito" ) );
 
+/* ---------- IL LIMITE ---------- */
+$limit_eyebrow = $ll( 'll_limit_eyebrow', 'Il limite' );
+$limit_title   = $ll( 'll_limit_title', '' );
+$limit_text    = $ll( 'll_limit_text', '' );
+
 /* ---------- SOLUZIONE ---------- */
 $sol_index   = $ll( 'll_sol_index', '02 / 05' );
 $sol_eyebrow = $ll( 'll_sol_eyebrow', 'La soluzione' );
+$sol_title   = $ll( 'll_sol_title', '' );
 $sol_text    = $ll( 'll_sol_text', '<p>Con <b>Layerloop NEXT</b> il soffietto si stampa direttamente nella sua forma flessibile, senza stampo e senza minimi d\'ordine: in <b>Layflex</b> (TPU similgomma) per un comportamento elastico controllato, oppure in <b>Foam</b> quando serve maggiore deformabilità e smorzamento. L\'asse di stampa inclinato a <b>30°</b> produce il pezzo finito senza supporti, anche sulle geometrie a fisarmonica, e la produzione gira <b>h24 senza operatore</b>.</p>' );
 
 /* ---------- RISULTATO ---------- */
@@ -142,6 +148,23 @@ for ( $i = 1; $i <= 3; $i++ ) {
 		'points' => $ll_lines( $ll( "ll_mat{$i}_points", '' ) ),
 	);
 }
+/*
+ * Indicatori del materiale: le stesse barre della scheda del PDF, una riga per
+ * indicatore nel formato "ETICHETTA | VALORE".
+ */
+$mat_bars = array();
+foreach ( $ll_lines( $ll( 'll_mat_bars', '' ) ) as $line ) {
+	list( $l, $v ) = $ll_pair( $line );
+	$v = (int) preg_replace( '/[^0-9]/', '', $v );
+	if ( '' === trim( $l ) || $v < 1 ) {
+		continue;
+	}
+	$mat_bars[] = array(
+		'label' => $l,
+		'value' => min( 10, $v ),
+	);
+}
+
 // dati per il JS dei tab
 $materials_js = array();
 foreach ( $materials as $i => $m ) {
@@ -190,6 +213,30 @@ $final_title   = $ll( 'll_final_title', 'Parliamo del tuo progetto' );
 $final_text    = $ll( 'll_final_text', 'Portaci un componente flessibile e ti mostriamo come automatizzarne la produzione, senza stampi.' );
 $final_cta1    = $ll( 'll_final_cta1', 'Richiedi una demo live' );
 $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
+/*
+ * "Perché scegliere Layerloop" chiude la landing dello Studio, dopo i materiali,
+ * mentre nelle landing storiche resta dov'era: qui il blocco si definisce una volta
+ * sola e si stampa nel punto giusto.
+ */
+$ll_render_why = function () use ( $why_eyebrow, $why_title, $why_text, $ll_br ) {
+	if ( ! $why_title && '' === trim( wp_strip_all_tags( (string) $why_text ) ) ) {
+		return;
+	}
+	?>
+	<section class="why-full" data-aura>
+	  <span class="aura"></span>
+	  <div class="wrap reveal">
+	    <div class="grid">
+	      <div>
+	        <?php if ( $why_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $why_eyebrow ); ?></span><?php endif; ?>
+	        <?php if ( $why_title ) : ?><h2><?php echo $ll_br( $why_title ); ?></h2><?php endif; ?>
+	      </div>
+	      <?php echo wp_kses_post( $why_text ); ?>
+	    </div>
+	  </div>
+	</section>
+	<?php
+};
 ?>
 <div class="ll-landing">
 
@@ -265,8 +312,8 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
       <?php if ( $prob_index ) : ?><span class="sec-index"><?php echo esc_html( $prob_index ); ?></span><?php endif; ?>
     </div>
     <?php endif; ?>
-    <?php if ( $prob_lead ) : ?><p class="sec-lead"><?php echo esc_html( $prob_lead ); ?></p><?php endif; ?>
-    <?php if ( $cmp_old || $cmp_new ) : ?>
+    <?php if ( $prob_lead ) : ?><p class="sec-lead"><?php echo nl2br( esc_html( $prob_lead ) ); ?></p><?php endif; ?>
+    <?php if ( ! $ll_from_studio && ( $cmp_old || $cmp_new ) ) : ?>
     <div class="compare">
       <?php if ( $cmp_old || $cmp_old_title ) : ?>
       <div class="col col--old">
@@ -290,13 +337,31 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
 </section>
 <?php endif; ?>
 
+<!-- ============ IL LIMITE DELLE TECNOLOGIE TRADIZIONALI ============ -->
+<?php if ( $limit_title || $limit_text ) : ?>
+<section style="background:#fff">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <?php if ( $limit_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $limit_eyebrow ); ?></span><?php endif; ?>
+        <?php if ( $limit_title ) : ?><h2 class="sec-title"><?php echo esc_html( $limit_title ); ?></h2><?php endif; ?>
+      </div>
+    </div>
+    <?php if ( $limit_text ) : ?><p class="sec-lead"><?php echo nl2br( esc_html( $limit_text ) ); ?></p><?php endif; ?>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- ============ 02 · SOLUZIONE ============ -->
 <?php if ( trim( wp_strip_all_tags( (string) $sol_text ) ) !== '' ) : ?>
 <section style="background:var(--panel)">
   <div class="wrap reveal">
-    <?php if ( $sol_eyebrow || $sol_index ) : ?>
+    <?php if ( $sol_eyebrow || $sol_title || $sol_index ) : ?>
     <div class="sec-head">
-      <?php if ( $sol_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $sol_eyebrow ); ?></span><?php endif; ?>
+      <div>
+        <?php if ( $sol_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $sol_eyebrow ); ?></span><?php endif; ?>
+        <?php if ( $sol_title ) : ?><h2 class="sec-title"><?php echo esc_html( $sol_title ); ?></h2><?php endif; ?>
+      </div>
       <?php if ( $sol_index ) : ?><span class="sec-index"><?php echo esc_html( $sol_index ); ?></span><?php endif; ?>
     </div>
     <?php endif; ?>
@@ -306,7 +371,7 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
 <?php endif; ?>
 
 <!-- ============ 03 · RISULTATO ============ -->
-<?php if ( $case_title || $case_photo || $case_specs || $case_lead ) : ?>
+<?php if ( ! $ll_from_studio && ( $case_title || $case_photo || $case_specs || $case_lead ) ) : ?>
 <section style="background:#fff">
   <div class="wrap reveal">
     <?php if ( $case_eyebrow || $case_title || $case_index ) : ?>
@@ -343,23 +408,42 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
 <?php endif; ?>
 
 <!-- ============ PERCHÉ CONVIENE (full-width) ============ -->
-<?php if ( $why_title || trim( wp_strip_all_tags( (string) $why_text ) ) !== '' ) : ?>
-<section class="why-full" data-aura>
-  <span class="aura"></span>
-  <div class="wrap reveal">
-    <div class="grid">
-      <div>
-        <?php if ( $why_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $why_eyebrow ); ?></span><?php endif; ?>
-        <?php if ( $why_title ) : ?><h2><?php echo $ll_br( $why_title ); ?></h2><?php endif; ?>
-      </div>
-      <?php echo wp_kses_post( $why_text ); ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
+<?php if ( ! $ll_from_studio ) { $ll_render_why(); } ?>
 
 <!-- ============ 04 · MATERIALI ============ -->
-<?php if ( ! empty( $materials ) ) : ?>
+<?php if ( $ll_from_studio ) : ?>
+  <?php if ( ! empty( $materials ) || ! empty( $mat_bars ) ) : ?>
+  <section style="background:#fff">
+    <div class="wrap reveal">
+      <div class="sec-head">
+        <div>
+          <?php if ( $mat_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $mat_eyebrow ); ?></span><?php endif; ?>
+          <?php if ( $mat_title ) : ?><h2 class="sec-title"><?php echo esc_html( $mat_title ); ?></h2><?php endif; ?>
+        </div>
+      </div>
+      <?php $mat_first = isset( $materials[0] ) ? $materials[0] : array( 'name' => '', 'sub' => '' ); ?>
+      <div class="mat-card">
+        <span class="mat-card__kicker">Materiale</span>
+        <?php if ( $mat_first['name'] ) : ?><h3 class="mat-card__name"><?php echo esc_html( $mat_first['name'] ); ?></h3><?php endif; ?>
+        <?php if ( $mat_first['sub'] ) : ?><p class="mat-card__sub"><?php echo esc_html( $mat_first['sub'] ); ?></p><?php endif; ?>
+        <?php if ( ! empty( $mat_bars ) ) : ?>
+        <div class="mat-card__bars">
+          <?php foreach ( $mat_bars as $bar ) : ?>
+          <div class="mat-bar">
+            <div class="mat-bar__head">
+              <span><?php echo esc_html( $bar['label'] ); ?></span>
+              <b><?php echo (int) $bar['value']; ?>/10</b>
+            </div>
+            <div class="mat-bar__track"><i style="width:<?php echo (int) $bar['value'] * 10; ?>%"></i></div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
+  <?php endif; ?>
+<?php elseif ( ! empty( $materials ) ) : ?>
 <section style="background:#fff">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -381,8 +465,10 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
 </section>
 <?php endif; ?>
 
+<?php if ( $ll_from_studio ) { $ll_render_why(); } ?>
+
 <!-- ============ 05 · STAMPANTI ============ -->
-<?php if ( ! empty( $printers ) ) : ?>
+<?php if ( ! $ll_from_studio && ! empty( $printers ) ) : ?>
 <section style="background:var(--panel)">
   <div class="wrap reveal">
     <div class="sec-head">

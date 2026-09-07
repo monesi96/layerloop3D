@@ -51,8 +51,13 @@ class LL_Studio_Mapper {
 			'll_cmp_new_title' => 60,
 			'll_cmp_new'      => 600,
 
+			'll_limit_eyebrow' => 60,
+			'll_limit_title'  => 140,
+			'll_limit_text'   => 1600,
+
 			'll_sol_index'    => 20,
 			'll_sol_eyebrow'  => 60,
+			'll_sol_title'    => 140,
 
 			'll_case_index'   => 20,
 			'll_case_eyebrow' => 60,
@@ -70,6 +75,7 @@ class LL_Studio_Mapper {
 			'll_mat1_name'    => 60,
 			'll_mat1_sub'     => 80,
 			'll_mat1_points'  => 600,
+			'll_mat_bars'     => 600,
 			'll_mat2_name'    => 60,
 			'll_mat2_sub'     => 80,
 			'll_mat2_points'  => 600,

@@ -222,3 +222,93 @@ h2.sec-title{font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.
   .mat-info li{text-align:left}
   .hero__meta{flex-direction:column;gap:6px;text-align:center}
 }
+
+/* ============================================================
+   Scheda materiale della landing dello Studio: le stesse barre
+   della scheda del PDF, con i colori del design system.
+   ============================================================ */
+
+.ll-landing .mat-card {
+  max-width: 620px;
+  margin-top: 28px;
+  padding: 30px 32px 34px;
+  border-radius: 14px;
+  background: var(--mint, #e8f4f0);
+}
+
+.ll-landing .mat-card__kicker {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--teal, #2e9c8b);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ll-landing .mat-card__name {
+  margin: 0 0 10px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.ll-landing .mat-card__sub {
+  margin: 0 0 26px;
+  max-width: 46ch;
+  color: #4d5654;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.ll-landing .mat-card__bars {
+  display: grid;
+  gap: 18px;
+}
+
+.ll-landing .mat-bar__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 7px;
+}
+
+.ll-landing .mat-bar__head span {
+  color: #2b3432;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.ll-landing .mat-bar__head b {
+  flex: 0 0 auto;
+  color: var(--teal, #2e9c8b);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ll-landing .mat-bar__track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.ll-landing .mat-bar__track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4bb3a2, #237d6f);
+}
+
+@media (max-width: 640px) {
+  .ll-landing .mat-card {
+    padding: 24px 20px 26px;
+  }
+
+  .ll-landing .mat-card__name {
+    font-size: 23px;
+  }
+}

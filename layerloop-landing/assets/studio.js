@@ -102,6 +102,31 @@
 		};
 	}
 
+	/**
+	 * Documento vuoto: mantiene la struttura del case study — titoletti fissi,
+	 * righe delle specifiche e degli indicatori — ma nessun contenuto. È il punto
+	 * di partenza di ogni nuovo whitepaper, così un documento non eredita mai
+	 * niente da quello precedente.
+	 *
+	 * @return {Object} Case study vuoto.
+	 */
+	function blankCaseStudy() {
+		var data = caseStudyDefaults();
+
+		[ 'document', 'title', 'subtitle', 'tags', 'section1Text', 'section2Text',
+			'boxText', 'boxQuestion', 'whyText', 'materialName', 'materialDescription',
+			'coverImage', 'pieceImage', 'logoImage' ].forEach( function ( key ) {
+			data[ key ] = '';
+		} );
+
+		data.specs = data.specs.map( function ( spec ) {
+			return { id: spec.id, label: spec.label, value: '' };
+		} );
+		data.benchmarkEnabled = false;
+
+		return data;
+	}
+
 	function safeImage( value ) {
 		return typeof value === 'string' ? value : '';
 	}
@@ -205,6 +230,12 @@
 		return String( text || '' ).split( /\n{2,}/ )[ 0 ].trim();
 	}
 
+	/*
+	 * Struttura della landing: cinque blocchi, con il testo del case study preso
+	 * per intero e senza riscritture. L'ordine è quello del whitepaper — la sfida,
+	 * il limite, la soluzione, i materiali, perché scegliere Layerloop — più l'hero
+	 * in apertura e la chiamata all'azione in chiusura.
+	 */
 	var LANDING_SCHEMA = [
 		{
 			legend: 'Hero',
@@ -212,8 +243,7 @@
 				{ name: 'll_hero_eyebrow', label: 'Occhiello', max: 90, from: function ( cs ) { return firstTag( cs ); } },
 				{ name: 'll_hero_title', label: 'Titolo (usa | per andare a capo)', max: 160, from: function ( cs ) { return String( cs.title || '' ).replace( /\n+/g, '|' ); } },
 				{ name: 'll_hero_lead', label: 'Sottotitolo', type: 'textarea', rows: 3, max: 320, from: function ( cs ) { return cs.subtitle; } },
-				{ name: 'll_meta', label: 'Riga meta in alto (3 voci separate da |)', max: 160, from: function ( cs ) { return [ cs.brand, cs.document, firstTag( cs ) ].join( '|' ); } },
-				{ name: 'll_hero_hint', label: 'Suggerimento sopra l’immagine', max: 60, from: function () { return 'Passa il mouse →'; } },
+				{ name: 'll_meta', label: 'Riga meta in alto (3 voci separate da |)', max: 160, from: function ( cs ) { return [ cs.brand, cs.document, firstTag( cs ) ].filter( Boolean ).join( '|' ); } },
 				{ name: 'll_hero_stats', label: 'Numeri chiave — VALORE | ETICHETTA, uno per riga', type: 'textarea', rows: 4, max: 400, from: function ( cs ) {
 					return statLines( cs.specs, 3 );
 				} },
@@ -224,101 +254,68 @@
 			]
 		},
 		{
-			legend: '01 · Il problema',
+			legend: 'La sfida',
 			fields: [
-				{ name: 'll_prob_index', label: 'Numerazione', max: 20, from: function () { return '01 / 05'; } },
-				{ name: 'll_prob_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'Il problema'; } },
-				{ name: 'll_prob_title', label: 'Titolo', max: 140, from: function ( cs ) { return cs.section2Title; } },
-				{ name: 'll_prob_lead', label: 'Testo introduttivo', type: 'textarea', rows: 4, max: 480, from: function ( cs ) { return firstParagraph( cs.section1Text ); } },
-				{ name: 'll_cmp_old_title', label: 'Colonna sinistra — intestazione', max: 60, from: function ( cs ) { return cs.benchmarkClassic.leftTitle; } },
-				{ name: 'll_cmp_old', label: 'Colonna sinistra — voci (✕), una per riga', type: 'textarea', rows: 5, max: 600, from: function ( cs ) {
-					return lines( ( cs.benchmarkClassic.metrics || [] ).map( function ( m ) {
-						return m.label + ': ' + m.left;
-					} ) );
-				} },
-				{ name: 'll_cmp_new_title', label: 'Colonna destra — intestazione', max: 60, from: function ( cs ) { return cs.benchmarkClassic.rightTitle; } },
-				{ name: 'll_cmp_new', label: 'Colonna destra — voci (✓), una per riga', type: 'textarea', rows: 5, max: 600, from: function ( cs ) {
-					return lines( ( cs.benchmarkClassic.metrics || [] ).map( function ( m ) {
-						return m.label + ': ' + m.right;
-					} ) );
-				} }
+				{ name: 'll_prob_title', label: 'Titolo del blocco', max: 140, from: function ( cs ) { return cs.section1Title; } },
+				{ name: 'll_prob_lead', label: 'Testo', type: 'textarea', rows: 8, max: 1500, from: function ( cs ) { return cs.section1Text; } },
+				{ name: 'll_prob_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } },
+				{ name: 'll_prob_index', label: 'Numerazione (facoltativa)', max: 20, from: function () { return ''; } }
 			]
 		},
 		{
-			legend: '02 · La soluzione',
+			legend: 'Il limite delle tecnologie tradizionali',
 			fields: [
-				{ name: 'll_sol_index', label: 'Numerazione', max: 20, from: function () { return '02 / 05'; } },
-				{ name: 'll_sol_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'La soluzione'; } },
-				{ name: 'll_sol_text', label: 'Testo centrale (accetta <b> e <p>)', type: 'textarea', rows: 7, max: 2400, html: true, from: function ( cs ) { return paragraphsToHtml( cs.boxText ); } }
+				{ name: 'll_limit_title', label: 'Titolo del blocco', max: 140, from: function ( cs ) { return cs.section2Title; } },
+				{ name: 'll_limit_text', label: 'Testo', type: 'textarea', rows: 9, max: 1600, from: function ( cs ) { return cs.section2Text; } },
+				{ name: 'll_limit_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } }
 			]
 		},
 		{
-			legend: '03 · Il risultato',
+			legend: 'La soluzione',
 			fields: [
-				{ name: 'll_case_index', label: 'Numerazione', max: 20, from: function () { return '03 / 05'; } },
-				{ name: 'll_case_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'Il risultato'; } },
-				{ name: 'll_case_title', label: 'Titolo', max: 140, from: function ( cs ) { return cs.boxTitle; } },
-				{ name: 'll_case_photo', label: 'Foto del pezzo stampato', type: 'image', maxDimension: 1600, fromImage: 'pieceImage' },
-				{ name: 'll_case_specs', label: 'Specifiche — VALORE | ETICHETTA, una per riga', type: 'textarea', rows: 4, max: 400, from: function ( cs ) {
-					return statLines( cs.specs, 4 );
-				} },
-				{ name: 'll_case_lead', label: 'Testo a destra', type: 'textarea', rows: 4, max: 600, from: function ( cs ) { return cs.whyText; } },
-				{ name: 'll_case_cta', label: 'Etichetta bottone', max: 60, from: function ( cs ) { return cs.boxButton; } }
+				{ name: 'll_sol_title', label: 'Titolo del blocco', max: 140, from: function ( cs ) { return cs.boxTitle; } },
+				{ name: 'll_sol_text', label: 'Testo (accetta <b> e <p>)', type: 'textarea', rows: 9, max: 3000, html: true, from: function ( cs ) { return paragraphsToHtml( cs.boxText ); } },
+				{ name: 'll_sol_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } },
+				{ name: 'll_sol_index', label: 'Numerazione (facoltativa)', max: 20, from: function () { return ''; } }
 			]
 		},
 		{
-			legend: 'Perché conviene',
+			legend: 'I materiali',
 			fields: [
-				{ name: 'll_why_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'Perché conviene'; } },
-				{ name: 'll_why_title', label: 'Titolo (usa | per andare a capo)', max: 160, from: function ( cs ) { return cs.boxQuestion; } },
-				{ name: 'll_why_text', label: 'Testo (accetta <b> e <p>)', type: 'textarea', rows: 5, max: 1200, html: true, from: function ( cs ) { return paragraphsToHtml( cs.whyText ); } }
-			]
-		},
-		{
-			legend: '04 · Materiali',
-			fields: [
-				{ name: 'll_mat_index', label: 'Numerazione', max: 20, from: function () { return '04 / 05'; } },
-				{ name: 'll_mat_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'Materiali'; } },
-				{ name: 'll_mat_title', label: 'Titolo', max: 140, from: function () { return 'Il materiale impiegato'; } },
-				{ name: 'll_mat1_name', label: 'Materiale 1 — nome', max: 60, from: function ( cs ) {
+				{ name: 'll_mat_title', label: 'Titolo del blocco', max: 140, from: function () { return 'I materiali'; } },
+				{ name: 'll_mat1_name', label: 'Nome del materiale', max: 60, from: function ( cs ) {
 					return isPlaceholder( cs.materialName ) || /^nome materiale$/i.test( String( cs.materialName ).trim() ) ? '' : cs.materialName;
 				} },
-				{ name: 'll_mat1_sub', label: 'Materiale 1 — sottotitolo', max: 80, from: function ( cs ) {
-					return isPlaceholder( cs.materialDescription ) ? '' : cs.materialDescription.slice( 0, 80 );
+				{ name: 'll_mat1_sub', label: 'Descrizione', type: 'textarea', rows: 3, max: 300, from: function ( cs ) {
+					return isPlaceholder( cs.materialDescription ) ? '' : cs.materialDescription;
 				} },
-				{ name: 'll_mat1_img', label: 'Materiale 1 — immagine tonda', type: 'image', maxDimension: 900 },
-				{ name: 'll_mat1_points', label: 'Materiale 1 — caratteristiche, una per riga', type: 'textarea', rows: 4, max: 600, from: function ( cs ) {
-					return lines( ( cs.performances || [] ).slice( 0, 4 ).map( function ( p ) {
-						return p.label + ' — ' + p.value + '/10';
+				{ name: 'll_mat_bars', label: 'Indicatori — ETICHETTA | VALORE, uno per riga', type: 'textarea', rows: 8, max: 600, from: function ( cs ) {
+					return lines( ( cs.performances || [] ).filter( function ( item ) {
+						return ! isPlaceholder( item.label );
+					} ).map( function ( item ) {
+						return item.label + ' | ' + item.value;
 					} ) );
 				} },
-				{ name: 'll_mat2_name', label: 'Materiale 2 — nome (vuoto = nascosto)', max: 60, from: function () { return ''; } },
-				{ name: 'll_mat2_sub', label: 'Materiale 2 — sottotitolo', max: 80, from: function () { return ''; } },
-				{ name: 'll_mat2_img', label: 'Materiale 2 — immagine tonda', type: 'image', maxDimension: 900 },
-				{ name: 'll_mat2_points', label: 'Materiale 2 — caratteristiche', type: 'textarea', rows: 3, max: 600, from: function () { return ''; } }
+				{ name: 'll_mat1_img', label: 'Immagine del materiale (facoltativa)', type: 'image', maxDimension: 900 },
+				{ name: 'll_mat_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } }
 			]
 		},
 		{
-			legend: '05 · Stampanti',
-			help: 'Lascia i campi vuoti per usare le schede standard NEXT ed EXTEND già previste dal template.',
+			legend: 'Perché scegliere Layerloop',
 			fields: [
-				{ name: 'll_pr_index', label: 'Numerazione', max: 20, from: function () { return '05 / 05'; } },
-				{ name: 'll_pr_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'Le stampanti'; } },
-				{ name: 'll_pr_title', label: 'Titolo', max: 140, from: function () { return 'Scegli la piattaforma'; } },
-				{ name: 'll_pr1_name', label: 'Stampante 1 — nome', max: 60, from: function () { return ''; } },
-				{ name: 'll_pr1_specs', label: 'Stampante 1 — specifiche, ETICHETTA | VALORE', type: 'textarea', rows: 3, max: 500, from: function () { return ''; } },
-				{ name: 'll_pr2_name', label: 'Stampante 2 — nome', max: 60, from: function () { return ''; } },
-				{ name: 'll_pr2_specs', label: 'Stampante 2 — specifiche, ETICHETTA | VALORE', type: 'textarea', rows: 3, max: 500, from: function () { return ''; } }
+				{ name: 'll_why_title', label: 'Titolo del blocco (usa | per andare a capo)', max: 160, from: function () { return 'Perché scegliere Layerloop'; } },
+				{ name: 'll_why_text', label: 'Testo (accetta <b> e <p>)', type: 'textarea', rows: 6, max: 1600, html: true, from: function ( cs ) { return paragraphsToHtml( cs.whyText ); } },
+				{ name: 'll_why_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } }
 			]
 		},
 		{
-			legend: 'CTA finale e contatti',
+			legend: 'Chiusura e contatti',
 			fields: [
-				{ name: 'll_final_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'Inizia qui'; } },
 				{ name: 'll_final_title', label: 'Titolo', max: 140, from: function ( cs ) { return cs.boxQuestion; } },
-				{ name: 'll_final_text', label: 'Testo', type: 'textarea', rows: 3, max: 480, from: function ( cs ) { return firstParagraph( cs.whyText ); } },
+				{ name: 'll_final_text', label: 'Testo (facoltativo)', type: 'textarea', rows: 3, max: 700, from: function () { return ''; } },
 				{ name: 'll_final_cta1', label: 'Bottone 1', max: 60, from: function ( cs ) { return cs.boxButton; } },
 				{ name: 'll_final_cta2', label: 'Bottone 2 (vuoto = nascosto)', max: 60, from: function () { return 'Scarica il whitepaper'; } },
+				{ name: 'll_final_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } },
 				{ name: 'll_anchor', label: 'Ancora dei bottoni', max: 200, from: function () { return '#contatti'; } },
 				{
 					name: 'll_closing_lines',
@@ -352,7 +349,7 @@
 	/* -------------------------------------------------------------- stato */
 
 	var state = {
-		data: caseStudyDefaults(),
+		data: blankCaseStudy(),
 		fields: {},
 		postId: 0,
 		title: '',
@@ -767,13 +764,22 @@
 
 	/* ----------------------------------------------------- costruttori UI */
 
-	function status( message, tone ) {
+	function status( message, tone, link ) {
 		if ( ! refs.status ) {
 			return;
 		}
 		refs.status.textContent = message || '';
 		refs.status.style.display = message ? 'block' : 'none';
 		refs.status.setAttribute( 'data-tone', tone || 'info' );
+		if ( link ) {
+			refs.status.appendChild( document.createElement( 'br' ) );
+			refs.status.appendChild( el( 'a', {
+				href: link,
+				target: '_blank',
+				rel: 'noopener',
+				text: 'Apri la landing appena pubblicata →'
+			} ) );
+		}
 	}
 
 	function textField( config ) {
@@ -1753,16 +1759,18 @@
 			status( 'Pubblicazione della landing page…' );
 			return api( '/whitepapers', { method: 'POST', body: payload } );
 		} ).then( function ( response ) {
-			state.postId = response.post.id;
-			var message = 'Landing pubblicata: ' + response.post.url;
-			if ( response.warnings && response.warnings.length ) {
-				message += ' — attenzione: ' + response.warnings.join( ' ' );
-			}
-			status( message );
-			refs.publishedLink.innerHTML = '';
-			refs.publishedLink.appendChild( el( 'a', { href: response.post.url, target: '_blank', rel: 'noopener', text: 'Apri la landing appena pubblicata →' } ) );
-			saveLocal();
-			return refreshArchive();
+			var url = response.post.url;
+			var warnings = ( response.warnings || [] ).join( ' ' );
+			return refreshArchive().then( function () {
+				// Documento chiuso: lo Studio torna vuoto, così il prossimo whitepaper
+				// non eredita niente da questo. Per correggerlo si riapre dall'Archivio.
+				resetStudio();
+				var message = 'Landing pubblicata. Lo Studio è pronto per un nuovo case study: questo si riapre dall’Archivio.';
+				if ( warnings ) {
+					message += ' Attenzione: ' + warnings;
+				}
+				status( message, 'info', url );
+			} );
 		} ).catch( function ( error ) {
 			status( error.message || 'Pubblicazione non riuscita.', 'error' );
 		} ).then( function () {
@@ -2144,6 +2152,28 @@
 		return previous;
 	}
 
+	/**
+	 * Riporta lo Studio a un documento vuoto, chiudendo quello in corso.
+	 */
+	function resetStudio() {
+		state.data = blankCaseStudy();
+		state.fields = landingDefaults( state.data );
+		state.fieldsBackup = null;
+		state.postId = 0;
+		state.title = '';
+		state.metaDescription = '';
+		state.status = 'publish';
+		state.formId = CFG.defaultForm || 0;
+		state.language = 'it';
+		state.displayData = null;
+		state.pdfSource = 'generate';
+		state.pdfFiles = { it: '', en: '', itName: '', enName: '', itFile: null };
+		state.tab = 'case';
+		buildPanel();
+		renderPreview();
+		saveLocal();
+	}
+
 	function onChange() {
 		if ( previewFrame ) {
 			cancelAnimationFrame( previewFrame );
@@ -2269,15 +2299,8 @@
 				if ( ! window.confirm( 'Ripartire da zero? Il documento aperto viene chiuso senza modificare le landing già pubblicate.' ) ) {
 					return;
 				}
-				state.data = caseStudyDefaults();
-				state.fields = landingDefaults( state.data );
-				state.postId = 0;
-				state.title = '';
-				state.metaDescription = '';
-				state.status = 'publish';
-				buildPanel();
-				onChange();
-				status( 'Nuovo documento pronto.' );
+				resetStudio();
+				status( 'Documento vuoto, pronto per un nuovo whitepaper.' );
 			}
 		} ) );
 
