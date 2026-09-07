@@ -312,3 +312,150 @@ h2.sec-title{font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.
     font-size: 23px;
   }
 }
+
+/* ============================================================
+   Landing dello Studio (.ll-landing--studio): cinque blocchi,
+   intestazioni e testi centrati, tutto a schede arrotondate.
+   Le regole valgono solo con la classe --studio: le landing
+   storiche compilate a mano non cambiano.
+   ============================================================ */
+
+.ll-landing--studio { --radius: 22px; --radius-sm: 14px; --body-text: #2c3a38; }
+.ll-landing--studio section { padding: 104px 0; }
+.ll-landing--studio section.alt { background: var(--panel); }
+.ll-landing--studio img { max-width: 100%; display: block; }
+.ll-landing--studio .btn { border-radius: 12px; }
+
+/* intestazione di sezione, uguale ovunque */
+.ll-landing--studio .sec-head--center { display: block; max-width: 800px; margin: 0 auto 40px; text-align: center; }
+.ll-landing--studio .sec-head--center .eyebrow { gap: 14px; letter-spacing: .2em; color: var(--teal-deep); }
+.ll-landing--studio .sec-head--center .eyebrow::before,
+.ll-landing--studio .sec-head--center .eyebrow::after { content: ""; display: inline-block; width: 34px; height: 1px; background: var(--teal); }
+.ll-landing--studio .sec-rule { display: block; width: 56px; height: 2px; margin: 0 auto; background: var(--teal); border-radius: 2px; }
+.ll-landing--studio h2.sec-title { margin: 20px 0 0; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.06; letter-spacing: -.03em; }
+
+/* testo di sezione: centrato come l'intestazione */
+.ll-landing--studio .body-text { max-width: 66ch; margin: 0 auto; text-align: center; font-size: 18px; color: var(--body-text); }
+.ll-landing--studio .body-text p + p { margin-top: 18px; }
+.ll-landing--studio .body-text b { font-weight: 600; color: var(--ink); }
+
+/* tacche d'angolo da vista CAD, sulle immagini */
+.ll-landing--studio .tick { position: absolute; width: 18px; height: 18px; border: 0 solid var(--teal); z-index: 3; pointer-events: none; }
+.ll-landing--studio .tick--tl { top: 10px; left: 10px; border-top-width: 2px; border-left-width: 2px; border-top-left-radius: 6px; }
+.ll-landing--studio .tick--tr { top: 10px; right: 10px; border-top-width: 2px; border-right-width: 2px; border-top-right-radius: 6px; }
+.ll-landing--studio .tick--bl { bottom: 10px; left: 10px; border-bottom-width: 2px; border-left-width: 2px; border-bottom-left-radius: 6px; }
+.ll-landing--studio .tick--br { bottom: 10px; right: 10px; border-bottom-width: 2px; border-right-width: 2px; border-bottom-right-radius: 6px; }
+
+/* ---- hero: righe di strato in filigrana, immagine in una scheda ---- */
+.ll-landing--studio .hero { padding: 120px 0 0; background: #f7f9f8; }
+.ll-landing--studio .hero::before {
+  background: repeating-linear-gradient(180deg, transparent 0 9px, rgba(20, 31, 30, .055) 9px 10px);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .55) 45%, transparent 82%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .55) 45%, transparent 82%);
+}
+.ll-landing--studio .hero__meta { justify-content: center; gap: 28px; margin-bottom: 64px; }
+.ll-landing--studio .hero h1 { font-weight: 800; }
+.ll-landing--studio .viewport {
+  position: relative; max-width: 980px; margin: 64px auto 0; padding: 26px;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 30px 60px -40px rgba(20, 60, 55, .35);
+}
+.ll-landing--studio .viewport .stage { margin: 0; max-width: none; }
+.ll-landing--studio .viewport .ll-svg { filter: none; }
+.ll-landing--studio .hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); max-width: 980px; margin: 22px auto 0; padding: 0;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+}
+.ll-landing--studio .hero-stats div { padding: 30px 18px; border-left: 1px solid var(--line); }
+.ll-landing--studio .hero-stats div:first-child { border-left: 0; }
+.ll-landing--studio .hero-stats div b { font-size: 25px; font-variant-numeric: tabular-nums; }
+.ll-landing--studio .hero-stats div span { display: block; margin-top: 6px; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; }
+.ll-landing--studio .hero .wrap { padding-bottom: 48px; }
+
+/* ---- la sfida: requisiti in tessere centrate ---- */
+.ll-landing--studio .reqs { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; max-width: 1000px; margin: 36px auto 0; list-style: none; }
+.ll-landing--studio .reqs li {
+  flex: 1 1 172px; max-width: 230px; padding: 24px 18px; border-radius: var(--radius-sm);
+  background: var(--panel); border: 1px solid var(--line); border-top: 2px solid var(--teal);
+  text-align: center; font-size: 15.5px; font-weight: 500; line-height: 1.4; color: var(--ink);
+}
+
+/* ---- il limite: un pannello per paragrafo ---- */
+.ll-landing--studio .limits { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1000px; margin: 0 auto; }
+.ll-landing--studio .limits div {
+  padding: 40px 36px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line);
+  text-align: center; font-size: 17.5px; color: var(--body-text);
+}
+
+/* ---- la soluzione: la tesi della pagina, con la diagonale a 30° ---- */
+.ll-landing--studio .solution {
+  position: relative; max-width: 920px; margin: 0 auto; padding: 58px 64px; border-radius: var(--radius);
+  border: 1px solid var(--pill-br);
+  background:
+    linear-gradient(30deg, transparent 0 62%, rgba(31, 195, 176, .16) 62% 62.4%, transparent 62.4% 70%, rgba(31, 195, 176, .16) 70% 70.4%, transparent 70.4%),
+    var(--pill);
+  overflow: hidden;
+}
+.ll-landing--studio .solution p { font-size: 18.5px; color: #1d2a28; text-align: center; }
+.ll-landing--studio .solution p + p { margin-top: 20px; }
+.ll-landing--studio .solution b { font-weight: 600; }
+
+/* ---- i materiali: scheda con foto e indicatori ---- */
+.ll-landing--studio .material {
+  display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 56px; align-items: center;
+  max-width: 1080px; margin: 0 auto; padding: 44px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+}
+.ll-landing--studio .material--text { grid-template-columns: 1fr; max-width: 760px; }
+.ll-landing--studio .material--text .material__body { text-align: center; }
+.ll-landing--studio .material--text .material__sub { margin-left: auto; margin-right: auto; }
+.ll-landing--studio .material__figure { position: relative; display: grid; place-items: center; padding: 26px; background: var(--panel); border-radius: var(--radius-sm); overflow: hidden; }
+.ll-landing--studio .material__figure img { width: 100%; height: auto; }
+.ll-landing--studio .material__kicker { color: var(--teal-deep); font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+.ll-landing--studio .material__name { margin: 8px 0 12px; font-size: 32px; line-height: 1.1; letter-spacing: -.025em; }
+.ll-landing--studio .material__sub { color: var(--muted); font-size: 16px; max-width: 44ch; }
+.ll-landing--studio .bars { display: grid; gap: 16px; margin-top: 32px; }
+.ll-landing--studio .bar__head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 7px; }
+.ll-landing--studio .bar__head span { font-family: var(--mono); font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: #3d4b48; }
+.ll-landing--studio .bar__head b { flex: 0 0 auto; color: var(--teal-deep); font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.ll-landing--studio .bar__track { position: relative; height: 8px; border-radius: 999px; overflow: hidden; background: var(--panel2); }
+.ll-landing--studio .bar__track i { display: block; height: 100%; background: linear-gradient(90deg, var(--teal-deep), var(--teal)); }
+.ll-landing--studio .bar__track::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), #fff calc(10% - 2px) 10%); }
+
+/* ---- perché scegliere Layerloop: scheda scura ---- */
+.ll-landing--studio .why-card {
+  position: relative; overflow: hidden; padding: 96px 28px; border-radius: var(--radius); color: #eef3f2;
+  background: radial-gradient(120% 150% at 18% 0%, #16221f, #0a0f10);
+}
+.ll-landing--studio .why-card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+  background-size: 48px 48px; -webkit-mask-image: radial-gradient(75% 85% at 50% 30%, #000, transparent 78%); mask-image: radial-gradient(75% 85% at 50% 30%, #000, transparent 78%);
+}
+.ll-landing--studio .why-card__inner { position: relative; z-index: 2; }
+.ll-landing--studio .why-card h2.sec-title { color: #fff; }
+.ll-landing--studio .why-card .eyebrow { color: var(--teal); }
+.ll-landing--studio .why-card .body-text { color: #b9c7c4; font-size: 19px; max-width: 62ch; }
+.ll-landing--studio .why-card .body-text b { color: #fff; }
+
+/* ---- chiusura ---- */
+.ll-landing--studio .closing { max-width: 900px; margin: 0 auto; padding: 72px 28px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line); text-align: center; }
+.ll-landing--studio .closing .eyebrow { margin-bottom: 14px; }
+.ll-landing--studio .closing h2 { max-width: 20ch; margin: 0 auto 18px; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.03em; }
+.ll-landing--studio .closing p { max-width: 52ch; margin: 0 auto 30px; color: var(--muted); font-size: 18px; }
+.ll-landing--studio .closing .cta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.ll-landing--studio .closing h2 + .cta-row { margin-top: 8px; }
+
+@media (max-width: 860px) {
+  .ll-landing--studio section { padding: 72px 0; }
+  .ll-landing--studio .hero { padding-top: 96px; }
+  .ll-landing--studio .hero__meta { flex-direction: column; gap: 6px; }
+  .ll-landing--studio .viewport { padding: 14px; }
+  .ll-landing--studio .hero-stats { grid-template-columns: 1fr; }
+  .ll-landing--studio .hero-stats div { border-left: 0; border-top: 1px solid var(--line); }
+  .ll-landing--studio .hero-stats div:first-child { border-top: 0; }
+  .ll-landing--studio .limits { grid-template-columns: 1fr; }
+  .ll-landing--studio .solution { padding: 36px 26px; }
+  .ll-landing--studio .material { grid-template-columns: 1fr; gap: 32px; padding: 26px; }
+  .ll-landing--studio .why-card { padding: 64px 22px; }
+  .ll-landing--studio .closing { padding: 52px 22px; }
+}

@@ -238,7 +238,18 @@ $ll_render_why = function () use ( $why_eyebrow, $why_title, $why_text, $ll_br )
 	<?php
 };
 ?>
-<div class="ll-landing">
+<div class="ll-landing<?php echo $ll_from_studio ? ' ll-landing--studio' : ''; ?>">
+
+<?php if ( $ll_from_studio ) : ?>
+<?php
+/*
+ * Le landing dello Studio hanno un layout dedicato a cinque blocchi (schede
+ * arrotondate, testi centrati): vive in landing-studio.php e usa le variabili
+ * calcolate qui sopra. Sotto resta il layout storico delle landing a mano.
+ */
+include LL_LANDING_PATH . 'templates/landing-studio.php';
+?>
+<?php else : ?>
 
 <!-- ============ HERO ============ -->
 <header class="hero">
@@ -408,42 +419,10 @@ $ll_render_why = function () use ( $why_eyebrow, $why_title, $why_text, $ll_br )
 <?php endif; ?>
 
 <!-- ============ PERCHÉ CONVIENE (full-width) ============ -->
-<?php if ( ! $ll_from_studio ) { $ll_render_why(); } ?>
+<?php $ll_render_why(); ?>
 
 <!-- ============ 04 · MATERIALI ============ -->
-<?php if ( $ll_from_studio ) : ?>
-  <?php if ( ! empty( $materials ) || ! empty( $mat_bars ) ) : ?>
-  <section style="background:#fff">
-    <div class="wrap reveal">
-      <div class="sec-head">
-        <div>
-          <?php if ( $mat_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $mat_eyebrow ); ?></span><?php endif; ?>
-          <?php if ( $mat_title ) : ?><h2 class="sec-title"><?php echo esc_html( $mat_title ); ?></h2><?php endif; ?>
-        </div>
-      </div>
-      <?php $mat_first = isset( $materials[0] ) ? $materials[0] : array( 'name' => '', 'sub' => '' ); ?>
-      <div class="mat-card">
-        <span class="mat-card__kicker">Materiale</span>
-        <?php if ( $mat_first['name'] ) : ?><h3 class="mat-card__name"><?php echo esc_html( $mat_first['name'] ); ?></h3><?php endif; ?>
-        <?php if ( $mat_first['sub'] ) : ?><p class="mat-card__sub"><?php echo esc_html( $mat_first['sub'] ); ?></p><?php endif; ?>
-        <?php if ( ! empty( $mat_bars ) ) : ?>
-        <div class="mat-card__bars">
-          <?php foreach ( $mat_bars as $bar ) : ?>
-          <div class="mat-bar">
-            <div class="mat-bar__head">
-              <span><?php echo esc_html( $bar['label'] ); ?></span>
-              <b><?php echo (int) $bar['value']; ?>/10</b>
-            </div>
-            <div class="mat-bar__track"><i style="width:<?php echo (int) $bar['value'] * 10; ?>%"></i></div>
-          </div>
-          <?php endforeach; ?>
-        </div>
-        <?php endif; ?>
-      </div>
-    </div>
-  </section>
-  <?php endif; ?>
-<?php elseif ( ! empty( $materials ) ) : ?>
+<?php if ( ! empty( $materials ) ) : ?>
 <section style="background:#fff">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -464,8 +443,6 @@ $ll_render_why = function () use ( $why_eyebrow, $why_title, $why_text, $ll_br )
   </div>
 </section>
 <?php endif; ?>
-
-<?php if ( $ll_from_studio ) { $ll_render_why(); } ?>
 
 <!-- ============ 05 · STAMPANTI ============ -->
 <?php if ( ! $ll_from_studio && ! empty( $printers ) ) : ?>
@@ -517,6 +494,8 @@ $ll_render_why = function () use ( $why_eyebrow, $why_title, $why_text, $ll_br )
   </div>
 </section>
 <?php endif; ?>
+
+<?php endif; // fine layout storico ?>
 
 <?php
 /* ---------- BLOCCHI DI CHIUSURA (uno per riga: ID template o shortcode) ---------- */

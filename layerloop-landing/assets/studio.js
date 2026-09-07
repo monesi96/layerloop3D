@@ -247,7 +247,7 @@
 				{ name: 'll_hero_stats', label: 'Numeri chiave — VALORE | ETICHETTA, uno per riga', type: 'textarea', rows: 4, max: 400, from: function ( cs ) {
 					return statLines( cs.specs, 3 );
 				} },
-				{ name: 'll_hero_img_render', label: 'Immagine dell’hero', type: 'image', maxDimension: 2000, fromImage: 'pieceImage' },
+				{ name: 'll_hero_img_render', label: 'Immagine dell’hero (predefinita: copertina del PDF)', type: 'image', maxDimension: 2000, fromImage: 'coverImage' },
 				{ name: 'll_hero_img_wire', label: 'Immagine WIREFRAME — facoltativa, attiva l’effetto al passaggio del mouse', type: 'image', maxDimension: 2000 },
 				{ name: 'll_hero_cta1', label: 'Bottone 1', max: 60, from: function ( cs ) { return cs.boxButton; } },
 				{ name: 'll_hero_cta2', label: 'Bottone 2 (vuoto = nascosto)', max: 60, from: function () { return 'Scarica il whitepaper'; } }
@@ -258,8 +258,7 @@
 			fields: [
 				{ name: 'll_prob_title', label: 'Titolo del blocco', max: 140, from: function ( cs ) { return cs.section1Title; } },
 				{ name: 'll_prob_lead', label: 'Testo', type: 'textarea', rows: 8, max: 1500, from: function ( cs ) { return cs.section1Text; } },
-				{ name: 'll_prob_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } },
-				{ name: 'll_prob_index', label: 'Numerazione (facoltativa)', max: 20, from: function () { return ''; } }
+				{ name: 'll_prob_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } }
 			]
 		},
 		{
@@ -275,8 +274,7 @@
 			fields: [
 				{ name: 'll_sol_title', label: 'Titolo del blocco', max: 140, from: function ( cs ) { return cs.boxTitle; } },
 				{ name: 'll_sol_text', label: 'Testo (accetta <b> e <p>)', type: 'textarea', rows: 9, max: 3000, html: true, from: function ( cs ) { return paragraphsToHtml( cs.boxText ); } },
-				{ name: 'll_sol_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } },
-				{ name: 'll_sol_index', label: 'Numerazione (facoltativa)', max: 20, from: function () { return ''; } }
+				{ name: 'll_sol_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } }
 			]
 		},
 		{
@@ -296,7 +294,7 @@
 						return item.label + ' | ' + item.value;
 					} ) );
 				} },
-				{ name: 'll_mat1_img', label: 'Immagine del materiale (facoltativa)', type: 'image', maxDimension: 900 },
+				{ name: 'll_mat1_img', label: 'Foto nella scheda materiale (predefinita: foto del pezzo)', type: 'image', maxDimension: 1400, fromImage: 'pieceImage' },
 				{ name: 'll_mat_eyebrow', label: 'Occhiello (facoltativo)', max: 60, from: function () { return ''; } }
 			]
 		},
