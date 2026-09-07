@@ -168,6 +168,7 @@ class LL_Studio_Shortcode {
 			'homeUrl'     => home_url( '/' ),
 			'pdfWorker'   => LL_LANDING_URL . 'vendor/pdf.worker.min.js',
 			'closingBlock' => (string) LL_Studio_Settings::get( 'closing_block', '' ),
+			'logoUrl'     => LL_Studio_Settings::logo_url(),
 			'canPublish'  => current_user_can( 'publish_ll_whitepapers' ),
 			'hasGemini'   => '' !== LL_Studio_Settings::gemini_key(),
 			'hasForms'    => LL_Studio_Leads::is_active(),

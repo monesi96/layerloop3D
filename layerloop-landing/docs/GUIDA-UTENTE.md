@@ -60,7 +60,8 @@ Scrivi **sempre in italiano**. I campi sono nell'ordine delle pagine:
 
 - **Intestazione** — il brand a sinistra e il numero del documento a destra, su tutte le pagine.
 - **Pagina 1 · Copertina** — titolo (premi Invio per andare a capo), sottotitolo, fino a 4 tag
-  separati da virgola, l'immagine grande e il logo in basso.
+  separati da virgola e l'immagine grande. Il logo Layerloop è già applicato, in copertina e in
+  fondo a ogni pagina: non serve caricarlo (il campo Logo serve solo per sostituirlo).
 - **Pagina 2 · Colonna sinistra** — la sfida, il limite delle tecnologie tradizionali, il box
   verde con la soluzione, la domanda finale e l'etichetta del pulsante.
 - **Pagina 2 · Colonna destra** — la foto del pezzo e le specifiche (etichetta + valore, massimo 6).

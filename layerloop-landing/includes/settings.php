@@ -28,6 +28,7 @@ class LL_Studio_Settings {
 			'ninja_form_id'  => 0,
 			'studio_page_id' => 0,
 			'closing_block'  => '[elementor-template id="6038"]',
+			'logo_id'        => 0,
 			'hide_title'     => 1,
 			'delivery_mode'  => 'both',
 			'attach_pdf'     => 0,
@@ -76,6 +77,44 @@ class LL_Studio_Settings {
 	}
 
 	/**
+	 * Logo Layerloop stampato in fondo a ogni pagina dei PDF.
+	 *
+	 * In ordine: il logo scelto nelle impostazioni dello Studio, il logo del tema
+	 * (Aspetto → Personalizza), il logo del kit Elementor, infine il marchio
+	 * vettoriale incluso nel plugin. Così il piè di pagina è sempre pronto senza
+	 * caricare nulla a ogni nuovo case study.
+	 *
+	 * @return string URL dell'immagine.
+	 */
+	public static function logo_url() {
+		$logo_id = (int) self::get( 'logo_id', 0 );
+		if ( $logo_id ) {
+			$url = wp_get_attachment_image_url( $logo_id, 'full' );
+			if ( $url ) {
+				return $url;
+			}
+		}
+
+		$theme_logo = (int) get_theme_mod( 'custom_logo' );
+		if ( $theme_logo ) {
+			$url = wp_get_attachment_image_url( $theme_logo, 'full' );
+			if ( $url ) {
+				return $url;
+			}
+		}
+
+		$kit = (int) get_option( 'elementor_active_kit', 0 );
+		if ( $kit ) {
+			$settings = get_post_meta( $kit, '_elementor_page_settings', true );
+			if ( is_array( $settings ) && ! empty( $settings['site_logo']['url'] ) ) {
+				return (string) $settings['site_logo']['url'];
+			}
+		}
+
+		return LL_LANDING_URL . 'assets/logo-layerloop.svg';
+	}
+
+	/**
 	 * Indirizzo della pagina che ospita lo Studio.
 	 *
 	 * @return string
@@ -98,6 +137,19 @@ class LL_Studio_Settings {
 	public function register() {
 		add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_media' ) );
+	}
+
+	/**
+	 * Selettore della libreria media per il campo Logo, solo sulla pagina delle impostazioni.
+	 *
+	 * @param string $hook Pagina amministrativa corrente.
+	 */
+	public function enqueue_media( $hook ) {
+		if ( false === strpos( (string) $hook, 'll-studio' ) ) {
+			return;
+		}
+		wp_enqueue_media();
 	}
 
 	/**
@@ -151,6 +203,7 @@ class LL_Studio_Settings {
 		$clean['attach_pdf']     = empty( $input['attach_pdf'] ) ? 0 : 1;
 		$clean['lock_backend']   = empty( $input['lock_backend'] ) ? 0 : 1;
 		$clean['hide_title']     = empty( $input['hide_title'] ) ? 0 : 1;
+		$clean['logo_id']        = isset( $input['logo_id'] ) ? absint( $input['logo_id'] ) : 0;
 		// Shortcode del blocco di chiusura: niente tag HTML, le parentesi restano.
 		$clean['closing_block']  = isset( $input['closing_block'] ) ? trim( wp_strip_all_tags( (string) $input['closing_block'] ) ) : $current['closing_block'];
 		$clean['link_ttl_hours'] = isset( $input['link_ttl_hours'] ) ? max( 1, min( 8760, absint( $input['link_ttl_hours'] ) ) ) : 168;
@@ -233,6 +286,47 @@ class LL_Studio_Settings {
 						<td>
 							<input type="text" class="large-text code" id="ll-closing" name="<?php echo esc_attr( $name ); ?>[closing_block]" value="<?php echo esc_attr( $options['closing_block'] ); ?>" />
 							<p class="description">Shortcode inserito in fondo a ogni landing, con l’ancora <code>#contatti</code> a cui puntano tutti i pulsanti. Qui va il template Elementor che contiene modulo contatti e piè di pagina, uguale su tutte le landing.</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">Logo nei PDF</th>
+						<td>
+							<?php $logo_preview = self::logo_url(); ?>
+							<div id="ll-logo-preview" style="margin-bottom:8px;padding:12px;background:#fff;border:1px solid #dcdcde;display:inline-block;max-width:320px">
+								<img src="<?php echo esc_url( $logo_preview ); ?>" alt="" style="max-width:100%;max-height:60px;display:block" />
+							</div>
+							<br />
+							<input type="hidden" id="ll-logo-id" name="<?php echo esc_attr( $name ); ?>[logo_id]" value="<?php echo esc_attr( $options['logo_id'] ); ?>" />
+							<button type="button" class="button" id="ll-logo-pick">Scegli dalla libreria</button>
+							<button type="button" class="button-link" id="ll-logo-clear" <?php echo $options['logo_id'] ? '' : 'style="display:none"'; ?>>Torna al logo del sito</button>
+							<p class="description">Compare in fondo a ogni pagina dei PDF e in copertina, già applicato: chi crea un case study non deve caricarlo. Se non ne scegli uno, lo Studio usa il logo del sito (tema o kit Elementor).</p>
+							<script>
+							( function () {
+								var pick = document.getElementById( 'll-logo-pick' );
+								var clear = document.getElementById( 'll-logo-clear' );
+								var input = document.getElementById( 'll-logo-id' );
+								var img = document.querySelector( '#ll-logo-preview img' );
+								if ( ! pick || ! window.wp || ! wp.media ) { return; }
+								var frame;
+								pick.addEventListener( 'click', function () {
+									if ( ! frame ) {
+										frame = wp.media( { title: 'Logo per i PDF', library: { type: 'image' }, multiple: false, button: { text: 'Usa questo logo' } } );
+										frame.on( 'select', function () {
+											var a = frame.state().get( 'selection' ).first().toJSON();
+											input.value = a.id;
+											img.src = a.url;
+											clear.style.display = '';
+										} );
+									}
+									frame.open();
+								} );
+								clear.addEventListener( 'click', function () {
+									input.value = '0';
+									clear.style.display = 'none';
+									img.src = <?php echo wp_json_encode( LL_LANDING_URL . 'assets/logo-layerloop.svg' ); ?>;
+								} );
+							} )();
+							</script>
 						</td>
 					</tr>
 					<tr>

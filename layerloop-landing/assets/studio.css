@@ -1261,10 +1261,36 @@ html.ll-studio-open body {
 	white-space: pre-line;
 }
 
-.ll-page-number {
+/* Piè di pagina delle pagine interne: logo a sinistra, numero a destra.
+   Vive negli ultimi 45px del foglio, sotto lo spazio riservato ai contenuti. */
+.ll-page-footer {
 	position: absolute;
 	right: 45px;
-	bottom: 28px;
+	bottom: 20px;
+	left: 45px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 22px;
+}
+
+.ll-page-footer-logo {
+	display: flex;
+	align-items: center;
+	height: 22px;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+}
+
+.ll-page-footer-logo img {
+	max-width: 130px;
+	max-height: 22px;
+	object-fit: contain;
+	object-position: left center;
+}
+
+.ll-page-number {
 	color: #b9bfbd;
 	font-size: 9px;
 	font-weight: 600;

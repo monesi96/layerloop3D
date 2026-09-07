@@ -364,7 +364,9 @@
 		// PDF già impaginati caricati dall'utente: restano in memoria, non in localStorage.
 		fieldsBackup: null,
 		pdfSource: 'generate',
-		pdfFiles: { it: '', en: '', itName: '', enName: '', itFile: null }
+		pdfFiles: { it: '', en: '', itName: '', enName: '', itFile: null },
+		// Logo Layerloop del sito, già pronto per il piè di pagina di ogni PDF.
+		defaultLogo: ''
 	};
 	state.fields = landingDefaults( state.data );
 
@@ -471,6 +473,42 @@
 			};
 			image.src = src;
 		} );
+	}
+
+	/**
+	 * Logo del sito per i PDF, rasterizzato una volta sola in PNG.
+	 *
+	 * Il piè di pagina va composto da html2canvas: un PNG in data URL si disegna
+	 * sempre, mentre un SVG o un file su un altro dominio potrebbero restare bianchi.
+	 * Se la conversione non riesce si usa l'indirizzo così com'è.
+	 */
+	function loadDefaultLogo() {
+		if ( ! CFG.logoUrl ) {
+			return Promise.resolve( '' );
+		}
+		return loadImage( CFG.logoUrl ).then( function ( image ) {
+			var width = image.naturalWidth || image.width || 400;
+			var height = image.naturalHeight || image.height || 86;
+			var scale = Math.min( 3, 1200 / width );
+			var canvas = document.createElement( 'canvas' );
+			canvas.width = Math.round( width * scale );
+			canvas.height = Math.round( height * scale );
+			canvas.getContext( '2d' ).drawImage( image, 0, 0, canvas.width, canvas.height );
+			try {
+				return canvas.toDataURL( 'image/png' );
+			} catch ( error ) {
+				return CFG.logoUrl;
+			}
+		} ).catch( function () {
+			return CFG.logoUrl;
+		} );
+	}
+
+	/**
+	 * Logo da stampare sul PDF: quello caricato nel case study, altrimenti quello del sito.
+	 */
+	function logoSource( data ) {
+		return data.logoImage || state.defaultLogo || '';
 	}
 
 	/**
@@ -946,7 +984,7 @@
 			} ),
 			aiPanel(),
 			imageField( {
-				label: 'Logo in basso (vuoto = scritta LAYERLOOP)',
+				label: 'Logo (vuoto = logo Layerloop del sito, già applicato)',
 				maxDimension: 900,
 				get: get( 'logoImage' ),
 				set: set( 'logoImage' )
@@ -1838,6 +1876,24 @@
 		];
 	}
 
+	function logoMark( data, className ) {
+		var src = logoSource( data );
+		return el( 'div', { class: className }, [
+			src ? el( 'img', { src: src, alt: 'Layerloop' } ) : el( 'span', { text: 'LAYERL∞P' } )
+		] );
+	}
+
+	/**
+	 * Piè di pagina delle pagine interne: logo Layerloop a sinistra, numero a destra.
+	 * È già applicato a ogni PDF, senza che chi scrive debba caricare nulla.
+	 */
+	function pageFooter( data, number ) {
+		return el( 'div', { class: 'll-page-footer' }, [
+			logoMark( data, 'll-page-footer-logo' ),
+			el( 'span', { class: 'll-page-number', text: number } )
+		] );
+	}
+
 	function contentSection( title, text ) {
 		return el( 'div', { class: 'll-content-section' }, [
 			el( 'div', { class: 'll-section-title', text: title } ),
@@ -1859,9 +1915,7 @@
 			el( 'div', { class: 'll-cover-image' }, [
 				data.coverImage ? el( 'img', { src: data.coverImage, alt: '' } ) : el( 'span', { text: '[ immagine copertina ]' } )
 			] ),
-			el( 'div', { class: 'll-cover-logo' }, [
-				data.logoImage ? el( 'img', { src: data.logoImage, alt: 'Layerloop' } ) : el( 'span', { text: 'LAYERL∞P' } )
-			] )
+			logoMark( data, 'll-cover-logo' )
 		] ) );
 	}
 
@@ -1909,7 +1963,8 @@
 		] );
 
 		return el( 'section', { class: 'll-sheet ll-sheet-p2' }, pageHeader( data ).concat( [
-			el( 'div', { class: 'll-two-columns' }, [ left, right ] )
+			el( 'div', { class: 'll-two-columns' }, [ left, right ] ),
+			pageFooter( data, '02' )
 		] ) );
 	}
 
@@ -1959,7 +2014,7 @@
 					el( 'p', { text: page.conclusionText } )
 				] )
 			] ),
-			el( 'div', { class: 'll-page-number', text: 'classic' === accent ? '03' : '04' } )
+			pageFooter( data, 'classic' === accent ? '03' : '04' )
 		] ) );
 	}
 
@@ -2489,6 +2544,13 @@
 		buildPanel();
 		renderPreview();
 		refreshArchive();
+
+		loadDefaultLogo().then( function ( logo ) {
+			if ( logo && logo !== state.defaultLogo ) {
+				state.defaultLogo = logo;
+				renderPreview();
+			}
+		} );
 	}
 
 	if ( 'loading' === document.readyState ) {
