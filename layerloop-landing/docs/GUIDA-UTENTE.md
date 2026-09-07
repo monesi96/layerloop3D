@@ -70,11 +70,11 @@ Scrivi **sempre in italiano**. I campi sono nell'ordine delle pagine:
 
 Sotto ogni campo c'è il contatore dei caratteri. Puoi scrivere liberamente: **più testo scrivi,
 più il corpo del carattere di quel blocco si riduce da solo** per far stare tutto nella pagina, senza
-tagliare niente e mantenendo le proporzioni fra titoletti e testo. Il contatore segnala solo il
-tetto massimo del campo.
+tagliare niente e mantenendo le proporzioni fra titoletti e testo.
 
-Se il testo è davvero troppo — oltre il corpo minimo leggibile — sotto il foglio compare una fascia
-rossa: quella è l'unica situazione in cui va accorciato a mano.
+Quando il testo arriva al corpo minimo leggibile **il campo si blocca**: il carattere in più non
+viene accettato, il bordo lampeggia rosso e compare un avviso. Cancella qualcosa in quella pagina e
+riprendi a scrivere. Non è possibile far uscire il testo dal foglio, né sotto né di lato.
 
 ### Le immagini
 

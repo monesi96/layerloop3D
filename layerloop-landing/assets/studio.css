@@ -738,6 +738,11 @@ html.ll-studio-open body {
 	text-align: center;
 }
 
+.ll-blocked {
+	border-color: var(--ll-red) !important;
+	background: #fdf3f3 !important;
+}
+
 .ll-overflow {
 	width: 794px;
 	max-width: 100%;
@@ -753,6 +758,9 @@ html.ll-studio-open body {
 /* ---------------------------------------------------------- fogli A4 */
 
 .ll-sheet {
+	/* Ereditato da tutto il contenuto: una sequenza lunga senza spazi va a capo
+	   invece di uscire dal bordo del foglio. */
+	overflow-wrap: break-word;
 	position: relative;
 	flex: 0 0 auto;
 	width: 794px;
@@ -818,6 +826,7 @@ html.ll-studio-open body {
 
 .ll-cover-tags {
 	display: flex;
+	flex-wrap: wrap;
 	gap: 10px;
 	min-height: 63px;
 	padding: 26px 45px 0;

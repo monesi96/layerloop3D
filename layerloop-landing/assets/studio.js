@@ -365,6 +365,7 @@
 		whitepapers: [],
 		ai: { preset: 'wireframe', prompt: '', ratio: 'auto', cutout: true, target: 'coverImage' },
 		// PDF già impaginati caricati dall'utente: restano in memoria, non in localStorage.
+		fieldsBackup: null,
 		pdfSource: 'generate',
 		pdfFiles: { it: '', en: '', itName: '', enName: '', itFile: null }
 	};
@@ -787,10 +788,16 @@
 			counter.className = control.value.length >= config.max ? 'll-limit' : '';
 		}
 		sync();
+
+		var accepted = control.value;
 		control.addEventListener( 'input', function () {
-			config.set( control.value );
+			if ( config.guard ) {
+				accepted = commitGuarded( control, accepted, config.set );
+			} else {
+				config.set( control.value );
+				onChange();
+			}
 			sync();
-			onChange();
 		} );
 
 		return el( 'label', { class: 'll-field' }, [
@@ -912,7 +919,7 @@
 			};
 		}
 		function text( label, key, max, multiline, rows ) {
-			return textField( { label: label, max: max, multiline: multiline, rows: rows, get: get( key ), set: set( key ) } );
+			return textField( { label: label, max: max, multiline: multiline, rows: rows, guard: true, get: get( key ), set: set( key ) } );
 		}
 
 		nodes.push( fieldset( 'Intestazione (tutte le pagine)', [
@@ -961,13 +968,17 @@
 				var value = el( 'input', { type: 'text', maxlength: 44, 'aria-label': 'Valore' } );
 				label.value = spec.label;
 				value.value = spec.value;
+				var acceptedLabel = label.value;
+				var acceptedValue = value.value;
 				label.addEventListener( 'input', function () {
-					spec.label = label.value;
-					onChange();
+					acceptedLabel = commitGuarded( label, acceptedLabel, function ( next ) {
+						spec.label = next;
+					} );
 				} );
 				value.addEventListener( 'input', function () {
-					spec.value = value.value;
-					onChange();
+					acceptedValue = commitGuarded( value, acceptedValue, function ( next ) {
+						spec.value = next;
+					} );
 				} );
 				specList.appendChild( el( 'div', { class: 'll-row' }, [
 					label,
@@ -990,8 +1001,12 @@
 		}
 		addSpec.addEventListener( 'click', function () {
 			data.specs.push( { id: uid( 'spec' ), label: 'ETICHETTA', value: 'Valore' } );
+			if ( ! applyChangeNow() ) {
+				data.specs.pop();
+				applyChangeNow();
+				status( 'La colonna è piena: per aggiungere una specifica accorcia i testi o togline un’altra.', 'error' );
+			}
 			renderSpecs();
-			onChange();
 		} );
 		renderSpecs();
 
@@ -1012,9 +1027,11 @@
 			label.value = item.label;
 			range.value = item.value;
 			number.value = item.value;
+			var acceptedLabel = label.value;
 			label.addEventListener( 'input', function () {
-				item.label = label.value;
-				onChange();
+				acceptedLabel = commitGuarded( label, acceptedLabel, function ( next ) {
+					item.label = next;
+				} );
 			} );
 			range.addEventListener( 'input', function () {
 				item.value = Number( range.value );
@@ -1076,6 +1093,7 @@
 				max: max,
 				multiline: multiline,
 				rows: rows,
+				guard: true,
 				get: function () {
 					return page[ key ];
 				},
@@ -1094,9 +1112,11 @@
 			left.value = metric.left;
 			right.value = metric.right;
 			[ [ label, 'label' ], [ left, 'left' ], [ right, 'right' ] ].forEach( function ( pair ) {
+				var accepted = pair[ 0 ].value;
 				pair[ 0 ].addEventListener( 'input', function () {
-					metric[ pair[ 1 ] ] = pair[ 0 ].value;
-					onChange();
+					accepted = commitGuarded( pair[ 0 ], accepted, function ( next ) {
+						metric[ pair[ 1 ] ] = next;
+					} );
 				} );
 			} );
 			metricList.appendChild( el( 'div', { class: 'll-metric-row' }, [ label, left, right ] ) );
@@ -1320,18 +1340,28 @@
 			el( 'button', {
 				type: 'button',
 				class: 'll-add',
-				text: '↺ Riporta tutta la landing al case study',
+				text: state.fieldsBackup ? '↶ Annulla il ripristino' : '↺ Riporta tutta la landing al case study',
 				onclick: function () {
-					if ( ! window.confirm( 'Rifare la landing partendo dal case study?\n\nTesti e immagini tornano ai valori predefiniti: le modifiche fatte a mano su questa landing vengono perse.' ) ) {
+					if ( state.fieldsBackup ) {
+						state.fields = state.fieldsBackup;
+						state.fieldsBackup = null;
+						buildPanel();
+						onChange();
+						status( 'Ripristino annullato: i testi e le immagini di prima sono tornati.' );
+						return;
+					}
+					if ( ! window.confirm( 'Rifare la landing partendo dal case study?\n\nTesti e immagini tornano ai valori predefiniti. Se cambi idea potrai annullare, finché non ricarichi la pagina.' ) ) {
 						return;
 					}
 					// Anche le immagini, non solo i testi: su una landing già pubblicata è
 					// l'unico modo per far valere i valori predefiniti attuali al posto di
-					// quelli salvati a suo tempo.
+					// quelli salvati a suo tempo. La copia di sicurezza permette di tornare
+					// indietro senza aver ripubblicato.
+					state.fieldsBackup = JSON.parse( JSON.stringify( state.fields ) );
 					state.fields = landingDefaults( state.data );
 					buildPanel();
 					onChange();
-					status( 'Landing riportata ai contenuti del case study. Ricontrolla e ripubblica.' );
+					status( 'Landing riportata ai contenuti del case study. Se non va bene, premi “Annulla il ripristino”.' );
 				}
 			} ) ] ) );
 
@@ -1939,7 +1969,7 @@
 			text: 'Anteprima in scala 1:1 del PDF A4. Le pagine 3 e 4 compaiono solo con il benchmark attivo.'
 		} ) );
 
-		fitSheets();
+		return fitSheets();
 	}
 
 	/*
@@ -1972,32 +2002,51 @@
 	}
 
 	/**
-	 * Riduce il corpo del testo del blocco finché rientra nel foglio.
+	 * Il blocco rientra nello spazio che ha sul foglio?
+	 */
+	function fitsInSheet( sheet, node ) {
+		return node.scrollHeight <= availableHeight( sheet, node ) + 1;
+	}
+
+	/**
+	 * Riduce il corpo del testo del blocco finché rientra nel foglio, cercando per
+	 * bisezione il valore più grande che ci sta: nove letture di layout invece di
+	 * quaranta, così il controllo può girare a ogni tasto premuto.
 	 *
-	 * @return {boolean} true se il blocco rientra.
+	 * @return {boolean} true se il blocco rientra, false se non ci sta nemmeno al minimo.
 	 */
 	function shrinkToFit( sheet, node, min ) {
-		var scale = 1;
 		node.style.fontSize = FIT_BASE + 'px';
-
-		for ( var step = 0; step < 40; step++ ) {
-			if ( node.scrollHeight <= availableHeight( sheet, node ) + 1 ) {
-				return true;
-			}
-			if ( scale <= min ) {
-				return false;
-			}
-			scale = Math.max( min, scale - 0.02 );
-			node.style.fontSize = ( FIT_BASE * scale ).toFixed( 2 ) + 'px';
+		if ( fitsInSheet( sheet, node ) ) {
+			return true;
 		}
 
-		return node.scrollHeight <= availableHeight( sheet, node ) + 1;
+		node.style.fontSize = ( FIT_BASE * min ).toFixed( 2 ) + 'px';
+		if ( ! fitsInSheet( sheet, node ) ) {
+			return false;
+		}
+
+		var low = min;
+		var high = 1;
+		for ( var step = 0; step < 7; step++ ) {
+			var mid = ( low + high ) / 2;
+			node.style.fontSize = ( FIT_BASE * mid ).toFixed( 2 ) + 'px';
+			if ( fitsInSheet( sheet, node ) ) {
+				low = mid;
+			} else {
+				high = mid;
+			}
+		}
+		node.style.fontSize = ( FIT_BASE * low ).toFixed( 2 ) + 'px';
+		return true;
 	}
 
 	/**
 	 * Adatta tutte le pagine e segnala quelle che, anche al corpo minimo, sbordano.
 	 */
 	function fitSheets() {
+		var everythingFits = true;
+
 		sheetsInDom().forEach( function ( sheet, index ) {
 			var fitted = true;
 
@@ -2015,6 +2064,7 @@
 			if ( fitted ) {
 				return;
 			}
+			everythingFits = false;
 
 			// L'avviso vive accanto al foglio, mai dentro: il PDF si compone clonando
 			// il foglio e si porterebbe dietro anche il badge.
@@ -2024,6 +2074,74 @@
 			} );
 			sheet.parentNode.insertBefore( badge, sheet.nextSibling );
 		} );
+
+		return everythingFits;
+	}
+
+	/**
+	 * Applica subito una modifica e ridisegna: serve alla guardia, che deve sapere
+	 * nello stesso istante se il testo appena scritto sta ancora nella pagina.
+	 *
+	 * @return {boolean} true se tutte le pagine rientrano.
+	 */
+	function applyChangeNow() {
+		if ( 'en' === state.language ) {
+			state.language = 'it';
+			state.displayData = null;
+		}
+		var fits = renderPreview();
+		saveLocal();
+		return fits;
+	}
+
+	/**
+	 * Segnala che il campo ha raggiunto il limite fisico della pagina.
+	 */
+	function flashLimit( control ) {
+		status( 'Questa pagina è piena: il testo è già al corpo minimo e non ci sta altro. Accorcia qualcosa per continuare a scrivere.', 'error' );
+		control.classList.add( 'll-blocked' );
+		setTimeout( function () {
+			control.classList.remove( 'll-blocked' );
+		}, 1200 );
+	}
+
+	/**
+	 * Accetta il nuovo valore di un campo solo se la pagina regge.
+	 *
+	 * Le pagine A4 hanno dimensioni fisse: prima si riduce il corpo del carattere,
+	 * e quando non basta più il testo in eccesso viene rifiutato invece di finire
+	 * oltre il bordo. Le cancellazioni passano sempre, perché liberano spazio.
+	 *
+	 * @param {HTMLElement} control  Campo in modifica.
+	 * @param {string}      previous Ultimo valore accettato.
+	 * @param {Function}    write    Scrive il valore nello stato.
+	 * @return {string} Il valore effettivamente accettato.
+	 */
+	function commitGuarded( control, previous, write ) {
+		var value = control.value;
+		write( value );
+
+		if ( value.length <= previous.length ) {
+			onChange();
+			return value;
+		}
+
+		var caret = control.selectionStart;
+		if ( applyChangeNow() ) {
+			return value;
+		}
+
+		write( previous );
+		control.value = previous;
+		var back = Math.max( 0, caret - ( value.length - previous.length ) );
+		try {
+			control.setSelectionRange( back, back );
+		} catch ( error ) {
+			/* Alcuni campi non espongono la selezione: il valore è comunque ripristinato. */
+		}
+		applyChangeNow();
+		flashLimit( control );
+		return previous;
 	}
 
 	function onChange() {
