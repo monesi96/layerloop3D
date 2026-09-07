@@ -395,6 +395,16 @@ class LL_Studio_Mapper {
 			return (int) $case_map[ $from_case ];
 		}
 
+		// Progetto riaperto: l'immagine del case study è già in libreria e arriva come
+		// indirizzo, quindi si risale all'allegato invece di ricaricare gli stessi byte.
+		$from_url = isset( $value['fromCaseUrl'] ) ? esc_url_raw( $value['fromCaseUrl'] ) : '';
+		if ( $from_url ) {
+			$attachment = attachment_url_to_postid( $from_url );
+			if ( $attachment ) {
+				return (int) $attachment;
+			}
+		}
+
 		return 0;
 	}
 

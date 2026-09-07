@@ -1320,20 +1320,18 @@
 			el( 'button', {
 				type: 'button',
 				class: 'll-add',
-				text: '↺ Riprendi tutti i testi dal case study',
+				text: '↺ Riporta tutta la landing al case study',
 				onclick: function () {
-					if ( ! window.confirm( 'Sovrascrivere i testi della landing con quelli del case study?' ) ) {
+					if ( ! window.confirm( 'Rifare la landing partendo dal case study?\n\nTesti e immagini tornano ai valori predefiniti: le modifiche fatte a mano su questa landing vengono perse.' ) ) {
 						return;
 					}
-					var fresh = landingDefaults( state.data );
-					Object.keys( fresh ).forEach( function ( key ) {
-						if ( fresh[ key ] && typeof fresh[ key ] === 'object' ) {
-							return;
-						}
-						state.fields[ key ] = fresh[ key ];
-					} );
+					// Anche le immagini, non solo i testi: su una landing già pubblicata è
+					// l'unico modo per far valere i valori predefiniti attuali al posto di
+					// quelli salvati a suo tempo.
+					state.fields = landingDefaults( state.data );
 					buildPanel();
-					saveLocal();
+					onChange();
+					status( 'Landing riportata ai contenuti del case study. Ricontrolla e ripubblica.' );
 				}
 			} ) ] ) );
 
@@ -1769,8 +1767,18 @@
 			}
 			for ( var i = 0; i < pair[ 1 ].length; i++ ) {
 				var source = state.data[ pair[ 1 ][ i ] ];
-				if ( source && 0 === source.indexOf( 'data:' ) ) {
+				if ( ! source ) {
+					continue;
+				}
+				if ( 0 === source.indexOf( 'data:' ) ) {
+					// Immagine ancora nel browser: il server la carica e ne riusa l'allegato.
 					out[ pair[ 0 ] ] = { id: 0, dataUrl: '', fromCase: pair[ 1 ][ i ] };
+					return;
+				}
+				if ( 0 === source.indexOf( 'http' ) ) {
+					// Progetto riaperto: l'immagine è già in libreria, si passa l'indirizzo
+					// e il server risale all'allegato senza ricaricare nulla.
+					out[ pair[ 0 ] ] = { id: 0, dataUrl: '', fromCaseUrl: source };
 					return;
 				}
 			}
