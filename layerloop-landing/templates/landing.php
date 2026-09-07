@@ -9,9 +9,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /* ---------- helper ---------- */
-$ll = function ( $name, $default = '' ) {
+/*
+ * Le landing create dallo Studio inviano sempre tutti i campi: uno lasciato vuoto è una
+ * scelta, non una dimenticanza. Non eredita quindi il contenuto di esempio e la parte
+ * corrispondente sparisce dalla pagina, invece di pubblicare un segnaposto. Le landing
+ * compilate a mano in bacheca mantengono il ripiego storico.
+ */
+$ll_from_studio = (bool) get_post_meta( get_the_ID(), '_ll_studio_payload', true );
+$ll = function ( $name, $default = '' ) use ( $ll_from_studio ) {
 	$v = get_field( $name );
-	return ( $v !== null && $v !== '' && $v !== false ) ? $v : $default;
+	if ( $v !== null && $v !== '' && $v !== false ) {
+		return $v;
+	}
+	return $ll_from_studio ? '' : $default;
 };
 $ll_br = function ( $text ) {
 	return implode( '<br>', array_map( 'esc_html', explode( '|', $text ) ) );
@@ -38,6 +48,9 @@ $ll_pair = function ( $line ) {
 
 $def_imgs = function_exists( 'll_landing_default_images' ) ? ll_landing_default_images() : array( 'materials' => array(), 'printers' => array() );
 $anchor   = esc_url( $ll( 'll_anchor', '#contatti' ) );
+if ( '' === $anchor ) {
+	$anchor = '#contatti';
+}
 
 /* ---------- HERO ---------- */
 $hero_eyebrow = $ll( 'll_hero_eyebrow', 'Raccordi & soffietti flessibili' );
@@ -46,13 +59,8 @@ $hero_lead    = $ll( 'll_hero_lead', 'In Layflex e Foam, direttamente in stampa 
 $hero_hint    = $ll( 'll_hero_hint', 'Passa il mouse →' );
 $hero_cta1    = $ll( 'll_hero_cta1', 'Richiedi una demo live' );
 $hero_cta2    = $ll( 'll_hero_cta2', 'Scarica il whitepaper' );
-/*
- * Le landing create dallo Studio non ereditano le immagini di esempio: mostrerebbero
- * il prodotto di un'altra scheda. Le pagine precedenti mantengono il ripiego storico.
- */
-$ll_from_studio = (bool) get_post_meta( get_the_ID(), '_ll_studio_payload', true );
-$img_render     = $ll( 'll_hero_img_render', $ll_from_studio ? '' : 'https://www.layerloop3d.com/wp-content/uploads/2026/07/raccordo.png' );
-$img_wire       = $ll( 'll_hero_img_wire', $ll_from_studio ? '' : 'https://www.layerloop3d.com/wp-content/uploads/2026/07/wireframe_raccordo.png' );
+$img_render     = $ll( 'll_hero_img_render', 'https://www.layerloop3d.com/wp-content/uploads/2026/07/raccordo.png' );
+$img_wire       = $ll( 'll_hero_img_wire', 'https://www.layerloop3d.com/wp-content/uploads/2026/07/wireframe_raccordo.png' );
 
 /*
  * L'effetto render → wireframe richiede due immagini scontornate con la stessa
@@ -64,11 +72,14 @@ $hero_overlay = ( $img_render && $img_wire ) ? $img_wire : '';
 if ( ! $hero_overlay ) {
 	$hero_hint = '';
 }
-$meta_parts   = explode( '|', $ll( 'll_meta', 'LayerLoop 3D|Whitepaper 01 / 2026|Manifattura & Automazione' ) );
+$meta_parts   = array_values( array_filter( array_map( 'trim', explode( '|', $ll( 'll_meta', 'LayerLoop 3D|Whitepaper 01 / 2026|Manifattura & Automazione' ) ) ), 'strlen' ) );
 
 $hero_stats = array();
 foreach ( $ll_lines( $ll( 'll_hero_stats', "~1h15 | tempo di stampa\n~50 g | peso pezzo\n€3,30 | al pezzo" ) ) as $line ) {
 	list( $v, $l ) = $ll_pair( $line );
+	if ( '' === trim( $v ) ) {
+		continue;
+	}
 	$hero_stats[] = array( 'value' => $v, 'label' => $l );
 }
 
@@ -91,12 +102,15 @@ $sol_text    = $ll( 'll_sol_text', '<p>Con <b>Layerloop NEXT</b> il soffietto si
 $case_index   = $ll( 'll_case_index', '03 / 05' );
 $case_eyebrow = $ll( 'll_case_eyebrow', 'Il risultato' );
 $case_title   = $ll( 'll_case_title', 'Dal file al pezzo, stampato' );
-$case_photo   = $ll( 'll_case_photo', $ll_from_studio ? '' : 'https://www.layerloop3d.com/wp-content/uploads/2026/07/case_raccordo.jpg' );
+$case_photo   = $ll( 'll_case_photo', 'https://www.layerloop3d.com/wp-content/uploads/2026/07/case_raccordo.jpg' );
 $case_lead    = $ll( 'll_case_lead', 'Un soffietto reale, prodotto senza stampo: stessa geometria a fisarmonica del file CAD, pronto all\'uso appena finita la stampa. Ogni misura parte da un nuovo file, non da un nuovo stampo.' );
 $case_cta     = $ll( 'll_case_cta', 'Richiedi un campione' );
 $case_specs   = array();
 foreach ( $ll_lines( $ll( 'll_case_specs', "37×37×90 | mm\n~1h15 | stampa\n~50 g | materiale\n€3,30–3,50 | al pezzo" ) ) as $line ) {
 	list( $v, $l ) = $ll_pair( $line );
+	if ( '' === trim( $v ) ) {
+		continue;
+	}
 	$case_specs[] = array( 'value' => $v, 'label' => $l );
 }
 
@@ -182,13 +196,15 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
 <!-- ============ HERO ============ -->
 <header class="hero">
   <div class="wrap">
+    <?php if ( ! empty( $meta_parts ) ) : ?>
     <div class="hero__meta reveal in">
       <?php foreach ( $meta_parts as $mp ) : ?><span><?php echo esc_html( trim( $mp ) ); ?></span><?php endforeach; ?>
     </div>
+    <?php endif; ?>
     <div class="hero__intro">
-      <span class="eyebrow reveal in"><?php echo esc_html( $hero_eyebrow ); ?></span>
-      <h1 class="reveal in" style="--d:.05s"><?php echo $ll_br( $hero_title ); ?></h1>
-      <p class="lead reveal in" style="--d:.12s"><?php echo esc_html( $hero_lead ); ?></p>
+      <?php if ( $hero_eyebrow ) : ?><span class="eyebrow reveal in"><?php echo esc_html( $hero_eyebrow ); ?></span><?php endif; ?>
+      <?php if ( $hero_title ) : ?><h1 class="reveal in" style="--d:.05s"><?php echo $ll_br( $hero_title ); ?></h1><?php endif; ?>
+      <?php if ( $hero_lead ) : ?><p class="lead reveal in" style="--d:.12s"><?php echo esc_html( $hero_lead ); ?></p><?php endif; ?>
       <div class="cta-row reveal in" style="--d:.18s">
         <?php if ( $hero_cta1 ) : ?><a class="btn btn--solid btn--arrow" href="<?php echo $anchor; ?>"><?php echo esc_html( $hero_cta1 ); ?></a><?php endif; ?>
         <?php if ( $hero_cta2 ) : ?><a class="btn btn--ghost" href="<?php echo $anchor; ?>"><?php echo esc_html( $hero_cta2 ); ?></a><?php endif; ?>
@@ -237,48 +253,71 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
 </header>
 
 <!-- ============ 01 · PROBLEMA ============ -->
+<?php if ( $prob_title || $prob_lead || $cmp_old || $cmp_new ) : ?>
 <section>
   <div class="wrap reveal">
+    <?php if ( $prob_eyebrow || $prob_title || $prob_index ) : ?>
     <div class="sec-head">
-      <div><span class="eyebrow"><?php echo esc_html( $prob_eyebrow ); ?></span><h2 class="sec-title"><?php echo esc_html( $prob_title ); ?></h2></div>
-      <span class="sec-index"><?php echo esc_html( $prob_index ); ?></span>
+      <div>
+        <?php if ( $prob_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $prob_eyebrow ); ?></span><?php endif; ?>
+        <?php if ( $prob_title ) : ?><h2 class="sec-title"><?php echo esc_html( $prob_title ); ?></h2><?php endif; ?>
+      </div>
+      <?php if ( $prob_index ) : ?><span class="sec-index"><?php echo esc_html( $prob_index ); ?></span><?php endif; ?>
     </div>
-    <p class="sec-lead"><?php echo esc_html( $prob_lead ); ?></p>
+    <?php endif; ?>
+    <?php if ( $prob_lead ) : ?><p class="sec-lead"><?php echo esc_html( $prob_lead ); ?></p><?php endif; ?>
+    <?php if ( $cmp_old || $cmp_new ) : ?>
     <div class="compare">
+      <?php if ( $cmp_old || $cmp_old_title ) : ?>
       <div class="col col--old">
-        <div class="col-head"><?php echo esc_html( $cmp_old_title ); ?></div>
+        <?php if ( $cmp_old_title ) : ?><div class="col-head"><?php echo esc_html( $cmp_old_title ); ?></div><?php endif; ?>
         <ul>
           <?php foreach ( $cmp_old as $t ) : ?><li><span class="ic">✕</span> <?php echo esc_html( $t ); ?></li><?php endforeach; ?>
         </ul>
       </div>
+      <?php endif; ?>
+      <?php if ( $cmp_new || $cmp_new_title ) : ?>
       <div class="col col--new">
-        <div class="col-head"><?php echo esc_html( $cmp_new_title ); ?></div>
+        <?php if ( $cmp_new_title ) : ?><div class="col-head"><?php echo esc_html( $cmp_new_title ); ?></div><?php endif; ?>
         <ul>
           <?php foreach ( $cmp_new as $t ) : ?><li><span class="ic">✓</span> <?php echo esc_html( $t ); ?></li><?php endforeach; ?>
         </ul>
       </div>
+      <?php endif; ?>
     </div>
+    <?php endif; ?>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- ============ 02 · SOLUZIONE ============ -->
+<?php if ( trim( wp_strip_all_tags( (string) $sol_text ) ) !== '' ) : ?>
 <section style="background:var(--panel)">
   <div class="wrap reveal">
+    <?php if ( $sol_eyebrow || $sol_index ) : ?>
     <div class="sec-head">
-      <span class="eyebrow"><?php echo esc_html( $sol_eyebrow ); ?></span>
-      <span class="sec-index"><?php echo esc_html( $sol_index ); ?></span>
+      <?php if ( $sol_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $sol_eyebrow ); ?></span><?php endif; ?>
+      <?php if ( $sol_index ) : ?><span class="sec-index"><?php echo esc_html( $sol_index ); ?></span><?php endif; ?>
     </div>
+    <?php endif; ?>
     <div class="sol-card"><?php echo wp_kses_post( $sol_text ); ?></div>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- ============ 03 · RISULTATO ============ -->
+<?php if ( $case_title || $case_photo || $case_specs || $case_lead ) : ?>
 <section style="background:#fff">
   <div class="wrap reveal">
+    <?php if ( $case_eyebrow || $case_title || $case_index ) : ?>
     <div class="sec-head">
-      <div><span class="eyebrow"><?php echo esc_html( $case_eyebrow ); ?></span><h2 class="sec-title"><?php echo esc_html( $case_title ); ?></h2></div>
-      <span class="sec-index"><?php echo esc_html( $case_index ); ?></span>
+      <div>
+        <?php if ( $case_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $case_eyebrow ); ?></span><?php endif; ?>
+        <?php if ( $case_title ) : ?><h2 class="sec-title"><?php echo esc_html( $case_title ); ?></h2><?php endif; ?>
+      </div>
+      <?php if ( $case_index ) : ?><span class="sec-index"><?php echo esc_html( $case_index ); ?></span><?php endif; ?>
     </div>
+    <?php endif; ?>
     <div class="case-grid">
       <div class="case-figure">
         <?php if ( $case_photo ) : ?>
@@ -295,26 +334,29 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
         <?php endif; ?>
       </div>
       <div class="case-text">
-        <p class="sec-lead"><?php echo esc_html( $case_lead ); ?></p>
+        <?php if ( $case_lead ) : ?><p class="sec-lead"><?php echo esc_html( $case_lead ); ?></p><?php endif; ?>
         <?php if ( $case_cta ) : ?><a class="btn btn--solid btn--arrow" href="<?php echo $anchor; ?>"><?php echo esc_html( $case_cta ); ?></a><?php endif; ?>
       </div>
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- ============ PERCHÉ CONVIENE (full-width) ============ -->
+<?php if ( $why_title || trim( wp_strip_all_tags( (string) $why_text ) ) !== '' ) : ?>
 <section class="why-full" data-aura>
   <span class="aura"></span>
   <div class="wrap reveal">
     <div class="grid">
       <div>
-        <span class="eyebrow"><?php echo esc_html( $why_eyebrow ); ?></span>
-        <h2><?php echo $ll_br( $why_title ); ?></h2>
+        <?php if ( $why_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $why_eyebrow ); ?></span><?php endif; ?>
+        <?php if ( $why_title ) : ?><h2><?php echo $ll_br( $why_title ); ?></h2><?php endif; ?>
       </div>
       <?php echo wp_kses_post( $why_text ); ?>
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- ============ 04 · MATERIALI ============ -->
 <?php if ( ! empty( $materials ) ) : ?>
@@ -373,13 +415,14 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
 <?php endif; ?>
 
 <!-- ============ CTA FINALE ============ -->
+<?php if ( $final_title || $final_text || $final_cta1 || $final_cta2 ) : ?>
 <section style="background:#fff">
   <div class="wrap reveal">
     <div class="finalcta" data-aura>
       <span class="aura"></span>
-      <span class="eyebrow"><?php echo esc_html( $final_eyebrow ); ?></span>
-      <h2><?php echo esc_html( $final_title ); ?></h2>
-      <p><?php echo esc_html( $final_text ); ?></p>
+      <?php if ( $final_eyebrow ) : ?><span class="eyebrow"><?php echo esc_html( $final_eyebrow ); ?></span><?php endif; ?>
+      <?php if ( $final_title ) : ?><h2><?php echo esc_html( $final_title ); ?></h2><?php endif; ?>
+      <?php if ( $final_text ) : ?><p><?php echo esc_html( $final_text ); ?></p><?php endif; ?>
       <div class="cta-row">
         <?php if ( $final_cta1 ) : ?><a class="btn btn--solid btn--arrow" href="<?php echo $anchor; ?>"><?php echo esc_html( $final_cta1 ); ?></a><?php endif; ?>
         <?php if ( $final_cta2 ) : ?><a class="btn btn--ghost" href="<?php echo $anchor; ?>"><?php echo esc_html( $final_cta2 ); ?></a><?php endif; ?>
@@ -387,6 +430,7 @@ $final_cta2    = $ll( 'll_final_cta2', 'Scarica il whitepaper' );
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <?php
 /* ---------- BLOCCHI DI CHIUSURA (uno per riga: ID template o shortcode) ---------- */

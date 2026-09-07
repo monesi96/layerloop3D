@@ -146,22 +146,28 @@ case study: comodo se hai cambiato molto e vuoi ripartire pulito (le immagini no
 Poi, in fondo, **Genera PDF e pubblica la landing**. In una trentina di secondi compare il link
 alla pagina appena messa online.
 
-### Le due immagini dell'hero
+### L'immagine dell'hero
 
-L'effetto render→wireframe della landing usa due immagini **con la stessa inquadratura**:
+Di serie la landing mostra **una sola foto**, presa dal case study: la foto del pezzo, oppure
+l'immagine di copertina se la foto manca. Puoi sostituirla dal campo **Immagine dell'hero**.
 
-- **Immagine RENDER** — la foto vera del pezzo (di default è la "foto del pezzo" del case study)
-- **Immagine WIREFRAME** — il fil di ferro (di default è l'immagine di copertina)
+Se vuoi l'effetto render→wireframe — la macchia che segue il mouse e scopre il fil di ferro —
+carica anche l'**Immagine WIREFRAME**. Servono due condizioni, altrimenti viene male:
 
-Se le lasci vuote vengono prese in automatico da quelle del case study. Se le due inquadrature non
-coincidono, l'effetto al passaggio del mouse "salta": genera il wireframe partendo esattamente
-dalla foto che usi come render.
+- **stessa inquadratura** delle due foto, altrimenti l'effetto "salta";
+- **entrambe scontornate** (pulsante **✂ Scontorna**), altrimenti il wireframe con il fondo pieno
+  copre la foto invece di scoprirla e si vede un rettangolo bianco.
 
-**Entrambe devono essere scontornate.** Sovrapporre un wireframe con il fondo pieno copre il render
-invece di rivelarlo: si vede un rettangolo bianco. Premi **✂ Scontorna** su tutte e due.
+Lascia vuoto il campo wireframe e resta la singola foto.
 
-**Vuoi una sola immagine?** Premi **Rimuovi** sull'immagine WIREFRAME: resta solo quella sotto, senza
-effetto al passaggio del mouse. È la scelta giusta quando non hai un wireframe pulito da abbinare.
+### I campi vuoti spariscono
+
+Sulle landing pubblicate dallo Studio un campo lasciato vuoto **non** viene riempito con un testo di
+esempio: l'elemento sparisce e basta. Vale anche per le sezioni intere — niente testo nel blocco
+"Il problema", niente sezione "Il problema".
+
+Le specifiche ancora sul valore predefinito **Da inserire** non arrivano sulla landing: quelle
+caselle restano fuori finché non ci scrivi un valore vero.
 
 ---
 

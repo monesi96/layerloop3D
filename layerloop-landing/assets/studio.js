@@ -149,6 +149,38 @@
 		return items.filter( Boolean ).join( '\n' );
 	}
 
+	/**
+	 * I valori segnaposto del modello ("Da inserire") vanno bene nel PDF, dove
+	 * ricordano cosa manca, ma sulla landing sarebbero testo pubblicato: qui si
+	 * riconoscono per scartarli.
+	 *
+	 * @param {string} value Valore da valutare.
+	 * @return {boolean} true se non va pubblicato.
+	 */
+	function isPlaceholder( value ) {
+		var text = String( value || '' ).trim();
+		if ( '' === text ) {
+			return true;
+		}
+		return /^(da\s+inserire|da\s+definire|da\s+compilare|n\/?d|tbd|[-–—.]+)$/i.test( text );
+	}
+
+	/**
+	 * Coppie "valore | etichetta" per le righe di numeri della landing,
+	 * saltando quelle ancora da compilare.
+	 *
+	 * @param {Array} items Specifiche del case study.
+	 * @param {number} max  Quante tenerne.
+	 * @return {string} Righe pronte per il campo ACF.
+	 */
+	function statLines( items, max ) {
+		return lines( ( items || [] ).filter( function ( item ) {
+			return ! isPlaceholder( item.value ) && ! isPlaceholder( item.label );
+		} ).slice( 0, max ).map( function ( item ) {
+			return item.value + ' | ' + String( item.label || '' ).toLowerCase();
+		} ) );
+	}
+
 	function firstTag( cs ) {
 		var tags = String( cs.tags || '' ).split( ',' ).map( function ( t ) {
 			return t.trim();
@@ -183,12 +215,10 @@
 				{ name: 'll_meta', label: 'Riga meta in alto (3 voci separate da |)', max: 160, from: function ( cs ) { return [ cs.brand, cs.document, firstTag( cs ) ].join( '|' ); } },
 				{ name: 'll_hero_hint', label: 'Suggerimento sopra l’immagine', max: 60, from: function () { return 'Passa il mouse →'; } },
 				{ name: 'll_hero_stats', label: 'Numeri chiave — VALORE | ETICHETTA, uno per riga', type: 'textarea', rows: 4, max: 400, from: function ( cs ) {
-					return lines( ( cs.specs || [] ).slice( 0, 3 ).map( function ( spec ) {
-						return spec.value + ' | ' + String( spec.label || '' ).toLowerCase();
-					} ) );
+					return statLines( cs.specs, 3 );
 				} },
-				{ name: 'll_hero_img_render', label: 'Immagine RENDER (foto del pezzo)', type: 'image', maxDimension: 2000, fromImage: 'pieceImage' },
-				{ name: 'll_hero_img_wire', label: 'Immagine WIREFRAME (fil di ferro)', type: 'image', maxDimension: 2000, fromImage: 'coverImage' },
+				{ name: 'll_hero_img_render', label: 'Immagine dell’hero', type: 'image', maxDimension: 2000, fromImage: 'pieceImage' },
+				{ name: 'll_hero_img_wire', label: 'Immagine WIREFRAME — facoltativa, attiva l’effetto al passaggio del mouse', type: 'image', maxDimension: 2000 },
 				{ name: 'll_hero_cta1', label: 'Bottone 1', max: 60, from: function ( cs ) { return cs.boxButton; } },
 				{ name: 'll_hero_cta2', label: 'Bottone 2 (vuoto = nascosto)', max: 60, from: function () { return 'Scarica il whitepaper'; } }
 			]
@@ -230,9 +260,7 @@
 				{ name: 'll_case_title', label: 'Titolo', max: 140, from: function ( cs ) { return cs.boxTitle; } },
 				{ name: 'll_case_photo', label: 'Foto del pezzo stampato', type: 'image', maxDimension: 1600, fromImage: 'pieceImage' },
 				{ name: 'll_case_specs', label: 'Specifiche — VALORE | ETICHETTA, una per riga', type: 'textarea', rows: 4, max: 400, from: function ( cs ) {
-					return lines( ( cs.specs || [] ).slice( 0, 4 ).map( function ( spec ) {
-						return spec.value + ' | ' + String( spec.label || '' ).toLowerCase();
-					} ) );
+					return statLines( cs.specs, 4 );
 				} },
 				{ name: 'll_case_lead', label: 'Testo a destra', type: 'textarea', rows: 4, max: 600, from: function ( cs ) { return cs.whyText; } },
 				{ name: 'll_case_cta', label: 'Etichetta bottone', max: 60, from: function ( cs ) { return cs.boxButton; } }
@@ -252,8 +280,12 @@
 				{ name: 'll_mat_index', label: 'Numerazione', max: 20, from: function () { return '04 / 05'; } },
 				{ name: 'll_mat_eyebrow', label: 'Occhiello', max: 60, from: function () { return 'Materiali'; } },
 				{ name: 'll_mat_title', label: 'Titolo', max: 140, from: function () { return 'Il materiale impiegato'; } },
-				{ name: 'll_mat1_name', label: 'Materiale 1 — nome', max: 60, from: function ( cs ) { return cs.materialName; } },
-				{ name: 'll_mat1_sub', label: 'Materiale 1 — sottotitolo', max: 80, from: function ( cs ) { return cs.materialDescription.slice( 0, 80 ); } },
+				{ name: 'll_mat1_name', label: 'Materiale 1 — nome', max: 60, from: function ( cs ) {
+					return isPlaceholder( cs.materialName ) || /^nome materiale$/i.test( String( cs.materialName ).trim() ) ? '' : cs.materialName;
+				} },
+				{ name: 'll_mat1_sub', label: 'Materiale 1 — sottotitolo', max: 80, from: function ( cs ) {
+					return isPlaceholder( cs.materialDescription ) ? '' : cs.materialDescription.slice( 0, 80 );
+				} },
 				{ name: 'll_mat1_img', label: 'Materiale 1 — immagine tonda', type: 'image', maxDimension: 900 },
 				{ name: 'll_mat1_points', label: 'Materiale 1 — caratteristiche, una per riga', type: 'textarea', rows: 4, max: 600, from: function ( cs ) {
 					return lines( ( cs.performances || [] ).slice( 0, 4 ).map( function ( p ) {
@@ -1724,15 +1756,23 @@
 		// Le immagini della landing non ancora scelte ereditano quelle del case study.
 		// Si invia solo il riferimento: il server riusa l'allegato appena caricato,
 		// così gli stessi byte non viaggiano due volte e la libreria non si riempie di doppioni.
-		[ [ 'll_hero_img_render', 'pieceImage' ], [ 'll_hero_img_wire', 'coverImage' ], [ 'll_case_photo', 'pieceImage' ] ].forEach( function ( pair ) {
+		// L'hero della landing mostra una sola foto: il wireframe si aggiunge a mano
+		// solo quando esiste una coppia con la stessa inquadratura.
+		[
+			[ 'll_hero_img_render', [ 'pieceImage', 'coverImage' ] ],
+			[ 'll_case_photo', [ 'pieceImage', 'coverImage' ] ]
+		].forEach( function ( pair ) {
 			var stored = state.fields[ pair[ 0 ] ] || {};
 			var current = out[ pair[ 0 ] ];
-			var fallback = state.data[ pair[ 1 ] ];
 			if ( stored.cleared || ! current || current.id || current.dataUrl ) {
 				return;
 			}
-			if ( fallback && 0 === fallback.indexOf( 'data:' ) ) {
-				out[ pair[ 0 ] ] = { id: 0, dataUrl: '', fromCase: pair[ 1 ] };
+			for ( var i = 0; i < pair[ 1 ].length; i++ ) {
+				var source = state.data[ pair[ 1 ][ i ] ];
+				if ( source && 0 === source.indexOf( 'data:' ) ) {
+					out[ pair[ 0 ] ] = { id: 0, dataUrl: '', fromCase: pair[ 1 ][ i ] };
+					return;
+				}
 			}
 		} );
 
