@@ -38,6 +38,9 @@
 			coverImage: '',
 			pieceImage: '',
 			logoImage: '',
+			// Dove finisce il logo nel piè di pagina delle pagine interne:
+			// left | right | center | none.
+			logoPlacement: 'left',
 			specs: [
 				{ id: 'length', label: 'LUNGHEZZA', value: '1,60 m' },
 				{ id: 'time', label: 'TEMPO DI STAMPA', value: 'Da inserire' },
@@ -146,6 +149,9 @@
 		out.coverImage = safeImage( out.coverImage );
 		out.pieceImage = safeImage( out.pieceImage );
 		out.logoImage = safeImage( out.logoImage );
+		if ( -1 === [ 'left', 'right', 'center', 'none' ].indexOf( out.logoPlacement ) ) {
+			out.logoPlacement = 'left';
+		}
 		out.benchmarkEnabled = !! out.benchmarkEnabled;
 		out.specs = Array.isArray( out.specs ) ? out.specs : base.specs;
 		out.performances = Array.isArray( out.performances ) ? out.performances : base.performances;
@@ -198,6 +204,14 @@
 	 * @param {number} max  Quante tenerne.
 	 * @return {string} Righe pronte per il campo ACF.
 	 */
+	function tagList( cs ) {
+		return String( cs.tags || '' ).split( ',' ).map( function ( tag ) {
+			return tag.trim();
+		} ).filter( function ( tag ) {
+			return tag && ! isPlaceholder( tag );
+		} );
+	}
+
 	function statLines( items, max ) {
 		return lines( ( items || [] ).filter( function ( item ) {
 			return ! isPlaceholder( item.value ) && ! isPlaceholder( item.label );
@@ -207,9 +221,7 @@
 	}
 
 	function firstTag( cs ) {
-		var tags = String( cs.tags || '' ).split( ',' ).map( function ( t ) {
-			return t.trim();
-		} ).filter( Boolean );
+		var tags = tagList( cs );
 		return tags.length ? tags[ 0 ] : cs.document;
 	}
 
@@ -239,14 +251,18 @@
 	var LANDING_SCHEMA = [
 		{
 			legend: 'Hero',
+			help: 'Si compila da solo con quello che scrivi nel case study. Quando cambi un campo qui, quel campo smette di seguire il case study: il pulsante “Riporta tutta la landing al case study” lo rimette in riga.',
 			fields: [
-				{ name: 'll_hero_eyebrow', label: 'Occhiello', max: 90, from: function ( cs ) { return firstTag( cs ); } },
 				{ name: 'll_hero_title', label: 'Titolo (usa | per andare a capo)', max: 160, from: function ( cs ) { return String( cs.title || '' ).replace( /\n+/g, '|' ); } },
 				{ name: 'll_hero_lead', label: 'Sottotitolo', type: 'textarea', rows: 3, max: 320, from: function ( cs ) { return cs.subtitle; } },
-				{ name: 'll_meta', label: 'Riga meta in alto (3 voci separate da |)', max: 160, from: function ( cs ) { return [ cs.brand, cs.document, firstTag( cs ) ].filter( Boolean ).join( '|' ); } },
-				{ name: 'll_hero_stats', label: 'Numeri chiave — VALORE | ETICHETTA, uno per riga', type: 'textarea', rows: 4, max: 400, from: function ( cs ) {
-					return statLines( cs.specs, 3 );
+				{ name: 'll_meta', label: 'Riga meta in alto (voci separate da |)', max: 160, from: function ( cs ) { return [ cs.brand, cs.document ].filter( Boolean ).join( '|' ); } },
+				{ name: 'll_hero_tags', label: 'Etichette sotto il sottotitolo (i tag del PDF, separati da virgola)', max: 160, from: function ( cs ) { return tagList( cs ).join( ', ' ); } },
+				{ name: 'll_hero_stats', label: 'Numeri chiave — VALORE | ETICHETTA, uno per riga', type: 'textarea', rows: 6, max: 700, from: function ( cs ) {
+					// Tutte le specifiche compilate del case study, non solo le prime:
+					// nell'hero servono i dati del pezzo, ed erano il primo dato a perdersi.
+					return statLines( cs.specs, 6 );
 				} },
+				{ name: 'll_hero_eyebrow', label: 'Occhiello (facoltativo: i tag sono già sotto il titolo)', max: 90, from: function () { return ''; } },
 				{ name: 'll_hero_img_render', label: 'Immagine dell’hero (predefinita: copertina del PDF)', type: 'image', maxDimension: 2000, fromImage: 'coverImage' },
 				{ name: 'll_hero_img_wire', label: 'Immagine WIREFRAME — facoltativa, attiva l’effetto al passaggio del mouse', type: 'image', maxDimension: 2000 },
 				{ name: 'll_hero_cta1', label: 'Bottone 1', max: 60, from: function ( cs ) { return cs.boxButton; } },
@@ -344,6 +360,73 @@
 		return fields;
 	}
 
+	/**
+	 * Allinea i testi della landing al case study.
+	 *
+	 * I campi della landing nascono dal case study, ma restavano fermi al valore
+	 * calcolato quando lo Studio si era aperto: chi compilava prima il PDF e poi
+	 * passava alla landing la trovava vuota, perché i testi erano stati letti da un
+	 * documento ancora bianco. Qui si ricalcolano a ogni modifica, saltando i campi
+	 * che sono stati riscritti a mano — quelli restano dell'utente.
+	 */
+	function syncLandingFromCase() {
+		var defaults = landingDefaults( state.data );
+		LANDING_SCHEMA.forEach( function ( section ) {
+			section.fields.forEach( function ( def ) {
+				if ( 'image' === def.type || ! def.from || state.fieldsTouched[ def.name ] ) {
+					return;
+				}
+				state.fields[ def.name ] = defaults[ def.name ];
+			} );
+		} );
+	}
+
+	/**
+	 * Segna un campo della landing come scritto a mano: da quel momento non segue
+	 * più il case study.
+	 *
+	 * @param {string} name Nome del campo.
+	 */
+	function markTouched( name ) {
+		state.fieldsTouched[ name ] = true;
+	}
+
+	/**
+	 * Ricostruisce l'elenco dei campi scritti a mano confrontando i valori salvati
+	 * con quelli che il case study produrrebbe: serve riaprendo una landing, dove
+	 * non si sa più quali testi fossero stati personalizzati.
+	 *
+	 * @param {Object} fields Campi salvati.
+	 * @return {Object} Mappa dei campi da non toccare più.
+	 */
+	function touchedFromFields( fields ) {
+		var defaults = landingDefaults( state.data );
+		// Valori che una landing pubblicata prima di questa versione poteva avere
+		// per il difetto di allineamento: erano stati letti da un case study ancora
+		// vuoto, quindi non sono scelte da rispettare.
+		var stale = landingDefaults( blankCaseStudy() );
+		var touched = {};
+		Object.keys( fields || {} ).forEach( function ( name ) {
+			var value = fields[ name ];
+			if ( value && typeof value === 'object' ) {
+				return;
+			}
+			// Un campo vuoto non è una scelta: è un testo che non è mai arrivato.
+			// Torna a seguire il case study, così le landing pubblicate a metà si
+			// completano riaprendole e ripubblicandole.
+			if ( '' === String( value || '' ).trim() ) {
+				return;
+			}
+			if ( String( value ) === String( stale[ name ] || '' ) ) {
+				return;
+			}
+			if ( String( value ) !== String( defaults[ name ] || '' ) ) {
+				touched[ name ] = true;
+			}
+		} );
+		return touched;
+	}
+
 	/* -------------------------------------------------------------- stato */
 
 	var state = {
@@ -359,10 +442,14 @@
 		displayData: null,
 		whitepapers: [],
 		ai: { preset: 'wireframe', prompt: '', ratio: 'auto', cutout: true, target: 'coverImage' },
+		// Campi della landing riscritti a mano: non seguono più il case study.
+		fieldsTouched: {},
 		// PDF già impaginati caricati dall'utente: restano in memoria, non in localStorage.
 		fieldsBackup: null,
 		pdfSource: 'generate',
 		pdfFiles: { it: '', en: '', itName: '', enName: '', itFile: null },
+		// PDF già allegato alla landing aperta dall'Archivio.
+		pdfAttached: { it: '', en: '' },
 		// Logo Layerloop del sito, già pronto per il piè di pagina di ogni PDF.
 		defaultLogo: ''
 	};
@@ -656,6 +743,7 @@
 			} );
 		} ).then( function ( result ) {
 			state.fields = landingDefaults( state.data );
+			state.fieldsTouched = {};
 			state.postId = 0;
 			state.title = String( state.data.title || '' ).replace( /\n+/g, ' ' ).trim();
 			state.metaDescription = state.data.subtitle;
@@ -690,6 +778,7 @@
 		var payload = {
 			data: state.data,
 			fields: state.fields,
+			fieldsTouched: state.fieldsTouched,
 			postId: state.postId,
 			title: state.title,
 			status: state.status,
@@ -742,6 +831,9 @@
 			var stored = JSON.parse( raw );
 			state.data = normalizeCaseStudy( stored.data );
 			state.fields = Object.assign( landingDefaults( state.data ), stored.fields || {} );
+			state.fieldsTouched = stored.fieldsTouched && typeof stored.fieldsTouched === 'object'
+				? stored.fieldsTouched
+				: touchedFromFields( stored.fields );
 			state.postId = parseInt( stored.postId, 10 ) || 0;
 			state.title = stored.title || '';
 			state.status = 'draft' === stored.status ? 'draft' : 'publish';
@@ -844,6 +936,26 @@
 
 		return el( 'label', { class: 'll-field' }, [
 			el( 'span', { class: 'll-field-label' }, [ el( 'span', { text: config.label } ), counter ] ),
+			control
+		] );
+	}
+
+	/**
+	 * Menu a tendina legato a un campo del documento.
+	 */
+	function selectField( config ) {
+		var control = el( 'select' );
+		config.options.forEach( function ( option ) {
+			control.appendChild( el( 'option', { value: option.id, text: option.label } ) );
+		} );
+		control.value = String( config.get() || config.options[ 0 ].id );
+		control.addEventListener( 'change', function () {
+			config.set( control.value );
+			onChange();
+		} );
+
+		return el( 'label', { class: 'll-field' }, [
+			el( 'span', { class: 'll-field-label' }, [ el( 'span', { text: config.label } ) ] ),
 			control
 		] );
 	}
@@ -986,6 +1098,17 @@
 				maxDimension: 900,
 				get: get( 'logoImage' ),
 				set: set( 'logoImage' )
+			} ),
+			selectField( {
+				label: 'Logo a piè di pagina (pagine interne)',
+				options: [
+					{ id: 'left', label: 'In basso a sinistra' },
+					{ id: 'right', label: 'In basso a destra' },
+					{ id: 'center', label: 'In basso al centro' },
+					{ id: 'none', label: 'Non mostrarlo' }
+				],
+				get: get( 'logoPlacement' ),
+				set: set( 'logoPlacement' )
 			} )
 		] ) );
 
@@ -1385,7 +1508,8 @@
 				text: state.fieldsBackup ? '↶ Annulla il ripristino' : '↺ Riporta tutta la landing al case study',
 				onclick: function () {
 					if ( state.fieldsBackup ) {
-						state.fields = state.fieldsBackup;
+						state.fields = state.fieldsBackup.fields;
+						state.fieldsTouched = state.fieldsBackup.touched;
 						state.fieldsBackup = null;
 						buildPanel();
 						onChange();
@@ -1399,8 +1523,12 @@
 					// l'unico modo per far valere i valori predefiniti attuali al posto di
 					// quelli salvati a suo tempo. La copia di sicurezza permette di tornare
 					// indietro senza aver ripubblicato.
-					state.fieldsBackup = JSON.parse( JSON.stringify( state.fields ) );
+					state.fieldsBackup = {
+						fields: JSON.parse( JSON.stringify( state.fields ) ),
+						touched: JSON.parse( JSON.stringify( state.fieldsTouched ) )
+					};
 					state.fields = landingDefaults( state.data );
+					state.fieldsTouched = {};
 					buildPanel();
 					onChange();
 					status( 'Landing riportata ai contenuti del case study. Se non va bene, premi “Annulla il ripristino”.' );
@@ -1426,6 +1554,7 @@
 						},
 						set: function ( value ) {
 							state.fields[ def.name ] = { id: 0, url: '', dataUrl: value, cleared: ! value };
+							markTouched( def.name );
 						}
 					} );
 				}
@@ -1439,6 +1568,7 @@
 					},
 					set: function ( value ) {
 						state.fields[ def.name ] = value;
+						markTouched( def.name );
 					}
 				} );
 			} );
@@ -1540,10 +1670,30 @@
 				state.data = normalizeCaseStudy( loaded.caseStudy );
 			}
 			state.fields = Object.assign( landingDefaults( state.data ), loaded.fields || {} );
+			// I testi che erano stati riscritti a mano restano tali; gli altri
+			// tornano a seguire il case study, così le correzioni al PDF arrivano
+			// anche sulla landing già pubblicata.
+			state.fieldsTouched = touchedFromFields( loaded.fields );
+
+			// Il PDF già allegato resta allegato: prima ogni ripubblicazione lo
+			// sostituiva con quello ricomposto dall'anteprima, e un file caricato
+			// a mano andava perso.
+			var pdf = loaded.pdf && typeof loaded.pdf === 'object' ? loaded.pdf : {};
+			state.pdfAttached = {
+				it: pdf.it ? String( pdf.it.name || 'PDF italiano' ) : '',
+				en: pdf.en ? String( pdf.en.name || 'PDF inglese' ) : ''
+			};
+			state.pdfFiles = { it: '', en: '', itName: '', enName: '', itFile: null };
+			state.pdfSource = state.pdfAttached.it ? 'keep' : 'generate';
+
 			state.tab = 'landing';
 			buildPanel();
 			onChange();
-			status( 'Landing “' + ( payload.post ? payload.post.title : '' ) + '” aperta: le modifiche aggiorneranno questa pagina.' );
+			var opened = 'Landing “' + ( payload.post ? payload.post.title : '' ) + '” aperta: le modifiche aggiorneranno questa pagina.';
+			if ( state.pdfAttached.it ) {
+				opened += ' Il PDF allegato (' + state.pdfAttached.it + ') resta quello attuale: per rifarlo scegli “Ricomponi il PDF dall’anteprima” nella scheda Landing.';
+			}
+			status( opened );
 		} ).catch( function ( error ) {
 			status( error.message, 'error' );
 		} );
@@ -1769,7 +1919,11 @@
 		};
 
 		var italianPdf;
-		if ( 'upload' === state.pdfSource && state.pdfFiles.it ) {
+		if ( 'keep' === state.pdfSource && state.pdfAttached.it ) {
+			// Nessun PDF nel documento inviato: il server tiene quello già allegato.
+			status( 'Il PDF già allegato resta invariato: ' + state.pdfAttached.it );
+			italianPdf = Promise.resolve( '' );
+		} else if ( 'upload' === state.pdfSource && state.pdfFiles.it ) {
 			status( 'Uso il PDF caricato: ' + state.pdfFiles.itName );
 			italianPdf = Promise.resolve( state.pdfFiles.it );
 		} else {
@@ -1782,9 +1936,15 @@
 		}
 
 		italianPdf.then( function ( italian ) {
-			payload.pdfIT = italian;
+			if ( italian ) {
+				payload.pdfIT = italian;
+			}
 			if ( state.pdfFiles.en ) {
 				payload.pdfEN = state.pdfFiles.en;
+			}
+			if ( ! italian && 'keep' === state.pdfSource ) {
+				// PDF invariato: anche la copertina dell'archivio resta quella di prima.
+				return '';
 			}
 			status( 'Preparazione della copertina…' );
 			return coverPreviewImage();
@@ -1830,8 +1990,11 @@
 		// così gli stessi byte non viaggiano due volte e la libreria non si riempie di doppioni.
 		// L'hero della landing mostra una sola foto: il wireframe si aggiunge a mano
 		// solo quando esiste una coppia con la stessa inquadratura.
+		// L'ordine segue quello dei campi nel pannello: nell'hero la copertina,
+		// nella scheda materiale la foto del pezzo.
 		[
-			[ 'll_hero_img_render', [ 'pieceImage', 'coverImage' ] ],
+			[ 'll_hero_img_render', [ 'coverImage', 'pieceImage' ] ],
+			[ 'll_mat1_img', [ 'pieceImage', 'coverImage' ] ],
 			[ 'll_case_photo', [ 'pieceImage', 'coverImage' ] ]
 		].forEach( function ( pair ) {
 			var stored = state.fields[ pair[ 0 ] ] || {};
@@ -1886,10 +2049,12 @@
 	 * È già applicato a ogni PDF, senza che chi scrive debba caricare nulla.
 	 */
 	function pageFooter( data, number ) {
-		return el( 'div', { class: 'll-page-footer' }, [
-			logoMark( data, 'll-page-footer-logo' ),
-			el( 'span', { class: 'll-page-number', text: number } )
-		] );
+		var placement = data.logoPlacement || 'left';
+		var children = [ el( 'span', { class: 'll-page-number', text: number } ) ];
+		if ( 'none' !== placement ) {
+			children.unshift( logoMark( data, 'll-page-footer-logo' ) );
+		}
+		return el( 'div', { class: 'll-page-footer ll-page-footer--' + placement }, children );
 	}
 
 	function contentSection( title, text ) {
@@ -2046,6 +2211,9 @@
 	 * lo sbordo, perché a quel punto il problema è la quantità di testo.
 	 */
 	var FIT_BASE = 16;
+	// Fascia in fondo al foglio riservata al piè di pagina: 42px occupati dal
+	// logo più un margine d'aria, così il testo non ci arriva sotto.
+	var FOOTER_RESERVE = 58;
 	var FIT_TARGETS = [
 		{ selector: '.ll-two-left', min: 0.68 },
 		{ selector: '.ll-two-right', min: 0.74 },
@@ -2056,10 +2224,13 @@
 	 * Spazio verticale disponibile dal bordo superiore del blocco alla fine del foglio.
 	 */
 	function availableHeight( sheet, node ) {
+		// Il piè di pagina (logo e numero) occupa l'ultima fascia del foglio: il
+		// testo deve fermarsi prima, altrimenti il logo finisce sopra le parole.
+		var reserve = sheet.querySelector( '.ll-page-footer' ) ? FOOTER_RESERVE : 0;
 		if ( node === sheet ) {
-			return sheet.clientHeight;
+			return sheet.clientHeight - reserve;
 		}
-		return sheet.getBoundingClientRect().bottom - node.getBoundingClientRect().top;
+		return sheet.getBoundingClientRect().bottom - node.getBoundingClientRect().top - reserve;
 	}
 
 	/**
@@ -2146,6 +2317,7 @@
 	 * @return {boolean} true se tutte le pagine rientrano.
 	 */
 	function applyChangeNow() {
+		syncLandingFromCase();
 		if ( 'en' === state.language ) {
 			state.language = 'it';
 			state.displayData = null;
@@ -2211,7 +2383,9 @@
 	function resetStudio() {
 		state.data = blankCaseStudy();
 		state.fields = landingDefaults( state.data );
+		state.fieldsTouched = {};
 		state.fieldsBackup = null;
+		state.pdfAttached = { it: '', en: '' };
 		state.postId = 0;
 		state.title = '';
 		state.metaDescription = '';
@@ -2228,6 +2402,8 @@
 	}
 
 	function onChange() {
+		// Prima di ridisegnare: i testi della landing seguono il case study.
+		syncLandingFromCase();
 		if ( previewFrame ) {
 			cancelAnimationFrame( previewFrame );
 		}
@@ -2325,6 +2501,7 @@
 					var parsed = JSON.parse( String( reader.result || '{}' ) );
 					state.data = normalizeCaseStudy( parsed.data || parsed );
 					state.fields = Object.assign( landingDefaults( state.data ), parsed.fields || {} );
+					state.fieldsTouched = touchedFromFields( parsed.fields );
 					buildPanel();
 					onChange();
 					status( 'Documento importato.' );
@@ -2375,19 +2552,30 @@
 			if ( state.pdfFiles.enName ) {
 				parts.push( 'EN: ' + state.pdfFiles.enName );
 			}
-			info.textContent = parts.length ? 'File caricati — ' + parts.join( ' · ' ) : 'Nessun file caricato: verrà composto il PDF dall’anteprima.';
+			if ( parts.length ) {
+				info.textContent = 'File caricati — ' + parts.join( ' · ' );
+			} else if ( 'keep' === state.pdfSource && state.pdfAttached.it ) {
+				info.textContent = 'Resta allegato il PDF già online: ' + state.pdfAttached.it + '. Cambia questa scelta solo se vuoi rifarlo.';
+			} else {
+				info.textContent = 'Nessun file caricato: verrà composto il PDF dall’anteprima.';
+			}
 		}
 
+		var options = [];
+		if ( state.pdfAttached.it ) {
+			options.push( { id: 'keep', label: 'Mantieni il PDF già allegato (' + state.pdfAttached.it + ')' } );
+		}
+		options.push( { id: 'generate', label: 'Ricomponi il PDF dall’anteprima' } );
+		options.push( { id: 'upload', label: 'Allega un PDF già pronto' } );
+
 		var select = el( 'select' );
-		[
-			{ id: 'generate', label: 'Componi il PDF dall’anteprima' },
-			{ id: 'upload', label: 'Allega un PDF già pronto' }
-		].forEach( function ( option ) {
+		options.forEach( function ( option ) {
 			select.appendChild( el( 'option', { value: option.id, text: option.label } ) );
 		} );
 		select.value = state.pdfSource;
 		select.addEventListener( 'change', function () {
 			state.pdfSource = select.value;
+			refresh();
 		} );
 
 		function uploader( language, label ) {
@@ -2433,7 +2621,7 @@
 			uploader( 'it', '⇪ Carica il PDF italiano' ),
 			uploader( 'en', '⇪ Carica il PDF inglese (facoltativo)' ),
 			info
-		], 'Se il PDF è già stato impaginato altrove, caricalo qui: viene allegato così com’è, senza ricomporlo.' );
+		], 'Se il PDF è già stato impaginato altrove, caricalo qui: viene allegato così com’è, senza ricomporlo. Riaprendo una landing dall’Archivio il suo PDF resta al suo posto finché non chiedi di rifarlo.' );
 	}
 
 	function publishBar() {

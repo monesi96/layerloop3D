@@ -37,7 +37,8 @@ class LL_Studio_Mapper {
 			'll_hero_title'   => 160,
 			'll_hero_lead'    => 420,
 			'll_hero_hint'    => 60,
-			'll_hero_stats'   => 400,
+			'll_hero_stats'   => 700,
+			'll_hero_tags'    => 160,
 			'll_meta'         => 160,
 			'll_hero_cta1'    => 60,
 			'll_hero_cta2'    => 60,
@@ -73,14 +74,14 @@ class LL_Studio_Mapper {
 			'll_mat_eyebrow'  => 60,
 			'll_mat_title'    => 140,
 			'll_mat1_name'    => 60,
-			'll_mat1_sub'     => 80,
+			'll_mat1_sub'     => 300,
 			'll_mat1_points'  => 600,
 			'll_mat_bars'     => 600,
 			'll_mat2_name'    => 60,
-			'll_mat2_sub'     => 80,
+			'll_mat2_sub'     => 300,
 			'll_mat2_points'  => 600,
 			'll_mat3_name'    => 60,
-			'll_mat3_sub'     => 80,
+			'll_mat3_sub'     => 300,
 			'll_mat3_points'  => 600,
 
 			'll_pr_index'     => 20,
@@ -721,6 +722,23 @@ class LL_Studio_Mapper {
 			$fields[ $name ] = array(
 				'id'  => $attachment,
 				'url' => $attachment ? (string) wp_get_attachment_url( $attachment ) : '',
+			);
+		}
+
+		// PDF già allegati: lo Studio li mantiene invece di rifarli a ogni modifica.
+		$payload['pdf'] = array();
+		foreach ( array(
+			'it' => self::META_PDF_IT,
+			'en' => self::META_PDF_EN,
+		) as $language => $meta_key ) {
+			$attachment = (int) get_post_meta( $post_id, $meta_key, true );
+			if ( ! $attachment || ! get_post( $attachment ) ) {
+				continue;
+			}
+			$file = get_attached_file( $attachment );
+			$payload['pdf'][ $language ] = array(
+				'id'   => $attachment,
+				'name' => $file ? basename( $file ) : get_the_title( $attachment ),
 			);
 		}
 

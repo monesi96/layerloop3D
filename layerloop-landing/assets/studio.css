@@ -1274,6 +1274,32 @@ html.ll-studio-open body {
 	height: 22px;
 }
 
+/* Posizione del logo scelta nella scheda Copertina. Il numero di pagina
+   resta sempre in basso a destra, tranne quando il logo lo raggiunge. */
+.ll-page-footer--right {
+	flex-direction: row-reverse;
+}
+
+.ll-page-footer--center {
+	justify-content: center;
+}
+
+/* Senza logo resta solo il numero di pagina, al suo posto a destra. */
+.ll-page-footer--none {
+	justify-content: flex-end;
+}
+
+.ll-page-footer--center .ll-page-number,
+.ll-page-footer--right .ll-page-number {
+	position: absolute;
+	left: 0;
+	bottom: 6px;
+}
+
+.ll-page-footer--center .ll-page-footer-logo {
+	justify-content: center;
+}
+
 .ll-page-footer-logo {
 	display: flex;
 	align-items: center;

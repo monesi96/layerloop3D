@@ -85,6 +85,11 @@ $mat_image = ! empty( $mat_first['image'] ) ? $mat_first['image'] : '';
       <?php if ( $hero_eyebrow ) : ?><span class="eyebrow reveal in"><?php echo esc_html( $hero_eyebrow ); ?></span><?php endif; ?>
       <?php if ( $hero_title ) : ?><h1 class="reveal in" style="--d:.05s"><?php echo $ll_br( $hero_title ); ?></h1><?php endif; ?>
       <?php if ( $hero_lead ) : ?><p class="lead reveal in" style="--d:.12s"><?php echo esc_html( $hero_lead ); ?></p><?php endif; ?>
+      <?php if ( ! empty( $hero_tags ) ) : ?>
+      <div class="pills reveal in" style="--d:.15s">
+        <?php foreach ( $hero_tags as $tag ) : ?><span><?php echo esc_html( $tag ); ?></span><?php endforeach; ?>
+      </div>
+      <?php endif; ?>
       <div class="cta-row reveal in" style="--d:.18s">
         <?php if ( $hero_cta1 ) : ?><a class="btn btn--solid btn--arrow" href="<?php echo $anchor; ?>"><?php echo esc_html( $hero_cta1 ); ?></a><?php endif; ?>
         <?php if ( $hero_cta2 ) : ?><a class="btn btn--ghost" href="<?php echo $anchor; ?>"><?php echo esc_html( $hero_cta2 ); ?></a><?php endif; ?>
@@ -137,16 +142,30 @@ $mat_image = ! empty( $mat_first['image'] ) ? $mat_first['image'] : '';
 <?php if ( $prob_title || $prob_lead ) : ?>
 <section>
   <div class="wrap reveal">
-    <?php $ll_head( $prob_eyebrow, $prob_title ); ?>
-    <?php foreach ( $ll_blocks( $prob_lead ) as $block ) : ?>
-      <?php if ( 'list' === $block['type'] ) : ?>
-      <ul class="reqs">
-        <?php foreach ( $block['items'] as $item ) : ?><li><?php echo esc_html( $item ); ?></li><?php endforeach; ?>
-      </ul>
-      <?php else : ?>
-      <div class="body-text"><p><?php echo esc_html( $block['text'] ); ?></p></div>
-      <?php endif; ?>
-    <?php endforeach; ?>
+    <?php
+    // Tutti i paragrafi in un unico blocco di testo, così restano distanziati
+    // fra loro; le righe puntate diventano tessere.
+    $prob_paragraphs = array();
+    $prob_items      = array();
+    foreach ( $ll_blocks( $prob_lead ) as $block ) {
+      if ( 'list' === $block['type'] ) {
+        $prob_items = array_merge( $prob_items, $block['items'] );
+      } else {
+        $prob_paragraphs[] = $block['text'];
+      }
+    }
+    $ll_head( $prob_eyebrow, $prob_title );
+    ?>
+    <?php if ( $prob_paragraphs ) : ?>
+    <div class="body-text">
+      <?php foreach ( $prob_paragraphs as $paragraph ) : ?><p><?php echo esc_html( $paragraph ); ?></p><?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+    <?php if ( $prob_items ) : ?>
+    <ul class="reqs">
+      <?php foreach ( $prob_items as $item ) : ?><li><?php echo esc_html( $item ); ?></li><?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
   </div>
 </section>
 <?php endif; ?>

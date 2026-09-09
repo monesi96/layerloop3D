@@ -61,7 +61,8 @@ Scrivi **sempre in italiano**. I campi sono nell'ordine delle pagine:
 - **Intestazione** — il brand a sinistra e il numero del documento a destra, su tutte le pagine.
 - **Pagina 1 · Copertina** — titolo (premi Invio per andare a capo), sottotitolo, fino a 4 tag
   separati da virgola e l'immagine grande. Il logo Layerloop è già applicato, in copertina e in
-  fondo a ogni pagina: non serve caricarlo (il campo Logo serve solo per sostituirlo).
+  fondo a ogni pagina: non serve caricarlo (il campo Logo serve solo per sostituirlo). Con
+  **Logo a piè di pagina** lo sposti a sinistra, a destra, al centro, oppure lo togli.
 - **Pagina 2 · Colonna sinistra** — la sfida, il limite delle tecnologie tradizionali, il box
   verde con la soluzione, la domanda finale e l'etichetta del pulsante.
 - **Pagina 2 · Colonna destra** — la foto del pezzo e le specifiche (etichetta + valore, massimo 6).
@@ -129,8 +130,12 @@ Con **Esporta JSON** salvi il documento come file da conservare o passare a un c
 
 Passa alla scheda **Landing**.
 
-I testi sono già compilati con i contenuti del case study. Controllali e correggili: la landing
-parla al visitatore, il PDF è più tecnico.
+I testi sono già compilati con i contenuti del case study, e **restano agganciati**: se torni
+indietro a correggere il PDF, la landing si aggiorna da sola. Appena riscrivi un campo qui, quel
+campo diventa tuo e smette di seguire il case study (il pulsante più sotto lo rimette in riga).
+
+Nell'hero finiscono il titolo, il sottotitolo, i tag e **tutte** le specifiche compilate del case
+study — lunghezza, tempo di stampa, materiale, risoluzione, costo.
 
 Nel primo riquadro:
 
@@ -178,6 +183,12 @@ Scheda **Archivio** → **Apri** sulla landing che ti interessa. Testi e immagin
 nell'editor. Correggi quello che serve e ripubblica: viene aggiornata la stessa pagina, con lo
 stesso indirizzo. Il pulsante di pubblicazione lo dice chiaramente
 ("Stai aggiornando una landing esistente").
+
+**Il PDF allegato non si perde.** Riaprendo una landing, nel riquadro *PDF da allegare* trovi la
+voce **Mantieni il PDF già allegato**: è quella scelta di partenza, quindi puoi correggere i testi
+della pagina senza toccare il file che scaricano i contatti. Se invece hai cambiato il case study e
+vuoi anche il PDF aggiornato, scegli **Ricomponi il PDF dall'anteprima** — oppure **Allega un PDF
+già pronto** per sostituirlo con un file tuo.
 
 Per ricominciare da capo con un case study nuovo usa **＋ Nuovo case study** nella scheda Case study:
 le landing già pubblicate non vengono toccate.

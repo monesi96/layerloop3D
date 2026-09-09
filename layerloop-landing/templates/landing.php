@@ -73,6 +73,8 @@ if ( ! $hero_overlay ) {
 	$hero_hint = '';
 }
 $meta_parts   = array_values( array_filter( array_map( 'trim', explode( '|', $ll( 'll_meta', 'LayerLoop 3D|Whitepaper 01 / 2026|Manifattura & Automazione' ) ) ), 'strlen' ) );
+// Etichette del whitepaper (i tag del PDF), mostrate sotto il sottotitolo.
+$hero_tags    = array_values( array_filter( array_map( 'trim', explode( ',', (string) $ll( 'll_hero_tags', '' ) ) ), 'strlen' ) );
 
 $hero_stats = array();
 foreach ( $ll_lines( $ll( 'll_hero_stats', "~1h15 | tempo di stampa\n~50 g | peso pezzo\n€3,30 | al pezzo" ) ) as $line ) {

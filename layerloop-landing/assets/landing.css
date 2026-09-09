@@ -362,13 +362,24 @@ h2.sec-title{font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.
 }
 .ll-landing--studio .viewport .stage { margin: 0; max-width: none; }
 .ll-landing--studio .viewport .ll-svg { filter: none; }
-.ll-landing--studio .hero-stats {
-  display: grid; grid-template-columns: repeat(3, 1fr); max-width: 980px; margin: 22px auto 0; padding: 0;
-  background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+/* Etichette del whitepaper (i tag del PDF). */
+.ll-landing--studio .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 0 30px; }
+.ll-landing--studio .pills span {
+  padding: 8px 18px; border: 1px solid var(--pill-br); border-radius: 999px; background: #fff;
+  color: #1a6f62; font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
 }
-.ll-landing--studio .hero-stats div { padding: 30px 18px; border-left: 1px solid var(--line); }
-.ll-landing--studio .hero-stats div:first-child { border-left: 0; }
-.ll-landing--studio .hero-stats div b { font-size: 25px; font-variant-numeric: tabular-nums; }
+
+/* Numeri chiave: tante colonne quante ne servono, senza schiacciarsi.
+   Le specifiche del case study finiscono qui tutte, non solo le prime tre. */
+/* I filetti fra una cifra e l'altra sono lo sfondo che passa fra le celle:
+   così le righe restano pulite con tre voci come con sei. */
+.ll-landing--studio .hero-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px;
+  max-width: 980px; margin: 22px auto 0; padding: 0;
+  background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+}
+.ll-landing--studio .hero-stats div { padding: 26px 18px; border: 0; background: #fff; }
+.ll-landing--studio .hero-stats div b { font-size: clamp(18px, 1.6vw, 25px); font-variant-numeric: tabular-nums; }
 .ll-landing--studio .hero-stats div span { display: block; margin-top: 6px; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; }
 .ll-landing--studio .hero .wrap { padding-bottom: 48px; }
 
@@ -381,7 +392,7 @@ h2.sec-title{font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.
 }
 
 /* ---- il limite: un pannello per paragrafo ---- */
-.ll-landing--studio .limits { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1000px; margin: 0 auto; }
+.ll-landing--studio .limits { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; max-width: 1100px; margin: 0 auto; }
 .ll-landing--studio .limits div {
   padding: 40px 36px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line);
   text-align: center; font-size: 17.5px; color: var(--body-text);
@@ -451,8 +462,6 @@ h2.sec-title{font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.
   .ll-landing--studio .hero__meta { flex-direction: column; gap: 6px; }
   .ll-landing--studio .viewport { padding: 14px; }
   .ll-landing--studio .hero-stats { grid-template-columns: 1fr; }
-  .ll-landing--studio .hero-stats div { border-left: 0; border-top: 1px solid var(--line); }
-  .ll-landing--studio .hero-stats div:first-child { border-top: 0; }
   .ll-landing--studio .limits { grid-template-columns: 1fr; }
   .ll-landing--studio .solution { padding: 36px 26px; }
   .ll-landing--studio .material { grid-template-columns: 1fr; gap: 32px; padding: 26px; }
