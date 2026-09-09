@@ -1,0 +1,261 @@
+# Guida allo Studio Layerloop
+
+Per chi crea i case study e le landing page. Non serve entrare in bacheca: si fa tutto dalla
+pagina **layerloop3d.com/pdf-generator/**.
+
+---
+
+## 1. Entrare
+
+Apri `/pdf-generator/`. Se non hai già fatto l'accesso trovi un riquadro bianco con nome utente e
+password: sono le stesse credenziali del sito Layerloop.
+
+Password dimenticata? Il link "Reimpostala qui" sotto il modulo ti manda un'email.
+
+Dopo l'accesso si apre lo Studio: a sinistra i campi da compilare, a destra l'anteprima delle
+pagine A4. Quello che vedi a destra è esattamente il PDF che verrà scaricato.
+
+---
+
+## 2. Le tre schede
+
+In alto a sinistra ci sono tre pulsanti:
+
+| Scheda | A cosa serve |
+|---|---|
+| **Case study** | I contenuti del PDF: testi, foto, specifiche, materiale, benchmark |
+| **Landing** | I testi della pagina web del whitepaper e il pulsante per pubblicarla |
+| **Archivio** | Le landing già online, con i contatti raccolti |
+
+Il lavoro si salva da solo nel tuo browser mentre scrivi. Se chiudi la pagina e torni, ritrovi
+tutto com'era.
+
+---
+
+## 3. Partire da un PDF già fatto
+
+Se il whitepaper esiste già in PDF, non serve riscriverlo: nella scheda **Case study** premi
+**⇪ Importa da un PDF già impaginato** e scegli il file.
+
+Lo Studio legge il PDF e compila da solo: brand e numero del documento, titolo, sottotitolo, tag,
+"la sfida", "il limite delle tecnologie tradizionali", il box della soluzione, "perché conviene" e
+tutte le specifiche della colonna destra. Recupera anche l'immagine grande della copertina e la
+foto del pezzo.
+
+Il file che hai importato resta agganciato: sarà quello allegato alla landing, senza ricomporlo.
+Lo vedi indicato nella scheda **Landing**, riquadro "PDF da allegare".
+
+I testi arrivano interi: non vengono tagliati. Se sono più lunghi dello spazio disponibile,
+l'impaginazione riduce da sola il corpo del carattere finché tutto rientra nella pagina.
+
+> L'importazione è una scorciatoia, non una garanzia: **ricontrolla sempre i campi** prima di
+> pubblicare. Se un testo è finito nel posto sbagliato, correggilo a mano — il PDF allegato non
+> cambia.
+
+---
+
+## 4. Compilare il case study
+
+Scrivi **sempre in italiano**. I campi sono nell'ordine delle pagine:
+
+- **Intestazione** — il brand a sinistra e il numero del documento a destra, su tutte le pagine.
+- **Pagina 1 · Copertina** — titolo (premi Invio per andare a capo), sottotitolo, fino a 4 tag
+  separati da virgola e l'immagine grande. Il logo Layerloop è già applicato, in copertina e in
+  fondo a ogni pagina: non serve caricarlo (il campo Logo serve solo per sostituirlo). Con
+  **Logo a piè di pagina** lo sposti a sinistra, a destra, al centro, oppure lo togli.
+- **Pagina 2 · Colonna sinistra** — la sfida, il limite delle tecnologie tradizionali, il box
+  verde con la soluzione, la domanda finale e l'etichetta del pulsante.
+- **Pagina 2 · Colonna destra** — la foto del pezzo e le specifiche (etichetta + valore, massimo 6).
+- **Pagina 2 · Materiale** — nome, descrizione e i sette indicatori da 1 a 10.
+- **Pagine 3–4 · Benchmark** — spuntando la casella si aggiungono due pagine di confronto.
+  Il PDF ha sempre un numero pari di pagine: 2 senza benchmark, 4 con benchmark.
+
+Sotto ogni campo c'è il contatore dei caratteri. Puoi scrivere liberamente: **più testo scrivi,
+più il corpo del carattere di quel blocco si riduce da solo** per far stare tutto nella pagina, senza
+tagliare niente e mantenendo le proporzioni fra titoletti e testo.
+
+Quando il testo arriva al corpo minimo leggibile **il campo si blocca**: il carattere in più non
+viene accettato, il bordo lampeggia rosso e compare un avviso. Cancella qualcosa in quella pagina e
+riprendi a scrivere. Non è possibile far uscire il testo dal foglio, né sotto né di lato.
+
+### Le immagini
+
+Si caricano dal pulsante "Carica immagine". Vengono ridimensionate e alleggerite in automatico,
+la trasparenza viene mantenuta. Formati accettati: PNG, JPG, WebP.
+
+---
+
+## 5. Il fil di ferro con l'intelligenza artificiale
+
+Nel riquadro verde sotto l'immagine di copertina:
+
+1. **Stile** — "Fil di ferro tecnico" è quello usato nelle landing. Ci sono anche
+   "Render pulito del pezzo" e "Disegno tecnico".
+2. **Immagine da usare** — quale foto trasformare: la copertina o la foto del pezzo.
+3. **Proporzione** — lascia "Proporzione originale" salvo esigenze particolari.
+4. **Cosa isolare o modificare** — scrivi in italiano o in inglese cosa vuoi:
+   *"isola solo il soffietto centrale, vista di tre quarti"*.
+5. **Rendi trasparente lo sfondo bianco** — lascialo attivo: serve per sovrapporre il wireframe
+   al render nella landing.
+6. Premi **Genera immagine con Gemini**. Servono dai 10 ai 40 secondi.
+
+Il risultato sostituisce l'immagine scelta. Se non ti piace, ricarica la foto originale e riprova
+con una descrizione diversa.
+
+> L'immagine da trasformare deve essere stata caricata da te in questa sessione. Se hai riaperto
+> un progetto dall'Archivio, ricarica la foto dal computer prima di generare.
+
+---
+
+## 6. Ottenere il PDF
+
+Due pulsanti, due risultati:
+
+- **↓ Scarica il PDF italiano** — un clic, file pronto. È lo stesso PDF che viene allegato alla
+  landing. Le pagine sono immagini ad alta risoluzione: perfette da leggere e da stampare, ma il
+  testo non è selezionabile.
+- **Stampa (PDF vettoriale)** — apre la finestra di stampa del browser. Scegli
+  **Destinazione: Salva come PDF**, **Margini: Nessuno**, **Grafica di sfondo: attiva**,
+  **Intestazioni e piè di pagina: disattiva**. Testo selezionabile e file più leggero.
+
+**PDF inglese** traduce i testi con il traduttore integrato di Chrome e scarica la versione EN.
+Funziona solo su Chrome aggiornato; su altri browser compare un avviso.
+
+Con **Esporta JSON** salvi il documento come file da conservare o passare a un collega, con
+**Importa JSON** lo riapri.
+
+---
+
+## 7. Pubblicare la landing page
+
+Passa alla scheda **Landing**.
+
+I testi sono già compilati con i contenuti del case study, e **restano agganciati**: se torni
+indietro a correggere il PDF, la landing si aggiorna da sola. Appena riscrivi un campo qui, quel
+campo diventa tuo e smette di seguire il case study (il pulsante più sotto lo rimette in riga).
+
+Nell'hero finiscono il titolo, il sottotitolo, i tag e **tutte** le specifiche compilate del case
+study — lunghezza, tempo di stampa, materiale, risoluzione, costo.
+
+Nel primo riquadro:
+
+- **Titolo della landing** — diventa anche l'indirizzo: "Raccordi e soffietti flessibili on-demand"
+  → `/whitepaper/raccordi-e-soffietti-flessibili-on-demand/`.
+- **Descrizione per Google** — due righe che compaiono nei risultati di ricerca.
+- **Modulo contatti** — scegli il modulo Ninja Forms. Viene inserito in fondo alla pagina e chi lo
+  compila riceve il PDF.
+- **Stato** — "Pubblicata" la mette online, "Bozza" la tiene nascosta finché non sei pronto.
+
+Il pulsante **↺ Riprendi tutti i testi dal case study** ricompila tutti i campi partendo dal
+case study: comodo se hai cambiato molto e vuoi ripartire pulito (le immagini non vengono toccate).
+
+Poi, in fondo, **Genera PDF e pubblica la landing**. In una trentina di secondi compare il link
+alla pagina appena messa online.
+
+### L'immagine dell'hero
+
+Di serie la landing mostra **una sola foto**, presa dal case study: la foto del pezzo, oppure
+l'immagine di copertina se la foto manca. Puoi sostituirla dal campo **Immagine dell'hero**.
+
+Se vuoi l'effetto render→wireframe — la macchia che segue il mouse e scopre il fil di ferro —
+carica anche l'**Immagine WIREFRAME**. Servono due condizioni, altrimenti viene male:
+
+- **stessa inquadratura** delle due foto, altrimenti l'effetto "salta";
+- **entrambe scontornate** (pulsante **✂ Scontorna**), altrimenti il wireframe con il fondo pieno
+  copre la foto invece di scoprirla e si vede un rettangolo bianco.
+
+Lascia vuoto il campo wireframe e resta la singola foto.
+
+### I campi vuoti spariscono
+
+Sulle landing pubblicate dallo Studio un campo lasciato vuoto **non** viene riempito con un testo di
+esempio: l'elemento sparisce e basta. Vale anche per le sezioni intere — niente testo nel blocco
+"Il problema", niente sezione "Il problema".
+
+Le specifiche ancora sul valore predefinito **Da inserire** non arrivano sulla landing: quelle
+caselle restano fuori finché non ci scrivi un valore vero.
+
+---
+
+## 8. Modificare una landing già pubblicata
+
+Scheda **Archivio** → **Apri** sulla landing che ti interessa. Testi e immagini tornano
+nell'editor. Correggi quello che serve e ripubblica: viene aggiornata la stessa pagina, con lo
+stesso indirizzo. Il pulsante di pubblicazione lo dice chiaramente
+("Stai aggiornando una landing esistente").
+
+**Il PDF allegato non si perde.** Riaprendo una landing, nel riquadro *PDF da allegare* trovi la
+voce **Mantieni il PDF già allegato**: è quella scelta di partenza, quindi puoi correggere i testi
+della pagina senza toccare il file che scaricano i contatti. Se invece hai cambiato il case study e
+vuoi anche il PDF aggiornato, scegli **Ricomponi il PDF dall'anteprima** — oppure **Allega un PDF
+già pronto** per sostituirlo con un file tuo.
+
+Per ricominciare da capo con un case study nuovo usa **＋ Nuovo case study** nella scheda Case study:
+le landing già pubblicate non vengono toccate.
+
+---
+
+## 9. Cosa succede ai contatti
+
+Chi compila il modulo sulla landing:
+
+1. riceve subito il whitepaper (download immediato, email con link, o entrambi — lo decide
+   l'amministratore nelle impostazioni);
+2. finisce fra le submission di Ninja Forms **con indicato da quale whitepaper arriva**;
+3. fa salire il contatore "contatti raccolti" che vedi nell'Archivio.
+
+Il link nell'email scade (di default dopo una settimana): serve a evitare che il PDF giri
+liberamente in rete.
+
+---
+
+## 10. La pagina con tutti i case study
+
+Metti in una pagina qualsiasi lo shortcode:
+
+```
+[ll_case_studies]
+```
+
+Compare l'elenco a scorrimento di tutte le landing pubblicate: copertina del PDF, titolo,
+sottotitolo e pulsante "Leggi il case study completo". Si aggiorna da solo ogni volta che pubblichi
+una nuova landing, non c'è niente da mantenere.
+
+Se vuoi cambiare l'etichetta o quante schede mostrare:
+
+```
+[ll_case_studies label="Case study" cta="Leggi tutto" limit="8"]
+```
+
+---
+
+## Problemi frequenti
+
+**"Chiave Gemini non configurata"** — la generazione delle immagini è spenta. Il resto funziona:
+chiedi a un amministratore di inserire la chiave.
+
+**"Sessione scaduta"** — ricarica la pagina e rifai l'accesso. Il lavoro resta salvato nel browser.
+
+**"Il server ha rifiutato l'invio perché troppo pesante"** — le immagini caricate sono troppo
+grandi. Ricaricale più leggere (sotto i 2 MB l'una) oppure pubblica senza le pagine benchmark.
+
+**La pubblicazione sembra bloccata** — la composizione del PDF impegna il browser per qualche
+decina di secondi, soprattutto con 4 pagine. Aspetta il messaggio verde, non ricaricare.
+
+**Sulla landing vedo il raccordo blu invece del mio pezzo** — le immagini hero sono rimaste vuote:
+torna nella scheda Landing, caricale e ripubblica.
+
+**Dietro al pezzo si vede un rettangolo bianco** — l'immagine non è scontornata. Premi
+**✂ Scontorna**: sta accanto a "Carica immagine", sotto ogni campo immagine. Toglie il fondo
+uniforme partendo dai bordi, senza intaccare le zone chiare dentro al pezzo. Le immagini estratte
+da un PDF vengono già scontornate in automatico all'importazione.
+
+**Non trovo il pulsante ✂ Scontorna** — il browser sta usando la versione vecchia dello Studio.
+Ricarica la pagina tenendo premuto Maiusc (o Ctrl+F5). Se ancora non compare, chiedi a un
+amministratore di verificare di aver caricato l'ultima versione del plugin.
+
+**Il testo di una pagina è diventato più piccolo** — è voluto: il blocco si è adattato per far
+stare tutto nella pagina. Se lo vuoi più grande, accorcia il testo.
+
+**Sotto il foglio c'è una fascia rossa "troppo testo anche al corpo minimo"** — hai superato il
+limite oltre il quale il testo diventerebbe illeggibile. Taglia qualche riga in quella pagina.
