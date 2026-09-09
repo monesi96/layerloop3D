@@ -757,10 +757,23 @@ html.ll-studio-open body {
 
 /* ---------------------------------------------------------- fogli A4 */
 
+/*
+ * Il foglio A4 non cambia mai misura: 794×1123, qualunque cosa ci si scriva.
+ *
+ * `overflow-wrap: anywhere` (e non `break-word`) è la chiave: solo così una
+ * sequenza lunghissima senza spazi smette di rivendicare la propria larghezza
+ * quando il browser calcola le colonne. Con `min-width: 0` nessun elemento di
+ * una griglia o di una riga flex può allargarsi oltre lo spazio assegnato:
+ * prima una parola lunga schiacciava la colonna destra fino a farla sparire e
+ * il testo usciva dal bordo.
+ */
+.ll-sheet,
+.ll-sheet * {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
 .ll-sheet {
-	/* Ereditato da tutto il contenuto: una sequenza lunga senza spazi va a capo
-	   invece di uscire dal bordo del foglio. */
-	overflow-wrap: break-word;
 	position: relative;
 	flex: 0 0 auto;
 	width: 794px;

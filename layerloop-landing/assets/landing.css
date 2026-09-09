@@ -321,6 +321,9 @@ h2.sec-title{font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.
    ============================================================ */
 
 .ll-landing--studio { --radius: 22px; --radius-sm: 14px; --body-text: #2c3a38; }
+/* Come nel PDF: una sequenza lunghissima senza spazi va a capo invece di
+   allargare la colonna e spingere la pagina fuori squadro. */
+.ll-landing--studio, .ll-landing--studio * { min-width: 0; overflow-wrap: anywhere; }
 .ll-landing--studio section { padding: 104px 0; }
 .ll-landing--studio section.alt { background: var(--panel); }
 .ll-landing--studio img { max-width: 100%; display: block; }

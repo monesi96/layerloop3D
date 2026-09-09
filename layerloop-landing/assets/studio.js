@@ -2293,6 +2293,14 @@
 				} );
 			}
 
+			// Ultimo controllo, in larghezza: il foglio A4 non deve mai allargarsi.
+			// Il CSS manda a capo anche le sequenze senza spazi, quindi qui non si
+			// dovrebbe arrivare: se succede lo stesso, la battuta viene rifiutata
+			// invece di sfondare la pagina.
+			if ( sheet.scrollWidth > sheet.clientWidth + 1 ) {
+				fitted = false;
+			}
+
 			if ( fitted ) {
 				return;
 			}
