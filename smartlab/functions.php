@@ -217,33 +217,161 @@ function smartlab_enqueue_style() {
 }
 add_action('wp_enqueue_scripts', 'smartlab_enqueue_style', 30);
 
-//Crea una funzione con una definizione chiara e indicativa
-function login_wp_nascosto(){
+/* ============================================================
+   LOGIN NASCOSTO — wp-login.php raggiungibile solo con la chiave
+   ------------------------------------------------------------
+   Un solo meccanismo, volutamente: il "gate" su login_init.
+   Le vecchie login_wp_nascosto() (hook login_head) e login_attuale()
+   (hook init) sono state rimosse perche' si sovrapponevano a questo
+   e causavano il redirect in fase di login.
 
-//nella variabile passerai come valore il nuovo url (sostituisci con quello che vuoi)
-    $new_login=  'adm_2ld';
-    if(strpos($_SERVER['REQUEST_URI'], $new_login) === false){
+   VIA DI FUGA: se resti chiuso fuori, in wp-config.php aggiungi
+       define( 'SMARTLAB_LOGIN_GATE_OFF', true );
+   e wp-login.php torna raggiungibile senza chiave.
+   ============================================================ */
 
-//al logout saremo indirizzati alla home del sito
-        wp_safe_redirect( home_url(), 302 );
-        exit();
-    }
+if ( ! defined( 'SMARTLAB_LOGIN_KEY' ) ) {
+	define( 'SMARTLAB_LOGIN_KEY', 'adm_2ld' );
 }
 
-//con il solito hook invochiamo la nostra funzione
-add_action( 'login_head', 'login_wp_nascosto');
-
-//adesso reindirizziamo alla pagina di login sul nuovo percorso
-function login_attuale(){
-
-    $new_login =  'adm_2ld';
-    if(parse_url($_SERVER['REQUEST_URI'],PHP_URL_QUERY) == $new_login&& ($_GET['redirect'] !== false)){
-        wp_safe_redirect(home_url("wp-login.php?$new_login&redirect=false"));
-        exit();
-
-    }
+// Valore non vuoto: "adm_2ld=1" sopravvive a cache, proxy e esc_url(),
+// mentre "adm_2ld=" (valore vuoto) viene a volte scartato.
+if ( ! defined( 'SMARTLAB_LOGIN_VALUE' ) ) {
+	define( 'SMARTLAB_LOGIN_VALUE', '1' );
 }
-add_action( 'init', 'login_attuale');
+
+function smartlab_login_gate_is_active() {
+	return ! ( defined( 'SMARTLAB_LOGIN_GATE_OFF' ) && SMARTLAB_LOGIN_GATE_OFF );
+}
+
+// La chiave vale sia in GET sia in POST (vedi campo nascosto piu' sotto):
+// cosi' l'invio del form passa anche se la query string dell'action viene
+// perduta da un plugin, da un proxy o da una regola di rewrite.
+function smartlab_login_key_present() {
+	return isset( $_REQUEST[ SMARTLAB_LOGIN_KEY ] );
+}
+
+function smartlab_login_current_action() {
+	return isset( $_REQUEST['action'] ) ? sanitize_key( $_REQUEST['action'] ) : 'login';
+}
+
+// Richieste che devono passare SEMPRE: se le blocchi rompi WordPress
+// (logout, password dei contenuti protetti, link di reset via email...).
+function smartlab_login_action_is_exempt() {
+
+	$esenti = array(
+		'logout',
+		'postpass',
+		'rp',
+		'resetpass',
+		'resetpassword',
+		'confirmaction',
+		'confirm_admin_email',
+		'entered_recovery_mode',
+	);
+
+	if ( in_array( smartlab_login_current_action(), $esenti, true ) ) {
+		return true;
+	}
+
+	// Login "interstiziale": il modale che l'admin mostra a sessione scaduta.
+	if ( isset( $_REQUEST['interim-login'] ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+function smartlab_login_gate() {
+
+	if ( ! smartlab_login_gate_is_active() ) {
+		return;
+	}
+
+	if ( smartlab_login_key_present() ) {
+		return;
+	}
+
+	if ( smartlab_login_action_is_exempt() ) {
+		return;
+	}
+
+	// Chi e' gia' autenticato non va buttato fuori.
+	if ( is_user_logged_in() ) {
+		return;
+	}
+
+	// Niente redirect su POST: un 302 trasforma il POST in GET e perde le
+	// credenziali, ed e' esattamente cio' che sembra un "redirect loop".
+	if ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
+		status_header( 403 );
+		nocache_headers();
+		wp_die( __( 'Accesso non consentito.', 'smartlab' ), '', array( 'response' => 403 ) );
+	}
+
+	wp_safe_redirect( home_url( '/' ), 302 );
+	exit;
+}
+add_action( 'login_init', 'smartlab_login_gate', 1 );
+
+// Se sei gia' dentro, wp-login.php ti porta all'admin invece di
+// rimostrarti il form (tranne quando WP chiede esplicitamente reauth).
+function smartlab_login_skip_when_logged_in() {
+
+	if ( 'login' !== smartlab_login_current_action() ) {
+		return;
+	}
+
+	if ( ! empty( $_REQUEST['reauth'] ) || isset( $_REQUEST['interim-login'] ) ) {
+		return;
+	}
+
+	if ( 'GET' !== strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
+		return;
+	}
+
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	wp_safe_redirect( admin_url() );
+	exit;
+}
+add_action( 'login_init', 'smartlab_login_skip_when_logged_in', 2 );
+
+// La chiave viaggia anche come campo nascosto dentro i form di wp-login.php.
+function smartlab_login_key_field() {
+	printf(
+		'<input type="hidden" name="%s" value="%s" />' . "\n",
+		esc_attr( SMARTLAB_LOGIN_KEY ),
+		esc_attr( SMARTLAB_LOGIN_VALUE )
+	);
+}
+add_action( 'login_form',        'smartlab_login_key_field' );
+add_action( 'lostpassword_form', 'smartlab_login_key_field' );
+add_action( 'resetpass_form',    'smartlab_login_key_field' );
+add_action( 'register_form',     'smartlab_login_key_field' );
+
+// Propaga la chiave su tutti gli URL di login generati da WordPress.
+function smartlab_add_login_key( $url ) {
+	return add_query_arg( SMARTLAB_LOGIN_KEY, SMARTLAB_LOGIN_VALUE, $url );
+}
+add_filter( 'login_url',        'smartlab_add_login_key' );
+add_filter( 'lostpassword_url', 'smartlab_add_login_key' );
+add_filter( 'logout_url',       'smartlab_add_login_key' );
+add_filter( 'register_url',     'smartlab_add_login_key' );
+
+// Copre l'action del form (scheme login_post) e gli altri URL di wp-login.php.
+function smartlab_login_post_url( $url, $path, $scheme ) {
+
+	if ( 'login_post' !== $scheme && 'login' !== $scheme ) {
+		return $url;
+	}
+
+	return add_query_arg( SMARTLAB_LOGIN_KEY, SMARTLAB_LOGIN_VALUE, $url );
+}
+add_filter( 'site_url',         'smartlab_login_post_url', 10, 3 );
+add_filter( 'network_site_url', 'smartlab_login_post_url', 10, 3 );
 
 
 
