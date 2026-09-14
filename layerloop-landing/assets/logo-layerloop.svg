@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="86" viewBox="0 0 400 86" role="img" aria-label="Layerloop — the power of 3D to infinity">
+  <!--
+    Ripiego vettoriale del marchio Layerloop: wordmark con le due O sostituite dal
+    simbolo di infinito e strati di stampa nel lobo destro, più il claim.
+    Nello Studio viene usato solo se il sito non ha un logo caricato
+    (Impostazioni Studio → Logo, oppure logo del tema / kit Elementor).
+    textLength fissa la larghezza delle parole, così il marchio resta composto
+    anche quando il carattere di ripiego è più stretto o più largo.
+  -->
+  <defs>
+    <pattern id="layers" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <rect width="2.2" height="5" fill="#1a6f62"/>
+    </pattern>
+    <clipPath id="right-lobe">
+      <path d="M296 31C310 49 340 49 340 31C340 13 310 13 296 31Z"/>
+    </clipPath>
+  </defs>
+
+  <text x="0" y="50" textLength="238" lengthAdjust="spacingAndGlyphs" fill="#1a6f62" font-family="Montserrat, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="900">LAYERL</text>
+
+  <!-- ∞ : lemniscata a tratto pieno -->
+  <path d="M296 31C282 13 252 13 252 31C252 49 282 49 296 31C310 13 340 13 340 31C340 49 310 49 296 31Z" fill="none" stroke="#1a6f62" stroke-width="9" stroke-linejoin="round"/>
+  <!-- strati di stampa nel lobo destro -->
+  <g clip-path="url(#right-lobe)">
+    <rect x="296" y="13" width="44" height="36" fill="url(#layers)"/>
+  </g>
+
+  <text x="346" y="50" textLength="40" lengthAdjust="spacingAndGlyphs" fill="#1a6f62" font-family="Montserrat, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="900">P</text>
+
+  <text x="1" y="78" textLength="300" lengthAdjust="spacing" fill="#3aa596" font-family="Montserrat, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="400">the power of 3D to infinity</text>
+</svg>
