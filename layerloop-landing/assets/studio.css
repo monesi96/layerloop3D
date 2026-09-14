@@ -1434,3 +1434,20 @@ html.ll-studio-open body {
 		page-break-after: auto;
 	}
 }
+
+/* Galleria della landing: otto caselle foto affiancate a due a due, così la
+   sezione resta corta anche con tutte le foto caricate. */
+.ll-fieldset-grid .ll-image-field {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px 14px;
+	align-items: start;
+}
+
+.ll-fieldset-grid .ll-image-field > span {
+	grid-column: 1 / -1;
+}
+
+.ll-fieldset-grid .ll-image-field .ll-image-note {
+	display: none;
+}

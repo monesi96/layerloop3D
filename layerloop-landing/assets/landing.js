@@ -61,3 +61,29 @@ document.querySelectorAll('[data-aura]').forEach(box=>{
     stage.style.transform=`translateY(${((p-0.5)*30).toFixed(1)}px) scale(${(1+p*0.10).toFixed(3)})`;ticking=false;});}
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 })();
+
+/* GALLERIA "LE NOSTRE STAMPE" — frecce che scorrono di una foto per volta.
+   Senza JavaScript il carosello resta comunque sfogliabile con il dito o la
+   rotella: le frecce sono un di più, non la sola strada. */
+document.querySelectorAll('[data-ll-gallery]').forEach(function(gallery){
+  var track=gallery.querySelector('[data-ll-gallery-track]');
+  var prev=gallery.querySelector('.ll-gallery__prev');
+  var next=gallery.querySelector('.ll-gallery__next');
+  if(!track||!prev||!next)return;
+
+  function step(){
+    var first=track.firstElementChild;
+    if(!first)return track.clientWidth;
+    var gap=parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap||'0')||0;
+    return first.getBoundingClientRect().width+gap;
+  }
+  function sync(){
+    prev.disabled=track.scrollLeft<=2;
+    next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-2;
+  }
+  prev.addEventListener('click',function(){track.scrollBy({left:-step(),behavior:'smooth'});});
+  next.addEventListener('click',function(){track.scrollBy({left:step(),behavior:'smooth'});});
+  track.addEventListener('scroll',sync,{passive:true});
+  window.addEventListener('resize',sync);
+  sync();
+});

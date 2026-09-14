@@ -166,6 +166,21 @@ carica anche l'**Immagine WIREFRAME**. Servono due condizioni, altrimenti viene 
 
 Lascia vuoto il campo wireframe e resta la singola foto.
 
+### Le foto delle stampe e il video
+
+Due blocchi facoltativi, in fondo alla scheda Landing:
+
+- **Le nostre stampe — foto**: fino a otto foto del pezzo finito, mostrate in un carosello. Servono
+  a far vedere il prodotto vero, non solo il render.
+- **Il video della stampa**: incolla un link di YouTube o Vimeo, oppure premi **⇪ Carica un video**
+  e scegli il filmato dal computer (MP4, WebM, MOV). Puoi aggiungere un'immagine di copertina.
+
+Regola valida per entrambi: **se non metti niente, il blocco non compare proprio sulla landing** —
+niente riquadri vuoti, niente titoli senza contenuto.
+
+Se il caricamento del video si interrompe con un errore sul limite di upload, il filmato supera
+quello che accetta il server: caricalo su YouTube (anche "non in elenco") e incolla il link.
+
 ### I campi vuoti spariscono
 
 Sulle landing pubblicate dallo Studio un campo lasciato vuoto **non** viene riempito con un testo di
@@ -226,6 +241,23 @@ Se vuoi cambiare l'etichetta o quante schede mostrare:
 ```
 [ll_case_studies label="Case study" cta="Leggi tutto" limit="8"]
 ```
+
+### La pagina di un settore
+
+Nella scheda **Landing** scegli il **Settore** del case study (nautica, automotive, podologia…).
+Se il settore non c'è ancora, scegli **＋ Nuovo settore…** e scrivine il nome: viene creato al
+volo, senza passare dalla bacheca.
+
+Subito sotto il menu a tendina compare lo shortcode già pronto. Copialo e incollalo nella pagina
+Elementor di quel settore:
+
+```
+[ll_case_studies settore="nautica" label="Case study nautica"]
+```
+
+Mostra **solo** i case study di quel settore, e si aggiorna da solo ogni volta che ne pubblichi uno
+nuovo con lo stesso settore. Se il settore è ancora vuoto lo shortcode non stampa niente; per far
+comparire una riga al suo posto aggiungi `vuoto="Presto i primi case study."`.
 
 ---
 

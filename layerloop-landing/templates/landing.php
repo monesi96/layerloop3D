@@ -178,6 +178,45 @@ foreach ( $materials as $i => $m ) {
 	);
 }
 
+/* ---------- GALLERIA "LE NOSTRE STAMPE" ---------- */
+/*
+ * Otto caselle foto: quelle vuote non lasciano buchi e, se sono vuote tutte,
+ * il blocco non viene proprio stampato.
+ */
+$gallery_title = $ll( 'll_gallery_title', '' );
+$gallery_text  = $ll( 'll_gallery_text', '' );
+$gallery       = array();
+for ( $i = 1; $i <= 8; $i++ ) {
+	$img = $ll( "ll_gal{$i}_img", '' );
+	if ( $img ) {
+		$gallery[] = $img;
+	}
+}
+
+/* ---------- VIDEO DELLA STAMPA ---------- */
+$video_title  = $ll( 'll_video_title', '' );
+$video_text   = $ll( 'll_video_text', '' );
+$video_url    = trim( (string) $ll( 'll_video_url', '' ) );
+$video_poster = $ll( 'll_video_poster', '' );
+
+/*
+ * Da un indirizzo qualsiasi al riquadro giusto: YouTube e Vimeo diventano un
+ * incorporamento, un file caricato in libreria diventa un lettore video.
+ */
+$video_embed = '';
+$video_file  = '';
+if ( $video_url ) {
+	if ( preg_match( '#youtu\.be/([A-Za-z0-9_-]{6,})#', $video_url, $m ) || preg_match( '#youtube\.com/.*[?&]v=([A-Za-z0-9_-]{6,})#', $video_url, $m ) || preg_match( '#youtube\.com/(?:embed|shorts)/([A-Za-z0-9_-]{6,})#', $video_url, $m ) ) {
+		$video_embed = 'https://www.youtube-nocookie.com/embed/' . $m[1] . '?rel=0';
+	} elseif ( preg_match( '#vimeo\.com/(?:video/)?(\d+)#', $video_url, $m ) ) {
+		$video_embed = 'https://player.vimeo.com/video/' . $m[1];
+	} elseif ( preg_match( '#\.(mp4|webm|ogv|mov)(\?.*)?$#i', $video_url ) ) {
+		$video_file = $video_url;
+	} else {
+		$video_embed = $video_url;
+	}
+}
+
 /* ---------- STAMPANTI ---------- */
 $pr_index   = $ll( 'll_pr_index', '05 / 05' );
 $pr_eyebrow = $ll( 'll_pr_eyebrow', 'Le stampanti' );

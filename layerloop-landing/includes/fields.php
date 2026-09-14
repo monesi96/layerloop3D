@@ -131,6 +131,26 @@ add_action( 'acf/init', function () {
 				'default_value' => '<p>Durezza, passo del soffietto e diametri variano da file a file senza costi di attrezzaggio: <b>ogni misura è un nuovo file, non un nuovo stampo.</b></p>',
 			),
 
+			/* ---------------- GALLERIA E VIDEO ---------------- */
+			array( 'key' => 'f_ll_tab_media', 'label' => 'Foto e video', 'type' => 'tab' ),
+			ll_msg( 'f_ll_gallery_msg', '<strong>Le nostre stampe</strong> — senza nemmeno una foto il blocco non compare sulla landing.' ),
+			ll_f( 'f_ll_gallery_title', 'll_gallery_title', 'Titolo del blocco', 'text', 'Le nostre stampe' ),
+			ll_ta( 'f_ll_gallery_text', 'll_gallery_text', 'Testo introduttivo (facoltativo)', '', 2 ),
+			ll_img( 'f_ll_gal1_img', 'll_gal1_img', 'Foto 1' ),
+			ll_img( 'f_ll_gal2_img', 'll_gal2_img', 'Foto 2' ),
+			ll_img( 'f_ll_gal3_img', 'll_gal3_img', 'Foto 3' ),
+			ll_img( 'f_ll_gal4_img', 'll_gal4_img', 'Foto 4' ),
+			ll_img( 'f_ll_gal5_img', 'll_gal5_img', 'Foto 5' ),
+			ll_img( 'f_ll_gal6_img', 'll_gal6_img', 'Foto 6' ),
+			ll_img( 'f_ll_gal7_img', 'll_gal7_img', 'Foto 7' ),
+			ll_img( 'f_ll_gal8_img', 'll_gal8_img', 'Foto 8' ),
+
+			ll_msg( 'f_ll_video_msg', '<strong>Video della stampa</strong> — senza indirizzo del video il blocco non compare sulla landing.' ),
+			ll_f( 'f_ll_video_title', 'll_video_title', 'Titolo del blocco', 'text', 'Il video della stampa' ),
+			ll_ta( 'f_ll_video_text', 'll_video_text', 'Testo introduttivo (facoltativo)', '', 2 ),
+			ll_f( 'f_ll_video_url', 'll_video_url', 'Indirizzo del video', 'text', '', array( 'instructions' => 'YouTube, Vimeo oppure un file .mp4 caricato in libreria.' ) ),
+			ll_img( 'f_ll_video_poster', 'll_video_poster', 'Immagine di copertina del video (facoltativa)' ),
+
 			/* ---------------- 04 MATERIALI ---------------- */
 			array( 'key' => 'f_ll_tab_mat', 'label' => '04 · Materiali', 'type' => 'tab' ),
 			ll_f( 'f_ll_mat_index', 'll_mat_index', 'Numerazione sezione', 'text', '04 / 05' ),

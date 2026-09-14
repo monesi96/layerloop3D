@@ -175,6 +175,8 @@ class LL_Studio_Shortcode {
 			'defaultForm' => (int) LL_Studio_Settings::get( 'ninja_form_id', 0 ),
 			'forms'       => $forms,
 			'presets'     => $presets,
+			'sectors'     => LL_Studio_Sectors::all(),
+			'gallerySlots' => LL_Studio_Mapper::GALLERY_SLOTS,
 		);
 		wp_add_inline_script( 'll-studio', 'window.LLStudioConfig = ' . wp_json_encode( $config ) . ';', 'before' );
 

@@ -57,10 +57,17 @@ class LL_Studio_Case_Studies {
 				'cta'     => 'Leggi il case study completo',
 				'ids'     => '',
 				'orderby' => 'date',
+				'settore' => '',
+				'sector'  => '',
+				'vuoto'   => '',
 			),
 			$atts,
 			'll_case_studies'
 		);
+
+		// "settore" e "sector" fanno la stessa cosa: la pagina di un settore
+		// mostra solo i case study di quel settore.
+		$sector = trim( (string) ( $atts['settore'] ? $atts['settore'] : $atts['sector'] ) );
 
 		$query_args = array(
 			'post_type'      => LL_LANDING_CPT,
@@ -71,6 +78,19 @@ class LL_Studio_Case_Studies {
 			'no_found_rows'  => true,
 		);
 
+		if ( '' !== $sector ) {
+			$slugs = array_filter( array_map( 'sanitize_title', array_map( 'trim', explode( ',', $sector ) ) ) );
+			if ( $slugs ) {
+				$query_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+					array(
+						'taxonomy' => LL_Studio_Sectors::TAX,
+						'field'    => 'slug',
+						'terms'    => $slugs,
+					),
+				);
+			}
+		}
+
 		$ids = array_filter( array_map( 'absint', explode( ',', (string) $atts['ids'] ) ) );
 		if ( $ids ) {
 			$query_args['post__in'] = $ids;
@@ -80,7 +100,10 @@ class LL_Studio_Case_Studies {
 
 		$query = new WP_Query( $query_args );
 		if ( ! $query->have_posts() ) {
-			return '';
+			// Una pagina settore ancora senza case study non mostra un buco:
+			// o il messaggio scritto nello shortcode, o niente del tutto.
+			$empty = trim( (string) $atts['vuoto'] );
+			return '' !== $empty ? '<p class="ll-cs-empty">' . esc_html( $empty ) . '</p>' : '';
 		}
 
 		wp_enqueue_style( 'll-case-studies' );

@@ -55,6 +55,16 @@ class LL_Studio_Rest {
 
 		register_rest_route(
 			self::NS,
+			'/video',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'video' ),
+				'permission_callback' => array( $this, 'permission' ),
+			)
+		);
+
+		register_rest_route(
+			self::NS,
 			'/forms',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
@@ -127,6 +137,56 @@ class LL_Studio_Rest {
 		}
 
 		return rest_ensure_response( array( 'image' => 'data:' . $result['mime'] . ';base64,' . $result['base64'] ) );
+	}
+
+	/**
+	 * Carica un video nella libreria media.
+	 *
+	 * Il video non passa dal documento JSON come fanno le immagini: un filmato
+	 * di stampa pesa decine di megabyte e in base64 crescerebbe di un terzo.
+	 * Arriva qui come file vero e torna indietro solo il suo indirizzo.
+	 *
+	 * @param WP_REST_Request $request Richiesta.
+	 * @return WP_REST_Response|WP_Error
+	 */
+	public function video( WP_REST_Request $request ) {
+		$files = $request->get_file_params();
+		if ( empty( $files['file'] ) || ! is_array( $files['file'] ) ) {
+			return new WP_Error( 'll_video', 'Nessun file ricevuto.', array( 'status' => 400 ) );
+		}
+
+		$file = $files['file'];
+		if ( ! empty( $file['error'] ) ) {
+			return new WP_Error( 'll_video', 'Caricamento interrotto dal server: il file potrebbe superare il limite di upload di WordPress.', array( 'status' => 413 ) );
+		}
+
+		$type = wp_check_filetype( isset( $file['name'] ) ? $file['name'] : '' );
+		if ( empty( $type['type'] ) || 0 !== strpos( $type['type'], 'video/' ) ) {
+			return new WP_Error( 'll_video', 'Formato non riconosciuto: carica un MP4, WebM o MOV.', array( 'status' => 400 ) );
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+
+		$attachment = media_handle_sideload(
+			array(
+				'name'     => sanitize_file_name( $file['name'] ),
+				'tmp_name' => $file['tmp_name'],
+			),
+			0
+		);
+		if ( is_wp_error( $attachment ) ) {
+			return new WP_Error( 'll_video', $attachment->get_error_message(), array( 'status' => 500 ) );
+		}
+
+		return rest_ensure_response(
+			array(
+				'id'   => (int) $attachment,
+				'url'  => (string) wp_get_attachment_url( (int) $attachment ),
+				'name' => sanitize_file_name( $file['name'] ),
+			)
+		);
 	}
 
 	/**

@@ -23,6 +23,9 @@ class LL_Studio_Mapper {
 
 	const PROTECTED_DIR = 'layerloop-whitepapers';
 
+	/** Quante foto può contenere la galleria della landing. */
+	const GALLERY_SLOTS = 8;
+
 	const MAX_PDF_BYTES   = 26214400; // 25 MB.
 	const MAX_IMAGE_BYTES = 8388608;  // 8 MB.
 
@@ -69,6 +72,12 @@ class LL_Studio_Mapper {
 
 			'll_why_eyebrow'  => 60,
 			'll_why_title'    => 160,
+
+			'll_gallery_title' => 140,
+			'll_gallery_text'  => 600,
+			'll_video_title'   => 140,
+			'll_video_text'    => 600,
+			'll_video_url'     => 600,
 
 			'll_mat_index'    => 20,
 			'll_mat_eyebrow'  => 60,
@@ -123,7 +132,7 @@ class LL_Studio_Mapper {
 	 * @return array<int,string>
 	 */
 	public static function image_fields() {
-		return array(
+		$fields = array(
 			'll_hero_img_render',
 			'll_hero_img_wire',
 			'll_case_photo',
@@ -132,7 +141,22 @@ class LL_Studio_Mapper {
 			'll_mat3_img',
 			'll_pr1_img',
 			'll_pr2_img',
+			'll_video_poster',
 		);
+		return array_merge( $fields, self::gallery_fields() );
+	}
+
+	/**
+	 * Le foto della galleria "Le nostre stampe": otto caselle, nessuna obbligatoria.
+	 *
+	 * @return array<int,string>
+	 */
+	public static function gallery_fields() {
+		$fields = array();
+		for ( $i = 1; $i <= self::GALLERY_SLOTS; $i++ ) {
+			$fields[] = 'll_gal' . $i . '_img';
+		}
+		return $fields;
 	}
 
 	/**
@@ -592,6 +616,12 @@ class LL_Studio_Mapper {
 			}
 		}
 
+		// Settore: serve allo shortcode delle pagine settore. Se è un nome nuovo,
+		// il settore viene creato al volo — dallo Studio, senza passare in bacheca.
+		if ( array_key_exists( 'sector', $payload ) ) {
+			LL_Studio_Sectors::assign( $post_id, (string) $payload['sector'] );
+		}
+
 		$form_id = isset( $payload['formId'] ) ? absint( $payload['formId'] ) : 0;
 		if ( $form_id ) {
 			update_post_meta( $post_id, self::META_FORM, $form_id );
@@ -634,6 +664,9 @@ class LL_Studio_Mapper {
 
 		return array(
 			'post'     => self::summary( get_post( $post_id ) ),
+			// L'elenco aggiornato: se è appena nato un settore, lo Studio se lo
+			// ritrova nel menu a tendina senza ricaricare la pagina.
+			'sectors'  => LL_Studio_Sectors::all(),
 			'warnings' => $warnings,
 		);
 	}
@@ -742,6 +775,7 @@ class LL_Studio_Mapper {
 			);
 		}
 
+		$payload['sector']  = LL_Studio_Sectors::of( $post_id );
 		$payload['fields']  = $fields;
 		$payload['postId']  = (int) $post_id;
 		$payload['title']   = get_the_title( $post_id );
@@ -763,10 +797,14 @@ class LL_Studio_Mapper {
 		$pdf_it = (int) get_post_meta( $post->ID, self::META_PDF_IT, true );
 		$pdf_en = (int) get_post_meta( $post->ID, self::META_PDF_EN, true );
 
+		$sector = LL_Studio_Sectors::of( $post->ID );
+
 		return array(
 			'id'       => (int) $post->ID,
 			'title'    => get_the_title( $post ),
 			'status'   => $post->post_status,
+			'sector'   => $sector,
+			'sectorName' => $sector ? LL_Studio_Sectors::name( $sector ) : '',
 			'url'      => get_permalink( $post ),
 			'edited'   => get_post_modified_time( 'd/m/Y H:i', false, $post ),
 			'leads'    => (int) get_post_meta( $post->ID, self::META_LEADS, true ),

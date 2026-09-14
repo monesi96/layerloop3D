@@ -2,7 +2,7 @@
 /**
  * Plugin Name: LayerLoop Landing Settore + Studio
  * Description: Landing "settore" standardizzata (hero render→wireframe, confronto, case study, materiali, stampanti, CTA) e Studio pubblico per generare il PDF del case study, le immagini fil di ferro con Gemini e la landing page collegata, senza mai entrare in bacheca. Shortcode: [ll_landing] per la landing, [layerloop_studio] per lo Studio.
- * Version:     2.9.1
+ * Version:     3.0.0
  * Author:      LayerLoop 3D
  * Text Domain: layerloop-landing
  *
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LL_LANDING_VERSION', '2.9.1' );
+define( 'LL_LANDING_VERSION', '3.0.0' );
 define( 'LL_LANDING_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LL_LANDING_URL', plugin_dir_url( __FILE__ ) );
 
@@ -51,6 +51,7 @@ require_once LL_LANDING_PATH . 'includes/download.php';
 require_once LL_LANDING_PATH . 'includes/settings.php';
 require_once LL_LANDING_PATH . 'includes/roles.php';
 require_once LL_LANDING_PATH . 'includes/gemini.php';
+require_once LL_LANDING_PATH . 'includes/sectors.php';
 require_once LL_LANDING_PATH . 'includes/mapper.php';
 require_once LL_LANDING_PATH . 'includes/leads.php';
 require_once LL_LANDING_PATH . 'includes/rest.php';
@@ -91,6 +92,7 @@ register_activation_hook( __FILE__, 'll_landing_activate' );
  */
 function ll_landing_activate() {
 	LL_Studio_Roles::install();
+	LL_Studio_Sectors::install();
 	flush_rewrite_rules();
 	update_option( 'll_landing_installed', LL_LANDING_VERSION );
 }
@@ -103,6 +105,7 @@ function ll_landing_activate() {
 add_action( 'init', function () {
 	if ( get_option( 'll_landing_flushed' ) !== LL_LANDING_VERSION ) {
 		LL_Studio_Roles::install();
+		LL_Studio_Sectors::install();
 		flush_rewrite_rules();
 		update_option( 'll_landing_flushed', LL_LANDING_VERSION );
 	}
@@ -202,6 +205,7 @@ add_shortcode( 'll_landing', function () {
 add_action( 'plugins_loaded', function () {
 	( new LL_Studio_Settings() )->register();
 	( new LL_Studio_Roles() )->register();
+	( new LL_Studio_Sectors() )->register();
 	( new LL_Studio_Rest() )->register();
 	( new LL_Studio_Leads() )->register();
 	( new LL_Studio_Shortcode() )->register();

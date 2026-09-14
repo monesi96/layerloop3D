@@ -207,3 +207,10 @@
 		transition: none;
 	}
 }
+
+/* Pagina settore ancora senza case study: solo la riga scritta nello shortcode. */
+.ll-cs-empty {
+	margin: 0;
+	color: #63736f;
+	font-size: 15px;
+}

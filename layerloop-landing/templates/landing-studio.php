@@ -238,6 +238,56 @@ $mat_image = ! empty( $mat_first['image'] ) ? $mat_first['image'] : '';
 </section>
 <?php endif; ?>
 
+<!-- ============ LE NOSTRE STAMPE (GALLERIA) ============ -->
+<?php if ( ! empty( $gallery ) ) : ?>
+<section>
+  <div class="wrap reveal">
+    <?php $ll_head( '', $gallery_title ? $gallery_title : 'Le nostre stampe' ); ?>
+    <?php if ( $gallery_text ) : ?>
+    <div class="body-text"><p><?php echo esc_html( $gallery_text ); ?></p></div>
+    <?php endif; ?>
+    <div class="ll-gallery" data-ll-gallery>
+      <div class="ll-gallery__track" data-ll-gallery-track tabindex="0" role="list">
+        <?php foreach ( $gallery as $index => $photo ) : ?>
+        <figure class="ll-gallery__item" role="listitem">
+          <?php $ll_ticks(); ?>
+          <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( sprintf( '%s — foto %d', $hero_title ? str_replace( '|', ' ', $hero_title ) : 'Case study', $index + 1 ) ); ?>" loading="lazy">
+        </figure>
+        <?php endforeach; ?>
+      </div>
+      <?php if ( count( $gallery ) > 1 ) : ?>
+      <div class="ll-gallery__nav">
+        <button type="button" class="ll-gallery__prev" aria-label="Foto precedente">←</button>
+        <button type="button" class="ll-gallery__next" aria-label="Foto successiva">→</button>
+      </div>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<!-- ============ VIDEO DELLA STAMPA ============ -->
+<?php if ( $video_embed || $video_file ) : ?>
+<section class="alt">
+  <div class="wrap reveal">
+    <?php $ll_head( '', $video_title ? $video_title : 'Il video della stampa' ); ?>
+    <?php if ( $video_text ) : ?>
+    <div class="body-text"><p><?php echo esc_html( $video_text ); ?></p></div>
+    <?php endif; ?>
+    <div class="ll-video">
+      <?php $ll_ticks(); ?>
+      <?php if ( $video_file ) : ?>
+      <video controls preload="metadata"<?php echo $video_poster ? ' poster="' . esc_url( $video_poster ) . '"' : ''; ?>>
+        <source src="<?php echo esc_url( $video_file ); ?>">
+      </video>
+      <?php else : ?>
+      <iframe src="<?php echo esc_url( $video_embed ); ?>" title="<?php echo esc_attr( $video_title ? $video_title : 'Il video della stampa' ); ?>" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- ============ PERCHÉ SCEGLIERE LAYERLOOP ============ -->
 <?php if ( $why_title || '' !== trim( wp_strip_all_tags( (string) $why_text ) ) ) : ?>
 <section>

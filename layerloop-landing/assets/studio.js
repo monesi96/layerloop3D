@@ -14,6 +14,19 @@
 
 	/* ------------------------------------------------------------------ dati */
 
+	/**
+	 * Nome leggibile → slug, come lo farebbe WordPress: serve a mostrare in
+	 * anticipo lo shortcode di un settore appena battuto a macchina.
+	 */
+	function slugify( value ) {
+		var text = String( value || '' ).toLowerCase();
+		if ( text.normalize ) {
+			// Via gli accenti: "Podologia è ortopedia" → "podologia-e-ortopedia".
+			text = text.normalize( 'NFD' ).replace( /[̀-ͯ]/g, '' );
+		}
+		return text.replace( /[^a-z0-9]+/g, '-' ).replace( /^-+|-+$/g, '' );
+	}
+
 	function uid( prefix ) {
 		return prefix + '-' + Math.random().toString( 36 ).slice( 2, 9 );
 	}
@@ -315,6 +328,33 @@
 			]
 		},
 		{
+			legend: 'Le nostre stampe — foto',
+			help: 'Le foto del pezzo finito, in un carosello. Senza nemmeno una foto il blocco non compare sulla landing.',
+			compact: true,
+			fields: [
+				{ name: 'll_gallery_title', label: 'Titolo del blocco', max: 140, from: function () { return 'Le nostre stampe'; } },
+				{ name: 'll_gallery_text', label: 'Testo introduttivo (facoltativo)', type: 'textarea', rows: 2, max: 600, from: function () { return ''; } },
+				{ name: 'll_gal1_img', label: 'Foto 1', type: 'image', maxDimension: 1600 },
+				{ name: 'll_gal2_img', label: 'Foto 2', type: 'image', maxDimension: 1600 },
+				{ name: 'll_gal3_img', label: 'Foto 3', type: 'image', maxDimension: 1600 },
+				{ name: 'll_gal4_img', label: 'Foto 4', type: 'image', maxDimension: 1600 },
+				{ name: 'll_gal5_img', label: 'Foto 5', type: 'image', maxDimension: 1600 },
+				{ name: 'll_gal6_img', label: 'Foto 6', type: 'image', maxDimension: 1600 },
+				{ name: 'll_gal7_img', label: 'Foto 7', type: 'image', maxDimension: 1600 },
+				{ name: 'll_gal8_img', label: 'Foto 8', type: 'image', maxDimension: 1600 }
+			]
+		},
+		{
+			legend: 'Il video della stampa',
+			help: 'Un video di YouTube o Vimeo, oppure un filmato caricato da qui. Senza video il blocco non compare sulla landing.',
+			fields: [
+				{ name: 'll_video_title', label: 'Titolo del blocco', max: 140, from: function () { return 'Il video della stampa'; } },
+				{ name: 'll_video_text', label: 'Testo introduttivo (facoltativo)', type: 'textarea', rows: 2, max: 600, from: function () { return ''; } },
+				{ name: 'll_video_url', label: 'Indirizzo del video', type: 'video', max: 600, from: function () { return ''; } },
+				{ name: 'll_video_poster', label: 'Immagine di copertina del video (facoltativa)', type: 'image', maxDimension: 1600 }
+			]
+		},
+		{
 			legend: 'Perché scegliere Layerloop',
 			fields: [
 				{ name: 'll_why_title', label: 'Titolo del blocco (usa | per andare a capo)', max: 160, from: function () { return 'Perché scegliere Layerloop'; } },
@@ -437,6 +477,10 @@
 		status: 'publish',
 		metaDescription: '',
 		formId: CFG.defaultForm || 0,
+		// Settore del case study: slug scelto dall'elenco, oppure nome di un
+		// settore nuovo che verrà creato alla pubblicazione.
+		sector: '',
+		sectorNew: '',
 		tab: 'case',
 		language: 'it',
 		displayData: null,
@@ -783,7 +827,9 @@
 			title: state.title,
 			status: state.status,
 			metaDescription: state.metaDescription,
-			formId: state.formId
+			formId: state.formId,
+			sector: state.sector,
+			sectorNew: state.sectorNew
 		};
 		try {
 			localStorage.setItem( STORAGE_KEY, JSON.stringify( payload ) );
@@ -839,6 +885,8 @@
 			state.status = 'draft' === stored.status ? 'draft' : 'publish';
 			state.metaDescription = stored.metaDescription || '';
 			state.formId = parseInt( stored.formId, 10 ) || CFG.defaultForm || 0;
+			state.sector = stored.sector || '';
+			state.sectorNew = stored.sectorNew || '';
 		} catch ( error ) {
 			/* Documento locale illeggibile: si riparte dai valori predefiniti. */
 		}
@@ -1047,12 +1095,94 @@
 		return wrapper;
 	}
 
-	function fieldset( legend, children, help ) {
+	function fieldset( legend, children, help, extraClass ) {
 		var nodes = [ el( 'legend', { text: legend } ) ];
 		if ( help ) {
 			nodes.push( el( 'p', { class: 'll-help', text: help } ) );
 		}
-		return el( 'fieldset', { class: 'll-fieldset' }, nodes.concat( children ) );
+		return el( 'fieldset', { class: 'll-fieldset' + ( extraClass ? ' ' + extraClass : '' ) }, nodes.concat( children ) );
+	}
+
+	/**
+	 * Campo "indirizzo del video": si può incollare un link di YouTube o Vimeo,
+	 * oppure caricare il filmato da qui. Il file non passa dal documento JSON —
+	 * viaggia da solo verso la libreria media e torna indietro come indirizzo.
+	 */
+	function videoField( config ) {
+		var note = el( 'small', { class: 'll-image-note', text: 'YouTube, Vimeo, oppure carica un filmato (MP4, WebM, MOV).' } );
+		var error = el( 'small', { class: 'll-image-error' } );
+		var input = el( 'input', { type: 'text', maxlength: config.max || 600, placeholder: 'https://…' } );
+		var file = el( 'input', { type: 'file', accept: 'video/mp4,video/webm,video/quicktime,video/*', hidden: true } );
+		var pick = el( 'button', { type: 'button', text: '⇪ Carica un video' } );
+		var clear = el( 'button', { type: 'button', class: 'll-clear', text: 'Rimuovi' } );
+
+		input.value = String( config.get() || '' );
+
+		function refresh() {
+			clear.style.display = input.value ? 'inline-block' : 'none';
+		}
+
+		input.addEventListener( 'input', function () {
+			config.set( input.value.trim() );
+			refresh();
+			onChange();
+		} );
+		clear.addEventListener( 'click', function () {
+			input.value = '';
+			config.set( '' );
+			refresh();
+			onChange();
+		} );
+		pick.addEventListener( 'click', function () {
+			file.click();
+		} );
+		file.addEventListener( 'change', function () {
+			var chosen = file.files && file.files[ 0 ];
+			file.value = '';
+			if ( ! chosen ) {
+				return;
+			}
+			error.textContent = '';
+			pick.disabled = true;
+			pick.textContent = 'Caricamento…';
+
+			var body = new FormData();
+			body.append( 'file', chosen );
+			fetch( CFG.restUrl + '/video', {
+				method: 'POST',
+				credentials: 'same-origin',
+				headers: { 'X-WP-Nonce': CFG.nonce },
+				body: body
+			} ).then( function ( response ) {
+				return response.json().then( function ( payload ) {
+					if ( ! response.ok ) {
+						throw new Error( payload && payload.message ? payload.message : 'Caricamento non riuscito.' );
+					}
+					return payload;
+				} );
+			} ).then( function ( payload ) {
+				input.value = payload.url;
+				config.set( payload.url );
+				refresh();
+				onChange();
+				status( 'Video “' + payload.name + '” caricato.' );
+			} ).catch( function ( reason ) {
+				error.textContent = reason.message || 'Caricamento non riuscito.';
+			} ).then( function () {
+				pick.disabled = false;
+				pick.textContent = '⇪ Carica un video';
+			} );
+		} );
+
+		refresh();
+		return el( 'div', { class: 'll-image-field' }, [
+			el( 'span', { text: config.label } ),
+			input,
+			el( 'div', { class: 'll-image-actions' }, [ pick, clear ] ),
+			note,
+			error,
+			file
+		] );
 	}
 
 	/* ------------------------------------------------- pannello: case study */
@@ -1486,6 +1616,74 @@
 			saveLocal();
 		} );
 
+		/*
+		 * Settore: è la chiave che porta il case study nella pagina del suo
+		 * settore. Sotto compare lo shortcode già pronto da incollare in quella
+		 * pagina Elementor, così non serve andarselo a costruire.
+		 */
+		var sectorHint = el( 'p', { class: 'll-help' } );
+		var sectorNew = el( 'input', { type: 'text', maxlength: 60, placeholder: 'Nome del nuovo settore' } );
+		sectorNew.style.display = 'none';
+		sectorNew.value = state.sectorNew || '';
+
+		var sectorSelect = el( 'select' );
+		sectorSelect.appendChild( el( 'option', { value: '', text: '— nessun settore —' } ) );
+		( CFG.sectors || [] ).forEach( function ( sector ) {
+			sectorSelect.appendChild( el( 'option', {
+				value: sector.slug,
+				text: sector.name + ( sector.count ? ' (' + sector.count + ')' : '' )
+			} ) );
+		} );
+		sectorSelect.appendChild( el( 'option', { value: '__new', text: '＋ Nuovo settore…' } ) );
+		sectorSelect.value = state.sectorNew ? '__new' : ( state.sector || '' );
+
+		function sectorLabel() {
+			if ( state.sectorNew ) {
+				return state.sectorNew;
+			}
+			var found = ( CFG.sectors || [] ).filter( function ( sector ) {
+				return sector.slug === state.sector;
+			} );
+			return found.length ? found[ 0 ].name : '';
+		}
+
+		function sectorShortcode() {
+			var slug = state.sector;
+			if ( ! slug && state.sectorNew ) {
+				slug = slugify( state.sectorNew );
+			}
+			if ( ! slug ) {
+				sectorHint.textContent = 'Senza settore il case study resta fuori dalle pagine di settore.';
+				return;
+			}
+			sectorHint.textContent = 'Nella pagina Elementor del settore incolla: [ll_case_studies settore="' + slug
+				+ '" label="Case study ' + ( sectorLabel() || slug ) + '"]';
+		}
+
+		sectorSelect.addEventListener( 'change', function () {
+			if ( '__new' === sectorSelect.value ) {
+				sectorNew.style.display = '';
+				state.sector = '';
+				sectorNew.focus();
+			} else {
+				sectorNew.style.display = 'none';
+				state.sectorNew = '';
+				sectorNew.value = '';
+				state.sector = sectorSelect.value;
+			}
+			sectorShortcode();
+			saveLocal();
+		} );
+		sectorNew.addEventListener( 'input', function () {
+			state.sectorNew = sectorNew.value.trim();
+			sectorShortcode();
+			saveLocal();
+		} );
+		if ( state.sectorNew ) {
+			sectorNew.style.display = '';
+		}
+		sectorShortcode();
+
 		var statusSelect = el( 'select' );
 		[ { id: 'publish', label: 'Pubblicata' }, { id: 'draft', label: 'Bozza (non visibile)' } ].forEach( function ( option ) {
 			statusSelect.appendChild( el( 'option', { value: option.id, text: option.label } ) );
@@ -1499,6 +1697,9 @@
 		nodes.push( fieldset( 'Pubblicazione', [
 			titleField,
 			metaField,
+			el( 'label', { class: 'll-field' }, [ el( 'span', { class: 'll-field-label' }, [ el( 'span', { text: 'Settore' } ) ] ), sectorSelect ] ),
+			sectorNew,
+			sectorHint,
 			el( 'label', { class: 'll-field' }, [ el( 'span', { class: 'll-field-label' }, [ el( 'span', { text: 'Modulo contatti (Ninja Forms)' } ) ] ), formSelect ] ),
 			el( 'label', { class: 'll-field' }, [ el( 'span', { class: 'll-field-label' }, [ el( 'span', { text: 'Stato' } ) ] ), statusSelect ] ),
 			el( 'p', { class: 'll-help', text: CFG.hasForms ? 'Il modulo viene inserito automaticamente in fondo alla landing, con l’ancora #contatti. Chi lo compila riceve il PDF.' : 'Ninja Forms non è attivo: la landing viene pubblicata senza modulo.' } ),
@@ -1537,6 +1738,19 @@
 
 		LANDING_SCHEMA.forEach( function ( section ) {
 			var children = section.fields.map( function ( def ) {
+				if ( 'video' === def.type ) {
+					return videoField( {
+						label: def.label,
+						max: def.max,
+						get: function () {
+							return state.fields[ def.name ] || '';
+						},
+						set: function ( value ) {
+							state.fields[ def.name ] = value;
+							markTouched( def.name );
+						}
+					} );
+				}
 				if ( 'image' === def.type ) {
 					return imageField( {
 						label: def.label,
@@ -1572,7 +1786,7 @@
 					}
 				} );
 			} );
-			nodes.push( fieldset( section.legend, children, section.help ) );
+			nodes.push( fieldset( section.legend, children, section.help, section.compact ? 'll-fieldset-grid' : '' ) );
 		} );
 
 		return nodes;
@@ -1666,6 +1880,8 @@
 			state.status = 'draft' === loaded.status ? 'draft' : 'publish';
 			state.metaDescription = loaded.metaDescription || '';
 			state.formId = parseInt( loaded.formId, 10 ) || 0;
+			state.sector = loaded.sector || '';
+			state.sectorNew = '';
 			if ( loaded.caseStudy ) {
 				state.data = normalizeCaseStudy( loaded.caseStudy );
 			}
@@ -1914,6 +2130,8 @@
 			title: title,
 			metaDescription: state.metaDescription || state.data.subtitle,
 			formId: state.formId,
+			// Un settore nuovo viaggia come nome: il server lo crea e lo assegna.
+			sector: state.sectorNew ? state.sectorNew : state.sector,
 			fields: preparedFields(),
 			caseStudy: state.data
 		};
@@ -1957,6 +2175,9 @@
 		} ).then( function ( response ) {
 			var url = response.post.url;
 			var warnings = ( response.warnings || [] ).join( ' ' );
+			if ( response.sectors ) {
+				CFG.sectors = response.sectors;
+			}
 			return refreshArchive().then( function () {
 				// Documento chiuso: lo Studio torna vuoto, così il prossimo whitepaper
 				// non eredita niente da questo. Per correggerlo si riapre dall'Archivio.
@@ -2399,6 +2620,8 @@
 		state.metaDescription = '';
 		state.status = 'publish';
 		state.formId = CFG.defaultForm || 0;
+		state.sector = '';
+		state.sectorNew = '';
 		state.language = 'it';
 		state.displayData = null;
 		state.pdfSource = 'generate';
