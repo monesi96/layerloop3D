@@ -318,3 +318,57 @@ footer.site{background:var(--bg-soft); border-radius:var(--r-band) var(--r-band)
 /* Nasconde l'admin bar fixed offset di WP quando loggati */
 body.admin-bar .top{top:52px}
 @media (min-width:783px){body.admin-bar .top{top:52px}}
+
+/* ============================================================
+   SHORTCODE CASE STUDY — [case_study settore="..."]
+   Pensato per le pagine settore costruite in Elementor: porta
+   con sé font, colori e card del blog senza dipendere dal
+   template della pagina ospite.
+   ============================================================ */
+
+.cs-block{
+  max-width:1140px; margin-inline:auto;
+  padding-inline:clamp(20px,4vw,56px);
+  padding-block:clamp(1.8rem,3.5vw,3rem);
+  font-family:"Familjen Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+}
+.cs-head{display:flex; align-items:end; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+.cs-head h2{font-size:clamp(1.45rem,2.5vw,2.05rem); line-height:1.14; letter-spacing:-.022em; margin:0}
+.cs-kicker{
+  font-family:"Fragment Mono",ui-monospace,monospace; font-size:.74rem;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--teal);
+  margin:0 0 .45rem;
+}
+
+/* Frecce del carosello */
+.cs-nav{display:flex; gap:.5rem}
+.cs-nav button{
+  width:42px; height:42px; border:0; border-radius:50%; cursor:pointer;
+  background:var(--card); color:var(--ink); box-shadow:var(--shadow-card);
+  display:grid; place-items:center;
+  transition:transform .25s, background .25s, color .25s;
+}
+.cs-nav button:hover:not(:disabled){background:var(--teal); color:#fff; transform:translateY(-2px)}
+.cs-nav button:disabled{opacity:.35; cursor:default}
+
+/* Carosello: scroll-snap, nessuna libreria esterna */
+.cs-carousel{
+  display:grid; grid-auto-flow:column; grid-auto-columns:minmax(280px,calc(33.333% - .94rem));
+  gap:clamp(.9rem,1.6vw,1.4rem);
+  padding-block:clamp(1.6rem,3vw,2.4rem);
+  overflow-x:auto; scroll-snap-type:x mandatory;
+  scrollbar-width:none; -ms-overflow-style:none;
+  /* spazio per non tagliare l'ombra delle card in hover */
+  margin-inline:-4px; padding-inline:4px;
+}
+.cs-carousel::-webkit-scrollbar{display:none}
+.cs-carousel > *{scroll-snap-align:start}
+
+@media (max-width:1060px){
+  .cs-carousel{grid-auto-columns:minmax(260px,calc(50% - .7rem))}
+}
+@media (max-width:640px){
+  .cs-carousel{grid-auto-columns:minmax(240px,86%)}
+  .cs-nav{display:none}
+}

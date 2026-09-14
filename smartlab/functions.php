@@ -398,4 +398,253 @@ add_filter( 'excerpt_length', function () { return 36; }, 99 );
 add_filter( 'excerpt_more', function () { return '…'; }, 99 );
 
 
+
+/* ============================================================
+   APPLICATION PORTFOLIO — Settori + shortcode Case Study
+   ------------------------------------------------------------
+   I case study sono normali articoli nella categoria
+   "case-studies". Qui aggiungiamo la tassonomia "Settore" e uno
+   shortcode da incollare nelle pagine settore fatte in Elementor:
+
+       [case_study settore="nautica"]
+       [case_study settore="nautica" layout="carosello" numero="8"]
+
+   Se per quel settore non c'e' ancora nessun case study, lo
+   shortcode non stampa niente: il blocco sparisce dalla pagina.
+   ============================================================ */
+
+// --- Tassonomia "Settore" ------------------------------------
+
+function smartlab_registra_settore() {
+
+	register_taxonomy(
+		'settore',
+		array( 'post' ),
+		array(
+			'labels'            => array(
+				'name'          => 'Settori',
+				'singular_name' => 'Settore',
+				'all_items'     => 'Tutti i settori',
+				'edit_item'     => 'Modifica settore',
+				'update_item'   => 'Aggiorna settore',
+				'add_new_item'  => 'Aggiungi nuovo settore',
+				'new_item_name' => 'Nome del nuovo settore',
+				'search_items'  => 'Cerca settori',
+				'menu_name'     => 'Settori',
+			),
+			// Gerarchica = caselle da spuntare come le categorie,
+			// non tag liberi: evita doppioni tipo "nautica"/"Nautico".
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_admin_column' => true,
+			'show_in_rest'      => true,
+			'rewrite'           => array( 'slug' => 'settore' ),
+		)
+	);
+}
+add_action( 'init', 'smartlab_registra_settore' );
+
+// --- Stili: lo shortcode si porta dietro il design del blog ---
+
+function smartlab_registra_stili_blog() {
+
+	wp_register_style(
+		'smartlab-blog-fonts',
+		'https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=Fragment+Mono&display=swap',
+		array(),
+		null
+	);
+
+	wp_register_style(
+		'smartlab-blog',
+		get_template_directory_uri() . '/css/blog.css',
+		array( 'smartlab-blog-fonts' ),
+		'1.1'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'smartlab_registra_stili_blog', 5 );
+
+// Carica il CSS gia' nell'head quando la pagina contiene lo
+// shortcode. Elementor tiene il proprio layout in un meta, quindi
+// controlliamo anche quello.
+function smartlab_stili_per_shortcode() {
+
+	if ( ! is_singular() ) {
+		return;
+	}
+
+	$post = get_post();
+	if ( ! $post ) {
+		return;
+	}
+
+	$contenuto = $post->post_content . (string) get_post_meta( $post->ID, '_elementor_data', true );
+
+	if ( false !== strpos( $contenuto, '[case_study' ) ) {
+		wp_enqueue_style( 'smartlab-blog' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'smartlab_stili_per_shortcode', 20 );
+
+// --- Lo shortcode --------------------------------------------
+
+function smartlab_shortcode_case_study( $atts ) {
+
+	$a = shortcode_atts(
+		array(
+			'settore'      => '',
+			'numero'       => 6,
+			'layout'       => 'griglia',   // griglia | carosello
+			'titolo'       => '',
+			'intestazione' => 'si',
+			'categoria'    => 'case-studies',
+		),
+		$atts,
+		'case_study'
+	);
+
+	$settore = sanitize_title( $a['settore'] );
+
+	// Senza attributo, prova a dedurre il settore dall'archivio.
+	if ( '' === $settore && is_tax( 'settore' ) ) {
+		$termine_corrente = get_queried_object();
+		if ( $termine_corrente instanceof WP_Term ) {
+			$settore = $termine_corrente->slug;
+		}
+	}
+
+	$args = array(
+		'post_type'           => 'post',
+		'post_status'         => 'publish',
+		'posts_per_page'      => max( 1, (int) $a['numero'] ),
+		'ignore_sticky_posts' => true,
+		'no_found_rows'       => true,
+	);
+
+	if ( '' !== $a['categoria'] ) {
+		$args['category_name'] = sanitize_title( $a['categoria'] );
+	}
+
+	if ( '' !== $settore ) {
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'settore',
+				'field'    => 'slug',
+				'terms'    => $settore,
+			),
+		);
+	}
+
+	$query = new WP_Query( $args );
+
+	// Nessun case study per questo settore: niente blocco.
+	if ( ! $query->have_posts() ) {
+		wp_reset_postdata();
+		return '';
+	}
+
+	wp_enqueue_style( 'smartlab-blog' );
+
+	$carosello = ( 'carosello' === $a['layout'] );
+
+	// Titolo: quello passato, altrimenti "Case study — Nautica".
+	$titolo = trim( (string) $a['titolo'] );
+	if ( '' === $titolo ) {
+		$titolo = 'Case study';
+		if ( '' !== $settore ) {
+			$termine = get_term_by( 'slug', $settore, 'settore' );
+			if ( $termine instanceof WP_Term ) {
+				$titolo .= ' — ' . $termine->name;
+			}
+		}
+	}
+
+	$mostra_intestazione = ( 'no' !== strtolower( (string) $a['intestazione'] ) );
+
+	ob_start();
+	?>
+	<section class="cs-block"<?php echo $carosello ? ' data-carousel' : ''; ?>>
+
+		<?php if ( $mostra_intestazione ) : ?>
+			<header class="cs-head">
+				<div>
+					<p class="cs-kicker">Application Portfolio</p>
+					<h2><?php echo esc_html( $titolo ); ?></h2>
+				</div>
+				<?php if ( $carosello ) : ?>
+					<div class="cs-nav">
+						<button type="button" data-cs-prev aria-label="Case study precedenti">
+							<svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11H4M10 5 4 11l6 6"/></svg>
+						</button>
+						<button type="button" data-cs-next aria-label="Case study successivi">
+							<svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h14M12 5l6 6-6 6"/></svg>
+						</button>
+					</div>
+				<?php endif; ?>
+			</header>
+		<?php endif; ?>
+
+		<div class="<?php echo $carosello ? 'cs-carousel' : 'postgrid'; ?>">
+			<?php
+			$i = 0;
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				get_template_part( 'template-parts/card-post', null, array( 'i' => $i ) );
+				$i++;
+			}
+			?>
+		</div>
+	</section>
+	<?php
+	wp_reset_postdata();
+
+	if ( $carosello ) {
+		// Le frecce si agganciano nel footer: una volta sola,
+		// a markup gia' presente nella pagina.
+		add_action( 'wp_footer', 'smartlab_script_carosello' );
+	}
+
+	return ob_get_clean();
+}
+add_shortcode( 'case_study', 'smartlab_shortcode_case_study' );
+
+// Frecce del carosello. Agganciata a wp_footer con add_action:
+// WordPress deduplica da solo, quindi anche con piu' caroselli
+// nella stessa pagina lo script esce una volta sola.
+function smartlab_script_carosello() {
+	?>
+	<script>
+	(function(){
+		function avvia(){
+			document.querySelectorAll('.cs-block[data-carousel]').forEach(function(blocco){
+				var pista = blocco.querySelector('.cs-carousel'),
+				    giu   = blocco.querySelector('[data-cs-prev]'),
+				    su    = blocco.querySelector('[data-cs-next]');
+				if(!pista || !giu || !su){ return; }
+
+				function passo(){
+					var prima = pista.firstElementChild;
+					return prima ? prima.getBoundingClientRect().width + 16 : pista.clientWidth;
+				}
+				function aggiorna(){
+					giu.disabled = pista.scrollLeft <= 4;
+					su.disabled  = pista.scrollLeft + pista.clientWidth >= pista.scrollWidth - 4;
+				}
+				giu.addEventListener('click', function(){ pista.scrollBy({left:-passo(), behavior:'smooth'}); });
+				su.addEventListener('click',  function(){ pista.scrollBy({left: passo(), behavior:'smooth'}); });
+				pista.addEventListener('scroll', aggiorna, {passive:true});
+				window.addEventListener('resize', aggiorna);
+				aggiorna();
+			});
+		}
+		if(document.readyState === 'loading'){
+			document.addEventListener('DOMContentLoaded', avvia);
+		} else {
+			avvia();
+		}
+	})();
+	</script>
+	<?php
+}
+
 ?>
