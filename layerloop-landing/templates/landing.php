@@ -15,7 +15,31 @@ if ( ! defined( 'ABSPATH' ) ) {
  * corrispondente sparisce dalla pagina, invece di pubblicare un segnaposto. Le landing
  * compilate a mano in bacheca mantengono il ripiego storico.
  */
-$ll_from_studio = (bool) get_post_meta( get_the_ID(), '_ll_studio_payload', true );
+$ll_payload_raw = get_post_meta( get_the_ID(), '_ll_studio_payload', true );
+$ll_from_studio = (bool) $ll_payload_raw;
+
+/*
+ * Il documento dello Studio, così com'è stato pubblicato: serve alla scheda
+ * materiale, che prende nome, descrizione, foto e indicatori direttamente dal
+ * case study invece che dalla copia salvata nei campi della landing. Quella
+ * copia poteva essere rimasta indietro — è quello che faceva comparire gli
+ * indicatori di esempio al posto di quelli veri.
+ *
+ * I campi riscritti a mano nello Studio restano al comando: arrivano qui
+ * nell'elenco "fieldsTouched" salvato insieme al documento.
+ */
+$ll_payload    = is_string( $ll_payload_raw ) && '' !== $ll_payload_raw ? json_decode( $ll_payload_raw, true ) : null;
+$ll_case_study = is_array( $ll_payload ) && isset( $ll_payload['caseStudy'] ) && is_array( $ll_payload['caseStudy'] ) ? $ll_payload['caseStudy'] : array();
+$ll_touched    = is_array( $ll_payload ) && isset( $ll_payload['fieldsTouched'] ) && is_array( $ll_payload['fieldsTouched'] ) ? $ll_payload['fieldsTouched'] : array();
+
+/** I segnaposto del modello non vanno pubblicati. */
+$ll_placeholder = function ( $value ) {
+	$text = trim( (string) $value );
+	if ( '' === $text ) {
+		return true;
+	}
+	return (bool) preg_match( '/^(da\s+inserire|da\s+definire|da\s+compilare|nome\s+materiale|descrizione\s+tecnica\s+sintetica\s+del\s+materiale\s+impiegato\.?|n\/?d|tbd|[-–—.]+)$/i', $text );
+};
 $ll = function ( $name, $default = '' ) use ( $ll_from_studio ) {
 	$v = get_field( $name );
 	if ( $v !== null && $v !== '' && $v !== false ) {
@@ -140,7 +164,9 @@ for ( $i = 1; $i <= 3; $i++ ) {
 		continue;
 	}
 	$img = $ll( "ll_mat{$i}_img", '' );
-	if ( $img === '' && isset( $mat_def_img[ $i - 1 ] ) ) {
+	// Le foto di esempio valgono solo per le landing compilate a mano: su una
+	// landing dello Studio mostrerebbero un materiale che non c'entra niente.
+	if ( $img === '' && ! $ll_from_studio && isset( $mat_def_img[ $i - 1 ] ) ) {
 		$img = $mat_def_img[ $i - 1 ];
 	}
 	$materials[] = array(
@@ -165,6 +191,62 @@ foreach ( $ll_lines( $ll( 'll_mat_bars', '' ) ) as $line ) {
 		'label' => $l,
 		'value' => min( 10, $v ),
 	);
+}
+
+/*
+ * Landing dello Studio: la scheda materiale arriva dal case study, cioè dallo
+ * stesso posto da cui arriva il PDF. I campi della landing la sovrascrivono
+ * solo dove sono stati riscritti a mano.
+ */
+if ( $ll_from_studio && $ll_case_study ) {
+	$mat_first = isset( $materials[0] ) ? $materials[0] : array( 'name' => '', 'sub' => '', 'image' => '', 'points' => array() );
+
+	if ( empty( $ll_touched['ll_mat1_name'] ) ) {
+		$case_name = isset( $ll_case_study['materialName'] ) ? trim( (string) $ll_case_study['materialName'] ) : '';
+		if ( ! $ll_placeholder( $case_name ) ) {
+			$mat_first['name'] = $case_name;
+		}
+	}
+
+	if ( empty( $ll_touched['ll_mat1_sub'] ) ) {
+		$case_sub = isset( $ll_case_study['materialDescription'] ) ? trim( (string) $ll_case_study['materialDescription'] ) : '';
+		$mat_first['sub'] = $ll_placeholder( $case_sub ) ? '' : $case_sub;
+	}
+
+	// La foto della scheda: quella scelta nella landing, altrimenti la foto del
+	// pezzo già caricata in libreria dallo Studio.
+	if ( '' === $mat_first['image'] ) {
+		$fallback_photo = $ll( 'll_case_photo', '' );
+		if ( '' === $fallback_photo ) {
+			$fallback_photo = $ll( 'll_hero_img_render', '' );
+		}
+		$mat_first['image'] = $fallback_photo;
+	}
+
+	if ( empty( $ll_touched['ll_mat_bars'] ) && ! empty( $ll_case_study['performances'] ) && is_array( $ll_case_study['performances'] ) ) {
+		$case_bars = array();
+		foreach ( $ll_case_study['performances'] as $performance ) {
+			if ( ! is_array( $performance ) ) {
+				continue;
+			}
+			$label = isset( $performance['label'] ) ? trim( (string) $performance['label'] ) : '';
+			$value = isset( $performance['value'] ) ? (int) $performance['value'] : 0;
+			if ( $ll_placeholder( $label ) || $value < 1 ) {
+				continue;
+			}
+			$case_bars[] = array(
+				'label' => $label,
+				'value' => min( 10, $value ),
+			);
+		}
+		if ( $case_bars ) {
+			$mat_bars = $case_bars;
+		}
+	}
+
+	$materials = ( '' !== $mat_first['name'] || '' !== $mat_first['sub'] || '' !== $mat_first['image'] )
+		? array( $mat_first )
+		: array();
 }
 
 // dati per il JS dei tab

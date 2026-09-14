@@ -1888,8 +1888,11 @@
 			state.fields = Object.assign( landingDefaults( state.data ), loaded.fields || {} );
 			// I testi che erano stati riscritti a mano restano tali; gli altri
 			// tornano a seguire il case study, così le correzioni al PDF arrivano
-			// anche sulla landing già pubblicata.
-			state.fieldsTouched = touchedFromFields( loaded.fields );
+			// anche sulla landing già pubblicata. L'elenco arriva dal documento
+			// salvato; sulle landing pubblicate prima si ricostruisce a naso.
+			state.fieldsTouched = loaded.fieldsTouched && typeof loaded.fieldsTouched === 'object'
+				? loaded.fieldsTouched
+				: touchedFromFields( loaded.fields );
 
 			// Il PDF già allegato resta allegato: prima ogni ripubblicazione lo
 			// sostituiva con quello ricomposto dall'anteprima, e un file caricato
@@ -2133,6 +2136,9 @@
 			// Un settore nuovo viaggia come nome: il server lo crea e lo assegna.
 			sector: state.sectorNew ? state.sectorNew : state.sector,
 			fields: preparedFields(),
+			// Quali testi sono stati riscritti a mano: la landing li rispetta,
+			// e per tutti gli altri prende la scheda materiale dal case study.
+			fieldsTouched: state.fieldsTouched,
 			caseStudy: state.data
 		};
 
