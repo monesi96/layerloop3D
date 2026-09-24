@@ -4,7 +4,7 @@ base = pathlib.Path(__file__).resolve().parent.parent
 cal = json.loads((base/"calendario-editoriale.json").read_text())
 MESI = "gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre".split()
 GG = "lun mar mer gio ven sab dom".split()
-PIL = {"Produzione in serie":"p1","Materiali":"p2","Tracciabilità e 4.0":"p3","Settori":"p4","Processo e qualità":"p5","Business e crescita":"p6"}
+PIL = {"Medical Division":"p1","Grandi componenti (Extend)":"p3","Produzione in serie":"p6","Materiali":"p2","Settori":"p4","Processo e strategia":"p5"}
 e = html.escape
 months = {}
 for a in cal:
@@ -77,7 +77,7 @@ footer{{color:var(--muted);font-size:14px;max-width:70ch}}
 <div class="wrap">
 <header>
   <div class="eyebrow">Layerloop 3D · Blog · ott 2026 – mar 2027</div>
-  <h1>26 articoli sulla produzione industriale con la stampa 3D</h1>
+  <h1>26 articoli su produzione industriale, grandi componenti e Medical Division</h1>
   <p>Un articolo ogni martedì alle 9:00. L'agente scrive la bozza il giovedì prima e apre una richiesta di approvazione: niente va online senza il tuo ok. Ogni articolo ha già la sua immagine generata con Higgsfield.</p>
 </header>
 <div class="flow">
@@ -89,7 +89,7 @@ footer{{color:var(--muted);font-size:14px;max-width:70ch}}
 </div>
 <div class="filters" role="group" aria-label="Filtra per pilastro"><span>Pilastri</span>{chips}</div>
 {"".join(secs)}
-<footer>Immagini generate con AI: mostrano pezzi e ambienti di lavoro, non la stampante Layerloop reale. L'articolo sugli incentivi (15 dicembre) va verificato sulla normativa in vigore al momento dell'uscita.</footer>
+<footer>Immagini generate con AI. Dove compare una stampante è sempre una Layerloop (Next, XE o Extend), ricreata dalle foto ufficiali; nelle altre immagini non compaiono stampanti. I dati tecnici di Extend vanno confermati prima della pubblicazione.</footer>
 </div>
 <script>
 const chips=[...document.querySelectorAll('.chip')];

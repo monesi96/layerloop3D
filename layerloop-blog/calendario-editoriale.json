@@ -18,16 +18,72 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "rows of identical small black technical plastic parts moving on a continuous conveyor belt coming out of a compact 3D printer, close-up on the parts, printer only partially visible and out of focus. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
       "file": "immagini/01-stampa-3d-a-nastro-come-produrre-centina.jpg",
-      "job_id": "b03c67aa-e03a-4fee-b3d9-16f0889c0e0a",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135942_b03c67aa-e03a-4fee-b3d9-16f0889c0e0a.png"
+      "job_id": "84441c61-1a68-440f-931e-534841e4f9e9",
+      "riferimento": "https://www.layerloop3d.com/wp-content/uploads/2024/03/Next_gamma-1024x704.jpg",
+      "media_id_riferimento": "ef4e9dc2-c7c0-492d-a300-a115a3cad251",
+      "prompt": "two Layerloop Next 3D printers side by side in a bright production workshop, in the foreground a grey crate filling with many identical small black technical plastic parts produced overnight. The 3D printer must look exactly like the Layerloop Next in the reference image (same shape, colours, proportions and details, with its LAYERLOOP logo as in the reference); no other 3D printers in the scene. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no other text or logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141211_84441c61-1a68-440f-931e-534841e4f9e9.png"
     },
     "stato": "pianificato"
   },
   {
     "n": 2,
     "data": "2026-10-13",
+    "pilastro": "Medical Division",
+    "titolo": "Plantari su misura con la stampa 3D: il flusso digitale dello studio podologico",
+    "slug": "plantari-su-misura-con-la-stampa-3d-il-flusso-digitale-dello-studio-po",
+    "keyword": "plantari stampa 3D podologo",
+    "target": "Podologi e studi podologici",
+    "prodotto_collegato": "Medical Division / Layerloop XE",
+    "scaletta": [
+      "Dal calco in gesso alla scansione 3D",
+      "Progettazione CAD del plantare: software e parametri",
+      "Stampa: materiali e tempi",
+      "Rifinitura e consegna al paziente",
+      "Cosa serve per partire"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/02-plantari-su-misura-con-la-stampa-3d-il-f.jpg",
+      "job_id": "b5a3797a-18fa-448b-948c-7585020d6f91",
+      "prompt": "podiatrist in a bright modern podiatry clinic scanning a patient's bare foot with a handheld 3D scanner, a tablet on the desk shows a colourful plantar pressure map and a 3D insole model. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141244_b5a3797a-18fa-448b-948c-7585020d6f91.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 3,
+    "data": "2026-10-20",
+    "pilastro": "Grandi componenti (Extend)",
+    "titolo": "Layerloop Extend: stampare componenti di grandi dimensioni per l'industria",
+    "slug": "layerloop-extend-stampare-componenti-di-grandi-dimensioni-per-l-indust",
+    "keyword": "stampante 3D grande formato industriale",
+    "target": "Uffici tecnici e manutenzione di aziende manifatturiere",
+    "prodotto_collegato": "Layerloop Extend",
+    "scaletta": [
+      "Quando il pezzo non entra in una stampante da banco",
+      "Camera riscaldata e moduli plug-in: come funziona Extend",
+      "Materiali per componenti grandi: ABS, nylon, compositi",
+      "Esempi: carter, supporti, condotti, attrezzature",
+      "Pezzo unico o assemblato? Come decidere"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/03-layerloop-extend-stampare-componenti-di-.jpg",
+      "job_id": "69de7278-fde3-4057-85ad-3368dc9c3e5c",
+      "riferimento": "https://www.layerloop3d.com/wp-content/uploads/2025/10/Layer_extend2-2048x1365.png",
+      "media_id_riferimento": "764b3a3a-6a79-479c-aef3-07504d8bc01c",
+      "prompt": "a Layerloop Extend industrial 3D printer and its plug-in module standing in a large factory hall next to heavy industrial machinery, a large black 3D printed machine housing part on a pallet in the foreground. The 3D printer must look exactly like the Layerloop Extend in the reference image (same shape, colours, proportions and details, with its LAYERLOOP logo as in the reference); no other 3D printers in the scene. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no other text or logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141214_69de7278-fde3-4057-85ad-3368dc9c3e5c.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 4,
+    "data": "2026-10-27",
     "pilastro": "Produzione in serie",
     "titolo": "Stampa 3D o stampaggio a iniezione? Quando conviene sotto i 5.000 pezzi",
     "slug": "stampa-3d-o-stampaggio-a-iniezione-quando-conviene-sotto-i-5-000-pezzi",
@@ -44,62 +100,11 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "side by side on a workbench: a heavy steel injection mould on the left and a neat batch of 3D printed plastic parts on the right, engineer's hands with a caliper. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/02-stampa-3d-o-stampaggio-a-iniezione-quand.jpg",
+      "prompt": null,
+      "riusa": "02",
+      "file": "immagini/04-stampa-3d-o-stampaggio-a-iniezione-quand.jpg",
       "job_id": "4818fded-2f6a-4ccb-9c4e-f6345cebe115",
       "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135944_4818fded-2f6a-4ccb-9c4e-f6345cebe115.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 3,
-    "data": "2026-10-20",
-    "pilastro": "Produzione in serie",
-    "titolo": "Asse inclinato a 30°: stampare senza supporti e tagliare il post-processing",
-    "slug": "asse-inclinato-a-30-stampare-senza-supporti-e-tagliare-il-post-process",
-    "keyword": "stampa 3D senza supporti",
-    "target": "Tecnici e uffici tecnici",
-    "prodotto_collegato": "Layerloop Next",
-    "scaletta": [
-      "Perché i supporti costano tempo e materiale",
-      "La geometria a 30°: cosa cambia nella stampa",
-      "Sbalzi, ponti e pezzi lunghi",
-      "Post-processing: prima e dopo",
-      "Linee guida di progettazione"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "long elongated 3D printed plastic profile part without any support structures, lying diagonally on a clean surface, dramatic side light showing fine layer lines. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/03-asse-inclinato-a-30-stampare-senza-suppo.jpg",
-      "job_id": "87d2a1f1-3c08-46ca-9d72-4efffd30c6d0",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135943_87d2a1f1-3c08-46ca-9d72-4efffd30c6d0.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 4,
-    "data": "2026-10-27",
-    "pilastro": "Produzione in serie",
-    "titolo": "Magazzino digitale: produrre on demand e ridurre le scorte con la stampa 3D",
-    "slug": "magazzino-digitale-produrre-on-demand-e-ridurre-le-scorte-con-la-stamp",
-    "keyword": "magazzino digitale ricambi stampa 3D",
-    "target": "Responsabili logistica e acquisti",
-    "prodotto_collegato": "Layerloop Next",
-    "scaletta": [
-      "Il costo del magazzino fermo",
-      "Cos'è un magazzino digitale",
-      "Ricambi fuori produzione e code lunghe",
-      "Organizzare file, versioni e materiali",
-      "Just-in-time in pratica"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "industrial warehouse shelf with mostly empty bins and a tablet showing a 3D CAD model library, in the foreground a few freshly 3D printed spare parts in a small bin. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/04-magazzino-digitale-produrre-on-demand-e-.jpg",
-      "job_id": "327b6fba-ffc7-40e1-844e-ae88a0825e29",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140033_327b6fba-ffc7-40e1-844e-ae88a0825e29.png"
     },
     "stato": "pianificato"
   },
@@ -122,7 +127,8 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "neat arrangement of 3D printer filament spools in different colours and several sample parts printed in different materials on a light grey table, overhead view. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "prompt": null,
+      "riusa": "05",
       "file": "immagini/05-come-scegliere-il-materiale-giusto-per-p.jpg",
       "job_id": "84b2d586-e57b-4f85-9ac0-032fedc62b2f",
       "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140032_84b2d586-e57b-4f85-9ac0-032fedc62b2f.png"
@@ -132,6 +138,84 @@
   {
     "n": 6,
     "data": "2026-11-10",
+    "pilastro": "Medical Division",
+    "titolo": "Suole industriali in serie: produzione controllata per calzature ortopediche",
+    "slug": "suole-industriali-in-serie-produzione-controllata-per-calzature-ortope",
+    "keyword": "suole stampa 3D produzione in serie",
+    "target": "Laboratori ortopedici e calzaturifici",
+    "prodotto_collegato": "Medical Division / Layerloop XE",
+    "scaletta": [
+      "Dal plantare singolo alla serie di suole",
+      "Produzione continua 24/7 e magazzino digitale",
+      "Materiali: durabilità e stabilità dimensionale",
+      "Ripetibilità tra un lotto e l'altro",
+      "Per chi ha senso"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/06-suole-industriali-in-serie-produzione-co.jpg",
+      "job_id": "e1ef2061-f980-4b1a-b2e6-4fedbf992616",
+      "prompt": "orthopedic footwear workshop, many 3D printed shoe soles in dark grey and teal flexible material neatly stacked in crates and lined up on a workbench, a craftsman holding one sole. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141244_e1ef2061-f980-4b1a-b2e6-4fedbf992616.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 7,
+    "data": "2026-11-17",
+    "pilastro": "Grandi componenti (Extend)",
+    "titolo": "Carter, coperture e protezioni per macchinari industriali stampati in 3D",
+    "slug": "carter-coperture-e-protezioni-per-macchinari-industriali-stampati-in-3",
+    "keyword": "carter macchine stampa 3D",
+    "target": "Costruttori di macchine e manutenzione",
+    "prodotto_collegato": "Layerloop Extend",
+    "scaletta": [
+      "Perché i carter sono ideali per la stampa 3D",
+      "Serie brevi e personalizzazioni senza stampi",
+      "Resistenza, temperatura e finitura",
+      "Montaggio e fissaggi",
+      "Dal file al pezzo in pochi giorni"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/07-carter-coperture-e-protezioni-per-macchi.jpg",
+      "job_id": "dcae6870-d20a-4ada-b8ca-685b07108eb2",
+      "prompt": "large industrial CNC machine in a factory with newly fitted black 3D printed protective guards, covers and housing panels, technician tightening a screw on a cover. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141244_dcae6870-d20a-4ada-b8ca-685b07108eb2.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 8,
+    "data": "2026-11-24",
+    "pilastro": "Produzione in serie",
+    "titolo": "Asse inclinato a 30°: stampare senza supporti e tagliare il post-processing",
+    "slug": "asse-inclinato-a-30-stampare-senza-supporti-e-tagliare-il-post-process",
+    "keyword": "stampa 3D senza supporti",
+    "target": "Tecnici e uffici tecnici",
+    "prodotto_collegato": "Layerloop Next",
+    "scaletta": [
+      "Perché i supporti costano tempo e materiale",
+      "La geometria a 30°: cosa cambia nella stampa",
+      "Sbalzi, ponti e pezzi lunghi",
+      "Post-processing: prima e dopo",
+      "Linee guida di progettazione"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/08-asse-inclinato-a-30-stampare-senza-suppo.jpg",
+      "job_id": "42a49da6-c463-4f86-ac79-0ba0d898c73b",
+      "prompt": "long elongated black 3D printed plastic profile part with clean overhangs and no support structures, lying diagonally on a light grey table, dramatic side light showing fine layer lines. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141244_42a49da6-c463-4f86-ac79-0ba0d898c73b.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 9,
+    "data": "2026-12-01",
     "pilastro": "Materiali",
     "titolo": "Carbonio + nylon: quando un pezzo stampato può sostituire l'alluminio",
     "slug": "carbonio-nylon-quando-un-pezzo-stampato-puo-sostituire-l-alluminio",
@@ -148,147 +232,74 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "matte black carbon fiber reinforced nylon 3D printed mechanical bracket next to a machined aluminium bracket of the same shape, macro detail of surface texture. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/06-carbonio-nylon-quando-un-pezzo-stampato-.jpg",
+      "prompt": null,
+      "riusa": "06",
+      "file": "immagini/09-carbonio-nylon-quando-un-pezzo-stampato-.jpg",
       "job_id": "31498220-9b88-4518-8b09-9d78d0368eac",
       "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135942_31498220-9b88-4518-8b09-9d78d0368eac.png"
     },
     "stato": "pianificato"
   },
   {
-    "n": 7,
-    "data": "2026-11-17",
-    "pilastro": "Materiali",
-    "titolo": "TPU e materiali flessibili: guarnizioni, protezioni e parti morbide in serie",
-    "slug": "tpu-e-materiali-flessibili-guarnizioni-protezioni-e-parti-morbide-in-s",
-    "keyword": "stampa 3D TPU flessibile",
-    "target": "Uffici tecnici e produzione",
-    "prodotto_collegato": "LAYFLEX / Layerloop XE",
-    "scaletta": [
-      "Cosa rende difficile stampare il flessibile",
-      "Durezza Shore e applicazioni",
-      "Guarnizioni, paracolpi, grip",
-      "Stampa in serie di parti flessibili",
-      "Consigli di progetto"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "a hand bending a flexible translucent TPU 3D printed part, several flexible gaskets and bumpers on a workbench in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/07-tpu-e-materiali-flessibili-guarnizioni-p.jpg",
-      "job_id": "3d601ec5-b89a-4649-94f6-fe53bfef5cea",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135943_3d601ec5-b89a-4649-94f6-fe53bfef5cea.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 8,
-    "data": "2026-11-24",
-    "pilastro": "Materiali",
-    "titolo": "Camera riscaldata: perché conta per tecnopolimeri e precisione dimensionale",
-    "slug": "camera-riscaldata-perche-conta-per-tecnopolimeri-e-precisione-dimensio",
-    "keyword": "stampante 3D camera riscaldata",
-    "target": "Tecnici di produzione",
-    "prodotto_collegato": "Layerloop Extend",
-    "scaletta": [
-      "Ritiro, warping e delaminazione",
-      "Cosa fa la camera riscaldata",
-      "Materiali che la richiedono",
-      "Tolleranze ripetibili sul lotto",
-      "Checklist di scelta"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "inside view of a warm heated 3D printer chamber with a subtle orange glow, a technical polymer part being printed, shallow depth of field. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/08-camera-riscaldata-perche-conta-per-tecno.jpg",
-      "job_id": "71c5141e-58b6-4ff8-a439-ed53ed3a9b9d",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140032_71c5141e-58b6-4ff8-a439-ed53ed3a9b9d.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 9,
-    "data": "2026-12-01",
-    "pilastro": "Tracciabilità e 4.0",
-    "titolo": "Tag RFID e NFC integrati nel pezzo: la tracciabilità nasce in stampa",
-    "slug": "tag-rfid-e-nfc-integrati-nel-pezzo-la-tracciabilita-nasce-in-stampa",
-    "keyword": "RFID NFC integrati stampa 3D",
-    "target": "Direttori operations e qualità",
-    "prodotto_collegato": "Testina RFID/NFC Layerloop",
-    "scaletta": [
-      "Il problema delle etichette applicate dopo",
-      "Il tag annegato nel pezzo: come funziona",
-      "Applicazioni: asset, ricambi, attrezzi",
-      "Lettura, scrittura e gestionale",
-      "Da dove partire"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "a smartphone held near a small 3D printed plastic component, a cutaway of the part revealing an embedded NFC tag inside, clean studio light. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/09-tag-rfid-e-nfc-integrati-nel-pezzo-la-tr.jpg",
-      "job_id": "d5b0889c-1790-4ba0-aa6f-2e2d4bf45b19",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135943_d5b0889c-1790-4ba0-aa6f-2e2d4bf45b19.png"
-    },
-    "stato": "pianificato"
-  },
-  {
     "n": 10,
     "data": "2026-12-09",
-    "pilastro": "Tracciabilità e 4.0",
-    "titolo": "Ricambi originali e anti-contraffazione: il valore di un NFC stampato dentro",
-    "slug": "ricambi-originali-e-anti-contraffazione-il-valore-di-un-nfc-stampato-d",
-    "keyword": "anticontraffazione ricambi NFC",
-    "target": "Brand manager e aftersales",
-    "prodotto_collegato": "Testina RFID/NFC Layerloop",
+    "pilastro": "Medical Division",
+    "titolo": "Produrre i plantari in studio: quanto conviene al podologo rispetto al laboratorio esterno",
+    "slug": "produrre-i-plantari-in-studio-quanto-conviene-al-podologo-rispetto-al",
+    "keyword": "produzione plantari in studio",
+    "target": "Podologi titolari di studio",
+    "prodotto_collegato": "Layerloop XE",
     "scaletta": [
-      "Il costo della contraffazione nei ricambi",
-      "Autenticare un pezzo con lo smartphone",
-      "Garanzia, manutenzione, storico",
-      "Integrare il tag senza rallentare la produzione",
-      "Esempi di applicazione"
+      "Costi e tempi del laboratorio esterno",
+      "Costo per plantare prodotto in-house: un esempio",
+      "Tempi di consegna e soddisfazione del paziente",
+      "Controllo sul risultato e modifiche rapide",
+      "Quando il conto torna"
     ],
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "technician in a workshop scanning a 3D printed spare part with a smartphone, screen showing a green verified check icon, industrial machinery softly blurred. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/10-ricambi-originali-e-anti-contraffazione-.jpg",
-      "job_id": "b81b029e-00b3-4a68-9532-819fc736d992",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135942_b81b029e-00b3-4a68-9532-819fc736d992.png"
+      "file": "immagini/10-produrre-i-plantari-in-studio-quanto-con.jpg",
+      "job_id": "c22cc9cb-2d99-422f-8df8-c4efe446363d",
+      "riferimento": "https://www.layerloop3d.com/wp-content/uploads/2024/02/xE-fronte-lato-2-1024x673.png",
+      "media_id_riferimento": "2917e5be-31b3-479c-b066-a3a7f5d8a280",
+      "prompt": "a Layerloop XE 3D printer on a counter in a modern podiatry clinic, a smiling podiatrist holding a freshly printed custom insole next to it. The 3D printer must look exactly like the Layerloop XE in the reference image (same shape, colours, proportions and details, with its LAYERLOOP logo as in the reference); no other 3D printers in the scene. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no other text or logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141208_c22cc9cb-2d99-422f-8df8-c4efe446363d.png"
     },
     "stato": "pianificato"
   },
   {
     "n": 11,
     "data": "2026-12-15",
-    "pilastro": "Tracciabilità e 4.0",
-    "titolo": "Incentivi e stampa 3D industriale: come valutare Transizione 5.0 e agevolazioni",
-    "slug": "incentivi-e-stampa-3d-industriale-come-valutare-transizione-5-0-e-agev",
-    "keyword": "incentivi stampante 3D industria 4.0",
-    "target": "Imprenditori e CFO",
-    "prodotto_collegato": "Tutta la gamma",
+    "pilastro": "Grandi componenti (Extend)",
+    "titolo": "Camera riscaldata: perché conta per tecnopolimeri e pezzi di grandi dimensioni",
+    "slug": "camera-riscaldata-perche-conta-per-tecnopolimeri-e-pezzi-di-grandi-dim",
+    "keyword": "stampante 3D camera riscaldata",
+    "target": "Tecnici di produzione",
+    "prodotto_collegato": "Layerloop Extend",
     "scaletta": [
-      "Perché una stampante 3D può rientrare negli investimenti 4.0",
-      "Requisiti tipici: interconnessione e integrazione",
-      "Documentazione da preparare",
-      "Con chi confrontarsi (commercialista, perizia)",
-      "Nota: verificare sempre la normativa vigente"
+      "Ritiro, warping e delaminazione",
+      "Cosa fa la camera riscaldata",
+      "Materiali che la richiedono: ABS, nylon, compositi",
+      "Tolleranze ripetibili su pezzi grandi",
+      "Checklist di scelta"
     ],
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "business owner and consultant reviewing documents and a laptop at a desk in a modern factory office, a compact industrial 3D printer visible through the glass wall. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/11-incentivi-e-stampa-3d-industriale-come-v.jpg",
-      "job_id": "4dd0588f-0d69-4c60-9dff-36db6e065865",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135943_4dd0588f-0d69-4c60-9dff-36db6e065865.png"
+      "file": "immagini/11-camera-riscaldata-perche-conta-per-tecno.jpg",
+      "job_id": "bc98e312-55a0-470f-b99a-f6420a617467",
+      "riferimento": "https://www.layerloop3d.com/wp-content/uploads/2025/10/Layer_extend2-2048x1365.png",
+      "media_id_riferimento": "764b3a3a-6a79-479c-aef3-07504d8bc01c",
+      "prompt": "close-up of a Layerloop Extend industrial 3D printer, warm orange light glowing through its front window where a large technical polymer part is being printed, factory softly blurred behind. The 3D printer must look exactly like the Layerloop Extend in the reference image (same shape, colours, proportions and details, with its LAYERLOOP logo as in the reference); no other 3D printers in the scene. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no other text or logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141213_bc98e312-55a0-470f-b99a-f6420a617467.png"
     },
     "stato": "pianificato"
   },
   {
     "n": 12,
     "data": "2026-12-22",
-    "pilastro": "Tracciabilità e 4.0",
+    "pilastro": "Processo e strategia",
     "titolo": "5 tendenze della produzione additiva da tenere d'occhio nel 2027",
     "slug": "5-tendenze-della-produzione-additiva-da-tenere-d-occhio-nel-2027",
     "keyword": "tendenze stampa 3D 2027",
@@ -296,18 +307,20 @@
     "prodotto_collegato": "Tutta la gamma",
     "scaletta": [
       "Produzione continua e automatizzata",
-      "Materiali tecnici più accessibili",
-      "Pezzi intelligenti con elettronica integrata",
+      "Componenti grandi stampati in casa",
+      "Dispositivi medicali su misura prodotti in studio",
       "Reshoring e filiere corte",
       "Competenze interne"
     ],
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "wide shot of a bright modern small factory floor at dusk with several compact 3D printers running in a row, warm interior light, cinematic. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
       "file": "immagini/12-5-tendenze-della-produzione-additiva-da-.jpg",
-      "job_id": "8ebc9ef8-6102-41a0-b114-8b1ae789dc6f",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135943_8ebc9ef8-6102-41a0-b114-8b1ae789dc6f.png"
+      "job_id": "81296c3c-f9e7-44a6-a9d4-db717444ec5a",
+      "riferimento": "https://www.layerloop3d.com/wp-content/uploads/2024/03/Next_gamma-1024x704.jpg",
+      "media_id_riferimento": "ef4e9dc2-c7c0-492d-a300-a115a3cad251",
+      "prompt": "a row of Layerloop Next 3D printers running in a bright modern small factory at dusk, warm interior light, cinematic wide shot. The 3D printer must look exactly like the Layerloop Next in the reference image (same shape, colours, proportions and details, with its LAYERLOOP logo as in the reference); no other 3D printers in the scene. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no other text or logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141230_81296c3c-f9e7-44a6-a9d4-db717444ec5a.png"
     },
     "stato": "pianificato"
   },
@@ -330,7 +343,8 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "close-up of a calculator, printed spreadsheet and a small 3D printed part with a digital scale showing weight, on a wooden desk, soft light. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "prompt": null,
+      "riusa": "13",
       "file": "immagini/13-quanto-costa-davvero-un-pezzo-stampato-i.jpg",
       "job_id": "7799ca56-6fa9-4d9b-a235-1d4b76c7275c",
       "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140033_7799ca56-6fa9-4d9b-a235-1d4b76c7275c.png"
@@ -340,26 +354,26 @@
   {
     "n": 14,
     "data": "2027-01-05",
-    "pilastro": "Settori",
-    "titolo": "Podologia e plantari su misura: produrre ortesi personalizzate in serie",
-    "slug": "podologia-e-plantari-su-misura-produrre-ortesi-personalizzate-in-serie",
-    "keyword": "plantari stampa 3D",
-    "target": "Podologi e laboratori ortopedici",
-    "prodotto_collegato": "Medical Division / Layerloop XE",
+    "pilastro": "Medical Division",
+    "titolo": "Materiali per plantari e suole: rigidità, comfort e durata",
+    "slug": "materiali-per-plantari-e-suole-rigidita-comfort-e-durata",
+    "keyword": "materiali plantari stampa 3D",
+    "target": "Podologi e tecnici ortopedici",
+    "prodotto_collegato": "Layinsole, LAYFLEX, LayRigidCF",
     "scaletta": [
-      "Dal calco al file: il flusso digitale",
-      "Materiali flessibili per il comfort",
-      "Più plantari in una notte",
-      "Qualità e ripetibilità",
-      "Formazione e avvio"
+      "Cosa chiede un plantare a un materiale",
+      "Layinsole, LAYFLEX, LayRigidCF: caratteristiche e usi",
+      "Zone rigide e zone morbide nello stesso plantare",
+      "Certificazioni e schede tecniche",
+      "Come scegliere caso per caso"
     ],
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "several custom 3D printed orthotic insoles in soft materials on a clean clinic table, a foot scan visible on a tablet screen in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/14-podologia-e-plantari-su-misura-produrre-.jpg",
-      "job_id": "0e978dde-8d8f-4a2b-ad99-739d368bcc06",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140046_0e978dde-8d8f-4a2b-ad99-739d368bcc06.png"
+      "file": "immagini/14-materiali-per-plantari-e-suole-rigidita-.jpg",
+      "job_id": "cf67af1b-8b22-410d-a541-8832b7745a59",
+      "prompt": "several custom 3D printed orthotic insoles in different soft and rigid materials and colours arranged on a clean white clinic table, a tablet showing a foot scan in the background. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141258_cf67af1b-8b22-410d-a541-8832b7745a59.png"
     },
     "stato": "pianificato"
   },
@@ -382,7 +396,8 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "automotive workshop, mechanic fitting a black 3D printed replacement part into a classic car dashboard, detailed hands, soft garage lighting. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "prompt": null,
+      "riusa": "15",
       "file": "immagini/15-automotive-dime-attrezzature-e-ricambi-f.jpg",
       "job_id": "378c61c5-fd42-4992-af84-24843be59c62",
       "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135956_378c61c5-fd42-4992-af84-24843be59c62.png"
@@ -392,6 +407,58 @@
   {
     "n": 16,
     "data": "2027-01-19",
+    "pilastro": "Grandi componenti (Extend)",
+    "titolo": "Ricambi per grandi macchinari: ridurre il fermo macchina con la stampa 3D",
+    "slug": "ricambi-per-grandi-macchinari-ridurre-il-fermo-macchina-con-la-stampa",
+    "keyword": "ricambi macchinari stampa 3D",
+    "target": "Responsabili manutenzione",
+    "prodotto_collegato": "Layerloop Extend",
+    "scaletta": [
+      "Quanto costa un'ora di fermo",
+      "Ricambi introvabili o con tempi lunghi",
+      "Magazzino digitale: il file al posto dello scaffale",
+      "Materiali per ricambi funzionali",
+      "Come organizzare il servizio"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/16-ricambi-per-grandi-macchinari-ridurre-il.jpg",
+      "job_id": "887c3f85-5471-4566-a731-8dc5d9b65493",
+      "prompt": "maintenance technician fitting a large black 3D printed replacement part into a big industrial packaging machine on a factory floor, open machine panel, work gloves. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141258_887c3f85-5471-4566-a731-8dc5d9b65493.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 17,
+    "data": "2027-01-26",
+    "pilastro": "Materiali",
+    "titolo": "TPU e materiali flessibili: guarnizioni, protezioni e parti morbide in serie",
+    "slug": "tpu-e-materiali-flessibili-guarnizioni-protezioni-e-parti-morbide-in-s",
+    "keyword": "stampa 3D TPU flessibile",
+    "target": "Uffici tecnici e produzione",
+    "prodotto_collegato": "LAYFLEX / Layerloop XE",
+    "scaletta": [
+      "Cosa rende difficile stampare il flessibile",
+      "Durezza Shore e applicazioni",
+      "Guarnizioni, paracolpi, grip",
+      "Stampa in serie di parti flessibili",
+      "Consigli di progetto"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/17-tpu-e-materiali-flessibili-guarnizioni-p.jpg",
+      "job_id": "09e02099-f51b-41b2-98ae-0598a9a6b6f6",
+      "prompt": "a hand bending a flexible translucent TPU 3D printed part over a workbench scattered with flexible gaskets, O-rings and bumpers in black and teal. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141323_09e02099-f51b-41b2-98ae-0598a9a6b6f6.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 18,
+    "data": "2027-02-02",
     "pilastro": "Settori",
     "titolo": "Serramenti: accessori e componenti su misura per chi produce infissi",
     "slug": "serramenti-accessori-e-componenti-su-misura-per-chi-produce-infissi",
@@ -408,16 +475,122 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "window frame manufacturing workshop, close-up of aluminium window profile corner with small grey 3D printed end caps and spacers, sawdust-free clean bench. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/16-serramenti-accessori-e-componenti-su-mis.jpg",
+      "prompt": null,
+      "riusa": "16",
+      "file": "immagini/18-serramenti-accessori-e-componenti-su-mis.jpg",
       "job_id": "ca649850-ede9-4222-854e-a7230b0c5703",
       "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135955_ca649850-ede9-4222-854e-a7230b0c5703.png"
     },
     "stato": "pianificato"
   },
   {
-    "n": 17,
-    "data": "2027-01-26",
+    "n": 19,
+    "data": "2027-02-09",
+    "pilastro": "Medical Division",
+    "titolo": "Processo controllato: ripetibilità e qualità nei dispositivi podologici su misura",
+    "slug": "processo-controllato-ripetibilita-e-qualita-nei-dispositivi-podologici",
+    "keyword": "processo controllato plantari 3D",
+    "target": "Podologi, cliniche, ortopedie",
+    "prodotto_collegato": "Medical Division",
+    "scaletta": [
+      "Perché la ripetibilità conta anche nel su misura",
+      "Parametri di stampa validati",
+      "Monitoraggio dei lavori e riduzione degli errori",
+      "Documentare il processo",
+      "Checklist per lo studio"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/19-processo-controllato-ripetibilita-e-qual.jpg",
+      "job_id": "e213632a-2ddc-4334-b008-64295ac587b8",
+      "prompt": "podiatric lab technician in a white coat checking the thickness of a 3D printed insole with a digital caliper, a batch of identical insoles lined up on the table and a printed checklist. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141259_e213632a-2ddc-4334-b008-64295ac587b8.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 20,
+    "data": "2027-02-16",
+    "pilastro": "Processo e strategia",
+    "titolo": "Dime, maschere e calibri stampati in 3D: il ROI si misura in settimane",
+    "slug": "dime-maschere-e-calibri-stampati-in-3d-il-roi-si-misura-in-settimane",
+    "keyword": "attrezzature produzione stampa 3D",
+    "target": "Responsabili di stabilimento",
+    "prodotto_collegato": "Layerloop Next / LAYRBON",
+    "scaletta": [
+      "Perché le attrezzature sono il caso d'uso numero uno",
+      "Esempi: dime di foratura, maschere di montaggio, go/no-go",
+      "Costi e tempi a confronto con il fresato",
+      "Ergonomia e peso",
+      "Calcolo del ROI"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "prompt": null,
+      "riusa": "20",
+      "file": "immagini/20-dime-maschere-e-calibri-stampati-in-3d-i.jpg",
+      "job_id": "45323b5b-0ff7-4715-90a8-9d5c814f4474",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140044_45323b5b-0ff7-4715-90a8-9d5c814f4474.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 21,
+    "data": "2027-02-23",
+    "pilastro": "Grandi componenti (Extend)",
+    "titolo": "Condotti, canalizzazioni e guide per linee di produzione stampati in 3D",
+    "slug": "condotti-canalizzazioni-e-guide-per-linee-di-produzione-stampati-in-3d",
+    "keyword": "condotti aria stampa 3D",
+    "target": "Ingegneria di produzione",
+    "prodotto_collegato": "Layerloop Extend",
+    "scaletta": [
+      "Geometrie complesse senza saldature",
+      "Condotti d'aria, aspirazioni, guide e scivoli",
+      "Materiali: temperatura e resistenza chimica",
+      "Modifiche di linea senza fermo lungo",
+      "Esempio di progetto"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/21-condotti-canalizzazioni-e-guide-per-line.jpg",
+      "job_id": "47c4190e-dd42-4654-979e-71c703268658",
+      "prompt": "production line with large black 3D printed curved air ducts, suction hoods and product guide rails mounted on conveyor machinery in a clean factory. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141327_47c4190e-dd42-4654-979e-71c703268658.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 22,
+    "data": "2027-03-02",
+    "pilastro": "Processo e strategia",
+    "titolo": "Design for Additive Manufacturing: 7 regole per pezzi da produrre in serie",
+    "slug": "design-for-additive-manufacturing-7-regole-per-pezzi-da-produrre-in-se",
+    "keyword": "design for additive manufacturing",
+    "target": "Progettisti",
+    "prodotto_collegato": "Layerloop Academy",
+    "scaletta": [
+      "Pensare al processo, non solo al pezzo",
+      "Spessori, raccordi, tolleranze",
+      "Orientamento e asse inclinato",
+      "Consolidare assiemi in un solo pezzo",
+      "Checklist finale"
+    ],
+    "cta": "Richiedi informazioni / prova di stampa gratuita",
+    "immagine": {
+      "serve": true,
+      "file": "immagini/22-design-for-additive-manufacturing-7-rego.jpg",
+      "job_id": "ce2612f2-a258-412a-96ff-5a8c67bb1bfd",
+      "prompt": "engineer at a CAD workstation designing a lattice-optimized mechanical part on screen, the physical grey 3D printed version of the same part on the desk next to the monitor, office with plants. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141336_ce2612f2-a258-412a-96ff-5a8c67bb1bfd.png"
+    },
+    "stato": "pianificato"
+  },
+  {
+    "n": 23,
+    "data": "2027-03-09",
     "pilastro": "Settori",
     "titolo": "Nautica: componenti stampati in 3D che resistono a salsedine e UV",
     "slug": "nautica-componenti-stampati-in-3d-che-resistono-a-salsedine-e-uv",
@@ -434,43 +607,45 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "white 3D printed marine fittings and cable clips mounted on a sailboat deck, sea and sunlight in the background, water droplets on the parts. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/17-nautica-componenti-stampati-in-3d-che-re.jpg",
-      "job_id": "bb01e4b3-ef21-4f83-bc1e-2753577e89bc",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140045_bb01e4b3-ef21-4f83-bc1e-2753577e89bc.png"
+      "file": "immagini/23-nautica-componenti-stampati-in-3d-che-re.jpg",
+      "job_id": "28865329-3dae-4606-9054-d8d42c33a5b0",
+      "prompt": "white 3D printed marine fittings, fairleads and cable clips mounted on a sailboat deck, open sea and sunlight in the background, water droplets on the parts. No 3D printers anywhere in the frame, not even in the background. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141337_28865329-3dae-4606-9054-d8d42c33a5b0.png"
     },
     "stato": "pianificato"
   },
   {
-    "n": 18,
-    "data": "2027-02-02",
-    "pilastro": "Processo e qualità",
-    "titolo": "Design for Additive Manufacturing: 7 regole per pezzi da produrre in serie",
-    "slug": "design-for-additive-manufacturing-7-regole-per-pezzi-da-produrre-in-se",
-    "keyword": "design for additive manufacturing",
-    "target": "Progettisti",
-    "prodotto_collegato": "Layerloop Academy",
+    "n": 24,
+    "data": "2027-03-16",
+    "pilastro": "Medical Division",
+    "titolo": "Podologi e stampa 3D: formazione e avvio con la Medical Division",
+    "slug": "podologi-e-stampa-3d-formazione-e-avvio-con-la-medical-division",
+    "keyword": "corso stampa 3D podologi",
+    "target": "Podologi",
+    "prodotto_collegato": "Layerloop XE / Layerloop Academy",
     "scaletta": [
-      "Pensare al processo, non solo al pezzo",
-      "Spessori, raccordi, tolleranze",
-      "Orientamento e asse inclinato",
-      "Consolidare assiemi in un solo pezzo",
-      "Checklist finale"
+      "Le competenze che servono in studio",
+      "Il percorso: scansione, CAD, stampa, rifinitura",
+      "Assistenza e sedi sul territorio",
+      "I primi 30 giorni",
+      "Domande frequenti"
     ],
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "engineer at a CAD workstation designing a lattice-optimized mechanical part, the physical 3D printed version of the same part on the desk next to the monitor. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/18-design-for-additive-manufacturing-7-rego.jpg",
-      "job_id": "04485f88-9388-4734-a047-4ffb7533c34a",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135957_04485f88-9388-4734-a047-4ffb7533c34a.png"
+      "file": "immagini/24-podologi-e-stampa-3d-formazione-e-avvio-.jpg",
+      "job_id": "e3e0d0b1-f829-4975-9104-1a51cd9e1f91",
+      "riferimento": "https://www.layerloop3d.com/wp-content/uploads/2024/02/xE-fronte-lato-2-1024x673.png",
+      "media_id_riferimento": "2917e5be-31b3-479c-b066-a3a7f5d8a280",
+      "prompt": "small group of podiatrists in a bright training room gathered around a Layerloop XE 3D printer while an instructor shows a printed insole. The 3D printer must look exactly like the Layerloop XE in the reference image (same shape, colours, proportions and details, with its LAYERLOOP logo as in the reference); no other 3D printers in the scene. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no other text or logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141230_e3e0d0b1-f829-4975-9104-1a51cd9e1f91.png"
     },
     "stato": "pianificato"
   },
   {
-    "n": 19,
-    "data": "2027-02-09",
-    "pilastro": "Processo e qualità",
+    "n": 25,
+    "data": "2027-03-23",
+    "pilastro": "Processo e strategia",
     "titolo": "Controllo qualità nella produzione additiva: ripetibilità dal primo all'ultimo pezzo",
     "slug": "controllo-qualita-nella-produzione-additiva-ripetibilita-dal-primo-all",
     "keyword": "controllo qualità stampa 3D",
@@ -486,43 +661,18 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "quality inspector measuring a 3D printed part with a digital caliper, a batch of identical parts lined up on a granite inspection plate. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/19-controllo-qualita-nella-produzione-addit.jpg",
+      "prompt": null,
+      "riusa": "19",
+      "file": "immagini/25-controllo-qualita-nella-produzione-addit.jpg",
       "job_id": "eea20ec5-07a0-4555-be8d-c3bf56a343fe",
       "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140048_eea20ec5-07a0-4555-be8d-c3bf56a343fe.png"
     },
     "stato": "pianificato"
   },
   {
-    "n": 20,
-    "data": "2027-02-16",
-    "pilastro": "Processo e qualità",
-    "titolo": "Dime, maschere e calibri stampati in 3D: il ROI si misura in settimane",
-    "slug": "dime-maschere-e-calibri-stampati-in-3d-il-roi-si-misura-in-settimane",
-    "keyword": "attrezzature produzione stampa 3D",
-    "target": "Responsabili di stabilimento",
-    "prodotto_collegato": "Layerloop Next / LAYRBON",
-    "scaletta": [
-      "Perché le attrezzature sono il caso d'uso numero uno",
-      "Esempi: dime di foratura, maschere di montaggio, go/no-go",
-      "Costi e tempi a confronto con il fresato",
-      "Ergonomia e peso",
-      "Calcolo del ROI"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "assembly line worker using a bright teal 3D printed assembly jig to position components, factory environment, focus on the jig. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/20-dime-maschere-e-calibri-stampati-in-3d-i.jpg",
-      "job_id": "45323b5b-0ff7-4715-90a8-9d5c814f4474",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140044_45323b5b-0ff7-4715-90a8-9d5c814f4474.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 21,
-    "data": "2027-02-23",
-    "pilastro": "Processo e qualità",
+    "n": 26,
+    "data": "2027-03-30",
+    "pilastro": "Processo e strategia",
     "titolo": "Internalizzare la stampa 3D o affidarsi al conto terzi? Guida alla scelta",
     "slug": "internalizzare-la-stampa-3d-o-affidarsi-al-conto-terzi-guida-alla-scel",
     "keyword": "stampa 3D in azienda o conto terzi",
@@ -538,140 +688,12 @@
     "cta": "Richiedi informazioni / prova di stampa gratuita",
     "immagine": {
       "serve": true,
-      "prompt": "two people shaking hands in a small modern manufacturing company, a compact 3D printer and parts on a workbench between them. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/21-internalizzare-la-stampa-3d-o-affidarsi-.jpg",
-      "job_id": "b49c4596-b620-4198-bb6d-b136cb25cb85",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135955_b49c4596-b620-4198-bb6d-b136cb25cb85.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 22,
-    "data": "2027-03-02",
-    "pilastro": "Business e crescita",
-    "titolo": "Formare il personale sulla stampa 3D: come accelerare l'adozione in azienda",
-    "slug": "formare-il-personale-sulla-stampa-3d-come-accelerare-l-adozione-in-azi",
-    "keyword": "corso stampa 3D aziende",
-    "target": "HR e responsabili produzione",
-    "prodotto_collegato": "Layerloop Academy",
-    "scaletta": [
-      "Perché la tecnologia da sola non basta",
-      "Le competenze che servono",
-      "Percorso tipo: dal primo pezzo alla serie",
-      "Chi coinvolgere",
-      "Misurare i risultati"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "small group of technicians in a training room gathered around a 3D printer while an instructor explains, bright and friendly atmosphere. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/22-formare-il-personale-sulla-stampa-3d-com.jpg",
-      "job_id": "147dcd1d-10f4-4a47-8665-5bae7375a2ae",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140053_147dcd1d-10f4-4a47-8665-5bae7375a2ae.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 23,
-    "data": "2027-03-09",
-    "pilastro": "Business e crescita",
-    "titolo": "Farm di stampanti o stampante a nastro? Come scalare la capacità produttiva",
-    "slug": "farm-di-stampanti-o-stampante-a-nastro-come-scalare-la-capacita-produt",
-    "keyword": "scalare produzione stampa 3D",
-    "target": "Responsabili produzione",
-    "prodotto_collegato": "Layerloop Next",
-    "scaletta": [
-      "Il modello farm: pro e contro",
-      "Il modello continuo a nastro",
-      "Spazio, energia, persone",
-      "Uno scenario a confronto",
-      "Come scegliere"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "compact industrial 3D printer in the foreground with a batch of finished parts in a tray, and in the blurred background a large room full of many small desktop 3D printers. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/23-farm-di-stampanti-o-stampante-a-nastro-c.jpg",
-      "job_id": "d96d79e5-366c-4f07-97ac-d12bcc088c89",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135956_d96d79e5-366c-4f07-97ac-d12bcc088c89.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 24,
-    "data": "2027-03-16",
-    "pilastro": "Business e crescita",
-    "titolo": "Produzione locale e sostenibile: meno scarti e trasporti con la stampa 3D",
-    "slug": "produzione-locale-e-sostenibile-meno-scarti-e-trasporti-con-la-stampa",
-    "keyword": "stampa 3D sostenibilità reshoring",
-    "target": "Imprenditori e ESG manager",
-    "prodotto_collegato": "LAYECO",
-    "scaletta": [
-      "Additivo vs sottrattivo: lo scarto",
-      "Filiera corta e reshoring",
-      "Materiali di origine vegetale",
-      "Produrre solo ciò che serve",
-      "Comunicare la sostenibilità"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "natural-coloured PLA 3D printed parts on a wooden table next to green plant leaves, soft daylight, calm sustainable mood. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/24-produzione-locale-e-sostenibile-meno-sca.jpg",
-      "job_id": "9c6d3536-6b61-43fe-a49a-fdabb3a3ef86",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_135956_9c6d3536-6b61-43fe-a49a-fdabb3a3ef86.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 25,
-    "data": "2027-03-23",
-    "pilastro": "Business e crescita",
-    "titolo": "Personalizzazione di massa: produrre in serie pezzi tutti diversi",
-    "slug": "personalizzazione-di-massa-produrre-in-serie-pezzi-tutti-diversi",
-    "keyword": "personalizzazione di massa stampa 3D",
-    "target": "Marketing e prodotto",
-    "prodotto_collegato": "Layerloop Next",
-    "scaletta": [
-      "Dalla serie uguale alla serie personalizzata",
-      "Nomi, codici, varianti in automatico",
-      "Esempi: gadget, targhette, ausili",
-      "Flusso file automatizzato",
-      "Nuovi modelli di business"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "a row of 3D printed product tags and small objects each with a different personalised shape and engraving, arranged neatly in a line, overhead studio shot. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/25-personalizzazione-di-massa-produrre-in-s.jpg",
-      "job_id": "e0d56435-0e52-4612-841a-5fc7d4d1dc5b",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140052_e0d56435-0e52-4612-841a-5fc7d4d1dc5b.png"
-    },
-    "stato": "pianificato"
-  },
-  {
-    "n": 26,
-    "data": "2027-03-30",
-    "pilastro": "Business e crescita",
-    "titolo": "Dal prototipo alla pre-serie: validare un prodotto prima di investire nello stampo",
-    "slug": "dal-prototipo-alla-pre-serie-validare-un-prodotto-prima-di-investire-n",
-    "keyword": "pre-serie stampa 3D",
-    "target": "Startup e product manager",
-    "prodotto_collegato": "Tutta la gamma",
-    "scaletta": [
-      "Prototipo, pre-serie, serie: le differenze",
-      "Test di mercato con 100 pezzi veri",
-      "Iterare il design in giorni",
-      "Quando passare allo stampo",
-      "Riepilogo del percorso"
-    ],
-    "cta": "Richiedi informazioni / prova di stampa gratuita",
-    "immagine": {
-      "serve": true,
-      "prompt": "product development table with an evolution of 3D printed prototypes from rough to finished, arranged left to right, final boxed product at the end. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no text, no logos, no watermarks, 16:9",
-      "file": "immagini/26-dal-prototipo-alla-pre-serie-validare-un.jpg",
-      "job_id": "60f17816-2b5d-4c4c-bd5d-e08decfd3fd3",
-      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_140053_60f17816-2b5d-4c4c-bd5d-e08decfd3fd3.png"
+      "file": "immagini/26-internalizzare-la-stampa-3d-o-affidarsi-.jpg",
+      "job_id": "6a610166-2329-422f-ab3c-653286cb04a3",
+      "riferimento": "https://www.layerloop3d.com/wp-content/uploads/2024/03/Next_gamma-1024x704.jpg",
+      "media_id_riferimento": "ef4e9dc2-c7c0-492d-a300-a115a3cad251",
+      "prompt": "two business people shaking hands in a small modern manufacturing company next to a Layerloop Next 3D printer, finished parts on a workbench. The 3D printer must look exactly like the Layerloop Next in the reference image (same shape, colours, proportions and details, with its LAYERLOOP logo as in the reference); no other 3D printers in the scene. Photorealistic editorial industrial photography, modern clean Italian manufacturing workshop, soft natural daylight, neutral palette with subtle teal accents, shallow depth of field, high detail, no other text or logos, no watermarks, 16:9",
+      "url_higgsfield": "https://d8j0ntlcm91z4.cloudfront.net/user_3EM2mhwIYgfmUTkU2k5ceGFdC9j/hf_20260924_141228_6a610166-2329-422f-ab3c-653286cb04a3.png"
     },
     "stato": "pianificato"
   }

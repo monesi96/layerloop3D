@@ -30,12 +30,13 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
 |---|---|
 | `CALENDARIO.md` | Il calendario leggibile (titoli, keyword, target, scaletta) |
 | `calendario-editoriale.json` | Lo stesso calendario per l'agente, con lo stato di ogni articolo |
-| `immagini/` | 26 immagini hero 16:9 generate con Higgsfield (una per articolo) |
+| `immagini/` | 26 immagini hero 16:9 generate con Higgsfield (una per articolo); le stampanti mostrate sono solo Layerloop |
 | `agente/prompt-settimanale.md` | Le istruzioni che l'agente segue ogni settimana |
 | `agente/modello-articolo.md` | Il modello di un articolo (frontmatter + struttura) |
 | `articoli/` | Gli articoli scritti dall'agente (uno per PR) |
 | `scripts/publish_wp.py` | Pubblica su WordPress gli articoli approvati |
-| `scripts/build_calendar.py` | Rigenera calendario JSON/MD dopo modifiche ai temi |
+| `scripts/build_calendar.py` | Rigenera calendario JSON/MD dopo modifiche ai temi (poi `fetch_images.py` per le immagini) |
+| `scripts/build_page.py` | Rigenera la pagina visuale `calendario.html` |
 
 ## Configurazione (una sola volta)
 
@@ -67,6 +68,8 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
 ## Da verificare prima di partire
 
 - L'URL della pagina contatti usato nella CTA (`/contatti/` nel modello).
-- Nell'articolo del 15 dicembre sugli incentivi, le norme vigenti al momento dell'uscita.
-- Le immagini sono generate con AI: mostrano pezzi e ambienti, non la stampante Layerloop
-  reale. Dove serve il prodotto, meglio usare le vostre foto.
+- Le immagini sono generate con AI. Dove compare una stampante è sempre una Layerloop, generata a
+  partire dalle foto ufficiali di Next, XE ed Extend; in tutte le altre non compaiono stampanti.
+  Controlla comunque i dettagli del prodotto (scritte, pannello, proporzioni) prima dell'approvazione.
+- Articoli su Extend: il sito non riporta volume di stampa e temperature; vanno confermati i dati
+  tecnici prima della pubblicazione.
