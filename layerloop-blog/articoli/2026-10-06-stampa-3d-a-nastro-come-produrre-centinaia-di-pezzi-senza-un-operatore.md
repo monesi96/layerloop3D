@@ -1,7 +1,7 @@
 ---
 titolo: "Stampa 3D a nastro: come produrre centinaia di pezzi senza un operatore"
 slug: stampa-3d-a-nastro-come-produrre-centinaia-di-pezzi-senza-un-operatore
-data: 2026-10-06
+data: 2026-09-25
 ora: "09:00"
 keyword: stampante 3D a nastro produzione in serie
 estratto: "Con una stampante 3D a nastro la produzione in serie continua anche di notte: il pezzo finito esce e il successivo parte da solo, senza operatore."
