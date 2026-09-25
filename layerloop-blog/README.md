@@ -35,6 +35,7 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
 | `agente/modello-articolo.md` | Il modello di un articolo (frontmatter + struttura) |
 | `articoli/` | Gli articoli scritti dall'agente (uno per PR) |
 | `scripts/publish_wp.py` | Pubblica su WordPress gli articoli approvati |
+| `scripts/render_post.py` | Impaginazione con lo stile Layerloop: hero con immagine, font MONUMET/DIN, box "In sintesi", CTA, form Ninja Forms generale (id 9) e footer |
 | `scripts/build_calendar.py` | Rigenera calendario JSON/MD dopo modifiche ai temi (poi `fetch_images.py` per le immagini) |
 | `scripts/build_page.py` | Rigenera la pagina visuale `calendario.html` |
 
