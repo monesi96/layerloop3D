@@ -127,4 +127,4 @@ di installazione.
 - È ideale dalle decine alle migliaia di pezzi. Oltre, lo stampaggio resta la scelta più economica.
 
 **Vuoi capire se i tuoi pezzi si possono produrre con Layerloop?**
-[Richiedi informazioni o una prova di stampa gratuita](https://www.smartlab3d.com/contatti/).
+[Richiedi informazioni o una prova di stampa gratuita](https://www.layerloop3d.com/form/).

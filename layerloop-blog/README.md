@@ -67,7 +67,7 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
 
 ## Da verificare prima di partire
 
-- L'URL della pagina contatti usato nella CTA (`/contatti/` nel modello).
+- La CTA punta a `https://www.layerloop3d.com/form/` ("Richiedi maggiori info"). Tutti i link restano su layerloop3d.com.
 - Le immagini sono generate con AI. Dove compare una stampante è sempre una Layerloop, generata a
   partire dalle foto ufficiali di Next, XE ed Extend; in tutte le altre non compaiono stampanti.
   Controlla comunque i dettagli del prodotto (scritte, pannello, proporzioni) prima dell'approvazione.

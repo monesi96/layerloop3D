@@ -33,4 +33,4 @@ Testo, con un esempio numerico o un caso pratico.
 - Punto chiave 3
 
 **Vuoi capire se i tuoi pezzi si possono produrre con Layerloop?**
-[Richiedi informazioni o una prova di stampa gratuita](https://www.layerloop3d.com/contatti/).
+[Richiedi informazioni o una prova di stampa gratuita](https://www.layerloop3d.com/form/).
