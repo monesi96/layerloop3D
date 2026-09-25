@@ -27,6 +27,7 @@ import urllib.request
 
 import yaml
 
+from newsletter import crea_campagna
 from render_post import render
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
@@ -88,13 +89,14 @@ def publish(path):
     if meta.get("stato") != "approvato":
         print(f"salto {path.name}: stato={meta.get('stato')}")
         return
+    info = calendar_info(meta["slug"])
     media = upload_image(meta) if meta.get("immagine") else None
     when = dt.datetime.fromisoformat(f'{meta["data"]}T{meta.get("ora", "09:00")}:00')
     post = {
         "title": meta["titolo"],
         "slug": meta["slug"],
         "excerpt": meta.get("estratto", ""),
-        "content": render(meta, body, media and media["source_url"], calendar_info(meta["slug"])),
+        "content": render(meta, body, media and media["source_url"], info),
         "template": "elementor_header_footer",
         "comment_status": "closed",
         "ping_status": "closed",
@@ -111,6 +113,8 @@ def publish(path):
     else:
         res = api("POST", "posts", post)
         print(f'creato #{res["id"]} {res["status"]} {res["link"]}')
+    if os.environ.get("NEWSLETTER", "si").lower() not in ("no", "false", "0"):
+        crea_campagna(meta, info, f'{WP_URL}/{meta["slug"]}/', media and media["source_url"])
 
 
 if __name__ == "__main__":

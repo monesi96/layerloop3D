@@ -11,6 +11,9 @@ on:
       file:
         description: "Articolo da (ri)pubblicare, es. layerloop-blog/articoli/2026-10-06-....md"
         required: true
+      newsletter:
+        description: "Crea/aggiorna anche la campagna Mailchimp (si/no)"
+        default: "si"
 
 jobs:
   pubblica:
@@ -39,4 +42,11 @@ jobs:
           WP_USER: ${{ secrets.WP_USER }}
           WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
           WP_CATEGORY: ${{ vars.WP_CATEGORY }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          MAILCHIMP_LIST_ID: ${{ vars.MAILCHIMP_LIST_ID }}
+          MAILCHIMP_AUDIENCE: ${{ vars.MAILCHIMP_AUDIENCE }}
+          MAILCHIMP_TAG: ${{ vars.MAILCHIMP_TAG }}
+          MAILCHIMP_MODE: ${{ vars.MAILCHIMP_MODE }}
+          MAILCHIMP_REPLY_TO: ${{ vars.MAILCHIMP_REPLY_TO }}
+          NEWSLETTER: ${{ inputs.newsletter || 'si' }}
         run: python layerloop-blog/scripts/publish_wp.py ${{ steps.files.outputs.list }}

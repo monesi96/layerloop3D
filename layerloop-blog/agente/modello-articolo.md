@@ -7,6 +7,8 @@ keyword: keyword principale
 estratto: "Una o due frasi (max 160 caratteri) con la keyword: diventano excerpt e meta description."
 immagine: immagini/01-nome-file.jpg
 immagine_alt: "Descrizione dell'immagine per l'accessibilità"
+newsletter_oggetto: "Oggetto della mail (max 60 caratteri)"
+newsletter_anteprima: "Testo di anteprima nella casella di posta (max 90 caratteri)"
 stato: bozza   # bozza -> approvato (solo dopo l'ok di Simone)
 ---
 

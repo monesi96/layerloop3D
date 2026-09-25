@@ -20,6 +20,9 @@ GitHub Action "Pubblica blog Layerloop" → scripts/publish_wp.py
         │
         ▼  WordPress REST API: carica l'immagine, crea il post
 Post programmato per il martedì previsto dal calendario, alle 09:00
+        │
+        ▼  scripts/newsletter.py (se c'è MAILCHIMP_API_KEY)
+Campagna Mailchimp con la grafica Layerloop: in bozza (default) o programmata alle 10:00
 ```
 
 Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
@@ -36,6 +39,7 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
 | `articoli/` | Gli articoli scritti dall'agente (uno per PR) |
 | `scripts/publish_wp.py` | Pubblica su WordPress gli articoli approvati |
 | `scripts/render_post.py` | Impaginazione con lo stile Layerloop: hero con immagine, font MONUMET/DIN, box "In sintesi", CTA, form Ninja Forms generale (id 9) e footer |
+| `scripts/newsletter.py` | Crea la campagna Mailchimp dell'articolo (anteprima: `anteprime/newsletter-esempio.png`) |
 | `scripts/build_calendar.py` | Rigenera calendario JSON/MD dopo modifiche ai temi (poi `fetch_images.py` per le immagini) |
 | `scripts/build_page.py` | Rigenera la pagina visuale `calendario.html` |
 
@@ -51,7 +55,17 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
 2. **GitHub → Settings → Secrets and variables → Actions**
    - Secret: `WP_URL` (`https://www.layerloop3d.com`), `WP_USER`, `WP_APP_PASSWORD`.
    - Variable (opzionale): `WP_CATEGORY` con lo slug della categoria.
-3. **Routine settimanale su Claude Code** (claude.ai/code → Routines, oppure chiedila a Claude):
+3. **Newsletter Mailchimp** (facoltativa)
+   - Secret: `MAILCHIMP_API_KEY` (Mailchimp → Profilo → Extras → API keys).
+   - Pubblico: "Smartlab Industrie 3D", tutti gli iscritti (cambiabile con le Variables
+     `MAILCHIMP_AUDIENCE` o `MAILCHIMP_LIST_ID`).
+   - Variables: `MAILCHIMP_TAG`
+     (invia solo a un tag), `MAILCHIMP_MODE` (`bozza` di default, oppure `programma`),
+     `MAILCHIMP_REPLY_TO` (email mittente, se diversa da quella del pubblico).
+   - Con `bozza` la campagna resta su Mailchimp da inviare con un clic; con `programma` parte da sola
+     il giorno di uscita, un'ora dopo il post. Se l'articolo viene ripubblicato la campagna viene
+     aggiornata, mai duplicata, e una campagna già inviata non viene toccata.
+4. **Routine settimanale su Claude Code** (claude.ai/code → Routines, oppure chiedila a Claude):
    - repository `monesi96/layerloop3d`, ogni giovedì alle 9:00;
    - prompt: *«Esegui le istruzioni di layerloop-blog/agente/prompt-settimanale.md»*;
    - connettori: GitHub e Higgsfield (serve solo se manca un'immagine).
