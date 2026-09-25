@@ -56,7 +56,7 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
    - Secret: `WP_URL` (`https://www.layerloop3d.com`), `WP_USER`, `WP_APP_PASSWORD`.
    - Variable (opzionale): `WP_CATEGORY` con lo slug della categoria.
 3. **Newsletter Mailchimp** (facoltativa)
-   - Secret: `MAILCHIMP_API_KEY` (Mailchimp → Profilo → Extras → API keys).
+   - Secret: `MAILCHIMP` o `MAILCHIMP_API_KEY` (Mailchimp → Profilo → Extras → API keys).
    - Pubblico: "Smartlab Industrie 3D", tutti gli iscritti (cambiabile con le Variables
      `MAILCHIMP_AUDIENCE` o `MAILCHIMP_LIST_ID`).
    - Variables: `MAILCHIMP_TAG`

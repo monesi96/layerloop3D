@@ -42,7 +42,7 @@ jobs:
           WP_USER: ${{ secrets.WP_USER }}
           WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
           WP_CATEGORY: ${{ vars.WP_CATEGORY }}
-          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY || secrets.MAILCHIMP }}
           MAILCHIMP_LIST_ID: ${{ vars.MAILCHIMP_LIST_ID }}
           MAILCHIMP_AUDIENCE: ${{ vars.MAILCHIMP_AUDIENCE }}
           MAILCHIMP_TAG: ${{ vars.MAILCHIMP_TAG }}
