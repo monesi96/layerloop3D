@@ -7,7 +7,7 @@ keyword: stampante 3D a nastro produzione in serie
 estratto: "Con una stampante 3D a nastro la produzione in serie continua anche di notte: il pezzo finito esce e il successivo parte da solo, senza operatore."
 immagine: immagini/01-stampa-3d-a-nastro-come-produrre-centina.jpg
 immagine_alt: "Due stampanti 3D Layerloop Next in un'officina e una cassetta piena di pezzi tecnici in plastica prodotti durante la notte"
-stato: bozza   # bozza -> approvato (solo dopo l'ok di Simone)
+stato: approvato
 ---
 
 Chi usa la stampa 3D in azienda conosce bene la scena: la stampante finisce il lavoro alle 23, ma
