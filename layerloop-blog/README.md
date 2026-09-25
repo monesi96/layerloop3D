@@ -61,7 +61,9 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
      `MAILCHIMP_AUDIENCE` o `MAILCHIMP_LIST_ID`).
    - Variables: `MAILCHIMP_TAG`
      (invia solo a un tag), `MAILCHIMP_MODE` (`bozza` di default, oppure `programma`),
-     `MAILCHIMP_REPLY_TO` (email mittente, se diversa da quella del pubblico).
+     `MAILCHIMP_REPLY_TO` / `MAILCHIMP_FROM_NAME` per cambiare il mittente.
+   - Mittente: **Layerloop 3D <newsletter@layerloop3d.com>**. L'indirizzo va verificato su Mailchimp
+     (e il dominio autenticato) prima del primo invio.
    - Con `bozza` la campagna resta su Mailchimp da inviare con un clic; con `programma` parte da sola
      il giorno di uscita, un'ora dopo il post. Se l'articolo viene ripubblicato la campagna viene
      aggiornata, mai duplicata, e una campagna già inviata non viene toccata.
