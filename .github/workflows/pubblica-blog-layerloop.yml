@@ -44,6 +44,7 @@ jobs:
           WP_CATEGORY: ${{ vars.WP_CATEGORY }}
           MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
           MAILCHIMP_LIST_ID: ${{ vars.MAILCHIMP_LIST_ID }}
+          MAILCHIMP_AUDIENCE: ${{ vars.MAILCHIMP_AUDIENCE }}
           MAILCHIMP_TAG: ${{ vars.MAILCHIMP_TAG }}
           MAILCHIMP_MODE: ${{ vars.MAILCHIMP_MODE }}
           MAILCHIMP_REPLY_TO: ${{ vars.MAILCHIMP_REPLY_TO }}

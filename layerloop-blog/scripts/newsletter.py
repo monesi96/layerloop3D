@@ -10,7 +10,8 @@ Modalità (variabile MAILCHIMP_MODE):
 
 Variabili d'ambiente:
     MAILCHIMP_API_KEY   chiave API (es. xxxxxxxx-us21), obbligatoria: senza, la newsletter è saltata
-    MAILCHIMP_LIST_ID   id del pubblico (Audience); se manca e c'è un solo pubblico, usa quello
+    MAILCHIMP_LIST_ID   id del pubblico (Audience); se manca si cerca per nome MAILCHIMP_AUDIENCE
+    MAILCHIMP_AUDIENCE  nome del pubblico (default "Smartlab Industrie 3D")
     MAILCHIMP_TAG       opzionale: invia solo ai contatti con questo tag
     MAILCHIMP_MODE      bozza | programma
     MAILCHIMP_REPLY_TO  opzionale: email mittente/risposta (default: quella del pubblico)
@@ -33,6 +34,7 @@ from render_post import PRODOTTI, _data_it
 
 LOGO = "https://www.layerloop3d.com/wp-content/uploads/2021/06/logo-layerloop-vector.png"
 ROMA = ZoneInfo("Europe/Rome")
+AUDIENCE = "Smartlab Industrie 3D"  # pubblico Mailchimp predefinito
 
 
 def email_html(meta, info, post_url, image_url):
@@ -111,11 +113,13 @@ def crea_campagna(meta, info, post_url, image_url):
     modo = (os.environ.get("MAILCHIMP_MODE") or "bozza").strip().lower()
     list_id = os.environ.get("MAILCHIMP_LIST_ID")
     if not list_id:
-        liste = mc("GET", "lists?count=10&fields=lists.id,lists.name")["lists"]
-        if len(liste) != 1:
-            sys.exit("newsletter: più pubblici su Mailchimp, imposta MAILCHIMP_LIST_ID: "
+        liste = mc("GET", "lists?count=100&fields=lists.id,lists.name")["lists"]
+        nome = (os.environ.get("MAILCHIMP_AUDIENCE") or AUDIENCE).strip().lower()
+        scelta = [l for l in liste if l["name"].strip().lower() == nome] or (liste if len(liste) == 1 else [])
+        if not scelta:
+            sys.exit(f"newsletter: pubblico '{nome}' non trovato, imposta MAILCHIMP_LIST_ID: "
                      + ", ".join(f'{l["name"]}={l["id"]}' for l in liste))
-        list_id = liste[0]["id"]
+        list_id = scelta[0]["id"]
     lista = mc("GET", f"lists/{list_id}?fields=name,campaign_defaults")
     recipients = {"list_id": list_id}
     tag = os.environ.get("MAILCHIMP_TAG")

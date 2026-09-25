@@ -57,7 +57,9 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
    - Variable (opzionale): `WP_CATEGORY` con lo slug della categoria.
 3. **Newsletter Mailchimp** (facoltativa)
    - Secret: `MAILCHIMP_API_KEY` (Mailchimp → Profilo → Extras → API keys).
-   - Variables: `MAILCHIMP_LIST_ID` (id del pubblico, serve se ce n'è più di uno), `MAILCHIMP_TAG`
+   - Pubblico: "Smartlab Industrie 3D", tutti gli iscritti (cambiabile con le Variables
+     `MAILCHIMP_AUDIENCE` o `MAILCHIMP_LIST_ID`).
+   - Variables: `MAILCHIMP_TAG`
      (invia solo a un tag), `MAILCHIMP_MODE` (`bozza` di default, oppure `programma`),
      `MAILCHIMP_REPLY_TO` (email mittente, se diversa da quella del pubblico).
    - Con `bozza` la campagna resta su Mailchimp da inviare con un clic; con `programma` parte da sola
