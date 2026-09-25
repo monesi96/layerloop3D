@@ -25,8 +25,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-import markdown
 import yaml
+
+from render_post import render
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
 WP_URL = os.environ["WP_URL"].rstrip("/")
@@ -62,15 +63,24 @@ def category_id(slug):
     return api("POST", "categories", {"name": slug.replace("-", " ").capitalize(), "slug": slug})["id"]
 
 
+def calendar_info(slug):
+    cal = json.loads((BASE / "calendario-editoriale.json").read_text(encoding="utf-8"))
+    return next((a for a in cal if a["slug"] == slug), {})
+
+
 def upload_image(meta):
+    """Carica l'immagine, o riusa quella già caricata con lo stesso nome file."""
     img = BASE / meta["immagine"]
+    for m in api("GET", f"media?search={urllib.parse.quote(img.stem)}&per_page=20"):
+        if img.stem in m.get("source_url", ""):
+            return m
     raw = img.read_bytes()
     media = api("POST", "media", raw=raw, headers={
         "Content-Type": mimetypes.guess_type(img.name)[0] or "image/jpeg",
         "Content-Disposition": f'attachment; filename="{img.name}"',
     })
     api("POST", f'media/{media["id"]}', {"alt_text": meta.get("immagine_alt", meta["titolo"])})
-    return media["id"]
+    return media
 
 
 def publish(path):
@@ -78,18 +88,22 @@ def publish(path):
     if meta.get("stato") != "approvato":
         print(f"salto {path.name}: stato={meta.get('stato')}")
         return
+    media = upload_image(meta) if meta.get("immagine") else None
     when = dt.datetime.fromisoformat(f'{meta["data"]}T{meta.get("ora", "09:00")}:00')
     post = {
         "title": meta["titolo"],
         "slug": meta["slug"],
         "excerpt": meta.get("estratto", ""),
-        "content": markdown.markdown(body, extensions=["tables", "sane_lists"]),
+        "content": render(meta, body, media and media["source_url"], calendar_info(meta["slug"])),
+        "template": "elementor_header_footer",
+        "comment_status": "closed",
+        "ping_status": "closed",
         "categories": [category_id(CATEGORY)],
         "date": when.isoformat(),
         "status": "future" if when > dt.datetime.now() else "publish",
     }
-    if meta.get("immagine"):
-        post["featured_media"] = upload_image(meta)
+    if media:
+        post["featured_media"] = media["id"]
     existing = api("GET", f'posts?slug={meta["slug"]}&status=any&context=edit')
     if existing:
         res = api("POST", f'posts/{existing[0]["id"]}', post)
