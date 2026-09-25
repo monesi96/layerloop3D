@@ -14,7 +14,8 @@ Variabili d'ambiente:
     MAILCHIMP_AUDIENCE  nome del pubblico (default "Smartlab Industrie 3D")
     MAILCHIMP_TAG       opzionale: invia solo ai contatti con questo tag
     MAILCHIMP_MODE      bozza | programma
-    MAILCHIMP_REPLY_TO  opzionale: email mittente/risposta (default: quella del pubblico)
+    MAILCHIMP_FROM_NAME opzionale: nome mittente (default "Layerloop 3D")
+    MAILCHIMP_REPLY_TO  opzionale: email mittente (default newsletter@layerloop3d.com)
 
 Anteprima locale della mail:
     python newsletter.py ../articoli/<file>.md anteprima.html
@@ -35,6 +36,8 @@ from render_post import PRODOTTI, _data_it
 LOGO = "https://www.layerloop3d.com/wp-content/uploads/2021/06/logo-layerloop-vector.png"
 ROMA = ZoneInfo("Europe/Rome")
 AUDIENCE = "Smartlab Industrie 3D"  # pubblico Mailchimp predefinito
+MITTENTE = "Layerloop 3D"
+MITTENTE_EMAIL = "newsletter@layerloop3d.com"
 
 
 def email_html(meta, info, post_url, image_url):
@@ -120,7 +123,7 @@ def crea_campagna(meta, info, post_url, image_url):
             sys.exit(f"newsletter: pubblico '{nome}' non trovato, imposta MAILCHIMP_LIST_ID: "
                      + ", ".join(f'{l["name"]}={l["id"]}' for l in liste))
         list_id = scelta[0]["id"]
-    lista = mc("GET", f"lists/{list_id}?fields=name,campaign_defaults")
+    lista = mc("GET", f"lists/{list_id}?fields=name")
     recipients = {"list_id": list_id}
     tag = os.environ.get("MAILCHIMP_TAG")
     if tag:
@@ -140,13 +143,12 @@ def crea_campagna(meta, info, post_url, image_url):
     if camp and camp["status"] == "schedule":
         mc("POST", f"campaigns/{camp['id']}/actions/unschedule")
 
-    d = lista["campaign_defaults"]
     settings = {
         "title": titolo,
         "subject_line": meta.get("newsletter_oggetto") or meta["titolo"],
         "preview_text": meta.get("newsletter_anteprima") or meta.get("estratto", ""),
-        "from_name": d.get("from_name") or "Layerloop",
-        "reply_to": os.environ.get("MAILCHIMP_REPLY_TO") or d.get("from_email"),
+        "from_name": os.environ.get("MAILCHIMP_FROM_NAME") or MITTENTE,
+        "reply_to": os.environ.get("MAILCHIMP_REPLY_TO") or MITTENTE_EMAIL,
     }
     if camp:
         mc("PATCH", f"campaigns/{camp['id']}", {"recipients": recipients, "settings": settings})

@@ -48,5 +48,6 @@ jobs:
           MAILCHIMP_TAG: ${{ vars.MAILCHIMP_TAG }}
           MAILCHIMP_MODE: ${{ vars.MAILCHIMP_MODE }}
           MAILCHIMP_REPLY_TO: ${{ vars.MAILCHIMP_REPLY_TO }}
+          MAILCHIMP_FROM_NAME: ${{ vars.MAILCHIMP_FROM_NAME }}
           NEWSLETTER: ${{ inputs.newsletter || 'si' }}
         run: python layerloop-blog/scripts/publish_wp.py ${{ steps.files.outputs.list }}
