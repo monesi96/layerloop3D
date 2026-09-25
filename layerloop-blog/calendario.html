@@ -1,0 +1,285 @@
+<title>Calendario blog Layerloop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#f3f5f5;--surface:#ffffff;--ink:#16201f;--muted:#5b6a69;--line:#d9e0df;--accent:#0e7c7b;--accent-ink:#ffffff;
+--p1:#0e7c7b;--p2:#8a5a12;--p3:#3d5fa8;--p4:#9b3d52;--p5:#4e7a2c;--p6:#6a4f9c;
+--display:"Archivo","Arial Narrow",system-ui,sans-serif;--sans:"Source Sans 3",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1515;--surface:#172020;--ink:#e6eeed;--muted:#94a4a3;--line:#2a3636;--accent:#3fb8b4;--accent-ink:#062020;
+--p1:#3fb8b4;--p2:#d9a452;--p3:#86a4e6;--p4:#e28a9e;--p5:#94c46e;--p6:#b39be0}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1515;--surface:#172020;--ink:#e6eeed;--muted:#94a4a3;--line:#2a3636;--accent:#3fb8b4;--accent-ink:#062020;
+--p1:#3fb8b4;--p2:#d9a452;--p3:#86a4e6;--p4:#e28a9e;--p5:#94c46e;--p6:#b39be0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+header{display:grid;gap:14px;max-width:760px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-stretch:112%;font-weight:800;font-size:clamp(30px,5vw,50px);line-height:1.02;margin:0;text-wrap:balance}
+header p{margin:0;color:var(--muted);max-width:65ch}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;counter-reset:s}
+.flow div{background:var(--surface);padding:14px 16px;font-size:14px;counter-increment:s}
+.flow div::before{content:counter(s,decimal-leading-zero);display:block;font:500 12px var(--mono);color:var(--accent);margin-bottom:4px}
+.flow b{display:block;font-family:var(--display);font-stretch:105%;font-size:15px}
+.flow .gate{background:var(--accent);color:var(--accent-ink)} .flow .gate::before{color:inherit}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filters span{font:500 12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+.chip{font:600 13px var(--sans);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+.chip::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:7px}
+.chip[aria-pressed="true"]{border-color:var(--c);box-shadow:inset 0 0 0 1px var(--c)}
+.chip:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.p1{--c:var(--p1)}.p2{--c:var(--p2)}.p3{--c:var(--p3)}.p4{--c:var(--p4)}.p5{--c:var(--p5)}.p6{--c:var(--p6)}
+.month{display:grid;gap:16px}
+.month h2{font-family:var(--display);font-stretch:118%;font-weight:700;font-size:26px;margin:0;text-transform:capitalize;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.month h2 span{font:500 14px var(--mono);color:var(--muted);vertical-align:middle}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.card img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.body{padding:14px 16px 16px;display:grid;gap:10px;align-content:start}
+.meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 12px var(--mono);font-variant-numeric:tabular-nums}
+.date{color:var(--ink)} .n{color:var(--muted)}
+.pill{margin-left:auto;font:600 11px var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--c)}
+.card h3{font-family:var(--display);font-stretch:100%;font-weight:700;font-size:17px;line-height:1.22;margin:0;text-wrap:balance}
+dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:0;font-size:13.5px}
+dt{color:var(--muted);font:500 11px/1.9 var(--mono);text-transform:uppercase;letter-spacing:.05em} dd{margin:0}
+.kw{font-style:italic}
+details{font-size:14px;border-top:1px solid var(--line);padding-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+ol{margin:8px 0 0;padding-left:20px;display:grid;gap:3px}
+.card[hidden]{display:none} .month.empty{display:none}
+footer{color:var(--muted);font-size:14px;max-width:70ch}
+</style>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Layerloop 3D · Blog · ott 2026 – mar 2027</div>
+  <h1>26 articoli su produzione industriale, grandi componenti e Medical Division</h1>
+  <p>Un articolo ogni martedì alle 9:00. L'agente scrive la bozza il giovedì prima e apre una richiesta di approvazione: niente va online senza il tuo ok. Ogni articolo ha già la sua immagine generata con Higgsfield.</p>
+</header>
+<div class="flow">
+  <div><b>Calendario</b>Tema, keyword e scaletta della settimana</div>
+  <div><b>Bozza</b>Ogni giovedì Claude scrive l'articolo e prepara l'immagine</div>
+  <div class="gate"><b>La tua approvazione</b>Pull Request su GitHub: chiedi modifiche o approvi</div>
+  <div><b>Merge</b>Parte la GitHub Action di pubblicazione</div>
+  <div><b>WordPress</b>Post programmato sul sito per il martedì</div>
+</div>
+<div class="filters" role="group" aria-label="Filtra per pilastro"><span>Pilastri</span><button type="button" class="chip p1" data-f="p1" aria-pressed="false">Medical Division</button><button type="button" class="chip p3" data-f="p3" aria-pressed="false">Grandi componenti (Extend)</button><button type="button" class="chip p6" data-f="p6" aria-pressed="false">Produzione in serie</button><button type="button" class="chip p2" data-f="p2" aria-pressed="false">Materiali</button><button type="button" class="chip p4" data-f="p4" aria-pressed="false">Settori</button><button type="button" class="chip p5" data-f="p5" aria-pressed="false">Processo e strategia</button></div>
+<section class="month"><h2>ottobre <span>2026</span></h2><div class="grid"><article class="card" data-p="p6">
+  <img src="immagini/01-stampa-3d-a-nastro-come-produrre-centina.jpg" alt="Stampa 3D a nastro: come produrre centinaia di pezzi senza un operatore" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 06.10</span><span class="n">#01</span><span class="pill p6">Produzione in serie</span></div>
+    <h3>Stampa 3D a nastro: come produrre centinaia di pezzi senza un operatore</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampante 3D a nastro produzione in serie</dd><dt>Target</dt><dd>Responsabili produzione PMI</dd><dt>Prodotto</dt><dd>Layerloop Next</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Il limite della stampa 3D tradizionale: un piano, un lotto, un operatore</li><li>Come funziona la belt: il pezzo esce e la stampa successiva parte da sola</li><li>Quanti pezzi in un turno notturno: un esempio di calcolo</li><li>Quali pezzi si prestano (e quali no)</li><li>Da dove iniziare</li></ol></details>
+  </div>
+</article><article class="card" data-p="p1">
+  <img src="immagini/02-plantari-su-misura-con-la-stampa-3d-il-f.jpg" alt="Plantari su misura con la stampa 3D: il flusso digitale dello studio podologico" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 13.10</span><span class="n">#02</span><span class="pill p1">Medical Division</span></div>
+    <h3>Plantari su misura con la stampa 3D: il flusso digitale dello studio podologico</h3>
+    <dl><dt>Keyword</dt><dd class="kw">plantari stampa 3D podologo</dd><dt>Target</dt><dd>Podologi e studi podologici</dd><dt>Prodotto</dt><dd>Medical Division / Layerloop XE</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Dal calco in gesso alla scansione 3D</li><li>Progettazione CAD del plantare: software e parametri</li><li>Stampa: materiali e tempi</li><li>Rifinitura e consegna al paziente</li><li>Cosa serve per partire</li></ol></details>
+  </div>
+</article><article class="card" data-p="p3">
+  <img src="immagini/03-layerloop-extend-stampare-componenti-di-.jpg" alt="Layerloop Extend: stampare componenti di grandi dimensioni per l&#x27;industria" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 20.10</span><span class="n">#03</span><span class="pill p3">Grandi componenti (Extend)</span></div>
+    <h3>Layerloop Extend: stampare componenti di grandi dimensioni per l&#x27;industria</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampante 3D grande formato industriale</dd><dt>Target</dt><dd>Uffici tecnici e manutenzione di aziende manifatturiere</dd><dt>Prodotto</dt><dd>Layerloop Extend</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Quando il pezzo non entra in una stampante da banco</li><li>Camera riscaldata e moduli plug-in: come funziona Extend</li><li>Materiali per componenti grandi: ABS, nylon, compositi</li><li>Esempi: carter, supporti, condotti, attrezzature</li><li>Pezzo unico o assemblato? Come decidere</li></ol></details>
+  </div>
+</article><article class="card" data-p="p6">
+  <img src="immagini/04-stampa-3d-o-stampaggio-a-iniezione-quand.jpg" alt="Stampa 3D o stampaggio a iniezione? Quando conviene sotto i 5.000 pezzi" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 27.10</span><span class="n">#04</span><span class="pill p6">Produzione in serie</span></div>
+    <h3>Stampa 3D o stampaggio a iniezione? Quando conviene sotto i 5.000 pezzi</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampa 3D vs stampaggio a iniezione</dd><dt>Target</dt><dd>Imprenditori e product manager</dd><dt>Prodotto</dt><dd>Layerloop Next</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Il costo nascosto dello stampo</li><li>Il punto di pareggio: come calcolarlo</li><li>Tempi: settimane contro giorni</li><li>Modifiche di progetto senza buttare lo stampo</li><li>Tabella decisionale</li></ol></details>
+  </div>
+</article></div></section><section class="month"><h2>novembre <span>2026</span></h2><div class="grid"><article class="card" data-p="p2">
+  <img src="immagini/05-come-scegliere-il-materiale-giusto-per-p.jpg" alt="Come scegliere il materiale giusto per produrre in serie con la stampa 3D" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 03.11</span><span class="n">#05</span><span class="pill p2">Materiali</span></div>
+    <h3>Come scegliere il materiale giusto per produrre in serie con la stampa 3D</h3>
+    <dl><dt>Keyword</dt><dd class="kw">materiali stampa 3D industriale</dd><dt>Target</dt><dd>Uffici tecnici</dd><dt>Prodotto</dt><dd>Materiali Layerloop</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Le domande da farsi: carico, temperatura, ambiente, estetica</li><li>Dal PLA ai tecnopolimeri: la mappa</li><li>LAYECO, LAYRBON, LAYFLEX: quando usarli</li><li>Errori frequenti</li><li>Richiedere un campione</li></ol></details>
+  </div>
+</article><article class="card" data-p="p1">
+  <img src="immagini/06-suole-industriali-in-serie-produzione-co.jpg" alt="Suole industriali in serie: produzione controllata per calzature ortopediche" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 10.11</span><span class="n">#06</span><span class="pill p1">Medical Division</span></div>
+    <h3>Suole industriali in serie: produzione controllata per calzature ortopediche</h3>
+    <dl><dt>Keyword</dt><dd class="kw">suole stampa 3D produzione in serie</dd><dt>Target</dt><dd>Laboratori ortopedici e calzaturifici</dd><dt>Prodotto</dt><dd>Medical Division / Layerloop XE</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Dal plantare singolo alla serie di suole</li><li>Produzione continua 24/7 e magazzino digitale</li><li>Materiali: durabilità e stabilità dimensionale</li><li>Ripetibilità tra un lotto e l&#x27;altro</li><li>Per chi ha senso</li></ol></details>
+  </div>
+</article><article class="card" data-p="p3">
+  <img src="immagini/07-carter-coperture-e-protezioni-per-macchi.jpg" alt="Carter, coperture e protezioni per macchinari industriali stampati in 3D" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 17.11</span><span class="n">#07</span><span class="pill p3">Grandi componenti (Extend)</span></div>
+    <h3>Carter, coperture e protezioni per macchinari industriali stampati in 3D</h3>
+    <dl><dt>Keyword</dt><dd class="kw">carter macchine stampa 3D</dd><dt>Target</dt><dd>Costruttori di macchine e manutenzione</dd><dt>Prodotto</dt><dd>Layerloop Extend</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Perché i carter sono ideali per la stampa 3D</li><li>Serie brevi e personalizzazioni senza stampi</li><li>Resistenza, temperatura e finitura</li><li>Montaggio e fissaggi</li><li>Dal file al pezzo in pochi giorni</li></ol></details>
+  </div>
+</article><article class="card" data-p="p6">
+  <img src="immagini/08-asse-inclinato-a-30-stampare-senza-suppo.jpg" alt="Asse inclinato a 30°: stampare senza supporti e tagliare il post-processing" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 24.11</span><span class="n">#08</span><span class="pill p6">Produzione in serie</span></div>
+    <h3>Asse inclinato a 30°: stampare senza supporti e tagliare il post-processing</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampa 3D senza supporti</dd><dt>Target</dt><dd>Tecnici e uffici tecnici</dd><dt>Prodotto</dt><dd>Layerloop Next</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Perché i supporti costano tempo e materiale</li><li>La geometria a 30°: cosa cambia nella stampa</li><li>Sbalzi, ponti e pezzi lunghi</li><li>Post-processing: prima e dopo</li><li>Linee guida di progettazione</li></ol></details>
+  </div>
+</article></div></section><section class="month"><h2>dicembre <span>2026</span></h2><div class="grid"><article class="card" data-p="p2">
+  <img src="immagini/09-carbonio-nylon-quando-un-pezzo-stampato-.jpg" alt="Carbonio + nylon: quando un pezzo stampato può sostituire l&#x27;alluminio" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 01.12</span><span class="n">#09</span><span class="pill p2">Materiali</span></div>
+    <h3>Carbonio + nylon: quando un pezzo stampato può sostituire l&#x27;alluminio</h3>
+    <dl><dt>Keyword</dt><dd class="kw">nylon carbonio stampa 3D</dd><dt>Target</dt><dd>Progettisti meccanici</dd><dt>Prodotto</dt><dd>LAYRBON</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Perché il nylon caricato carbonio</li><li>Rigidezza, peso, resistenza: numeri a confronto</li><li>Staffe, supporti e attrezzature</li><li>Limiti da conoscere</li><li>Caso tipo: staffa riprogettata</li></ol></details>
+  </div>
+</article><article class="card" data-p="p1">
+  <img src="immagini/10-produrre-i-plantari-in-studio-quanto-con.jpg" alt="Produrre i plantari in studio: quanto conviene al podologo rispetto al laboratorio esterno" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mer 09.12</span><span class="n">#10</span><span class="pill p1">Medical Division</span></div>
+    <h3>Produrre i plantari in studio: quanto conviene al podologo rispetto al laboratorio esterno</h3>
+    <dl><dt>Keyword</dt><dd class="kw">produzione plantari in studio</dd><dt>Target</dt><dd>Podologi titolari di studio</dd><dt>Prodotto</dt><dd>Layerloop XE</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Costi e tempi del laboratorio esterno</li><li>Costo per plantare prodotto in-house: un esempio</li><li>Tempi di consegna e soddisfazione del paziente</li><li>Controllo sul risultato e modifiche rapide</li><li>Quando il conto torna</li></ol></details>
+  </div>
+</article><article class="card" data-p="p3">
+  <img src="immagini/11-camera-riscaldata-perche-conta-per-tecno.jpg" alt="Camera riscaldata: perché conta per tecnopolimeri e pezzi di grandi dimensioni" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 15.12</span><span class="n">#11</span><span class="pill p3">Grandi componenti (Extend)</span></div>
+    <h3>Camera riscaldata: perché conta per tecnopolimeri e pezzi di grandi dimensioni</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampante 3D camera riscaldata</dd><dt>Target</dt><dd>Tecnici di produzione</dd><dt>Prodotto</dt><dd>Layerloop Extend</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Ritiro, warping e delaminazione</li><li>Cosa fa la camera riscaldata</li><li>Materiali che la richiedono: ABS, nylon, compositi</li><li>Tolleranze ripetibili su pezzi grandi</li><li>Checklist di scelta</li></ol></details>
+  </div>
+</article><article class="card" data-p="p5">
+  <img src="immagini/12-5-tendenze-della-produzione-additiva-da-.jpg" alt="5 tendenze della produzione additiva da tenere d&#x27;occhio nel 2027" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 22.12</span><span class="n">#12</span><span class="pill p5">Processo e strategia</span></div>
+    <h3>5 tendenze della produzione additiva da tenere d&#x27;occhio nel 2027</h3>
+    <dl><dt>Keyword</dt><dd class="kw">tendenze stampa 3D 2027</dd><dt>Target</dt><dd>Imprenditori e manager</dd><dt>Prodotto</dt><dd>Tutta la gamma</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Produzione continua e automatizzata</li><li>Componenti grandi stampati in casa</li><li>Dispositivi medicali su misura prodotti in studio</li><li>Reshoring e filiere corte</li><li>Competenze interne</li></ol></details>
+  </div>
+</article><article class="card" data-p="p6">
+  <img src="immagini/13-quanto-costa-davvero-un-pezzo-stampato-i.jpg" alt="Quanto costa davvero un pezzo stampato in 3D: guida al costo per pezzo" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 29.12</span><span class="n">#13</span><span class="pill p6">Produzione in serie</span></div>
+    <h3>Quanto costa davvero un pezzo stampato in 3D: guida al costo per pezzo</h3>
+    <dl><dt>Keyword</dt><dd class="kw">costo stampa 3D per pezzo</dd><dt>Target</dt><dd>Acquisti e controllo di gestione</dd><dt>Prodotto</dt><dd>Layerloop Next</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Le voci di costo: materiale, macchina, energia, manodopera</li><li>Il peso della presidiatura</li><li>Ammortamento della stampante</li><li>Foglio di calcolo di esempio</li><li>Come ridurre il costo per pezzo</li></ol></details>
+  </div>
+</article></div></section><section class="month"><h2>gennaio <span>2027</span></h2><div class="grid"><article class="card" data-p="p1">
+  <img src="immagini/14-materiali-per-plantari-e-suole-rigidita-.jpg" alt="Materiali per plantari e suole: rigidità, comfort e durata" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 05.01</span><span class="n">#14</span><span class="pill p1">Medical Division</span></div>
+    <h3>Materiali per plantari e suole: rigidità, comfort e durata</h3>
+    <dl><dt>Keyword</dt><dd class="kw">materiali plantari stampa 3D</dd><dt>Target</dt><dd>Podologi e tecnici ortopedici</dd><dt>Prodotto</dt><dd>Layinsole, LAYFLEX, LayRigidCF</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Cosa chiede un plantare a un materiale</li><li>Layinsole, LAYFLEX, LayRigidCF: caratteristiche e usi</li><li>Zone rigide e zone morbide nello stesso plantare</li><li>Certificazioni e schede tecniche</li><li>Come scegliere caso per caso</li></ol></details>
+  </div>
+</article><article class="card" data-p="p4">
+  <img src="immagini/15-automotive-dime-attrezzature-e-ricambi-f.jpg" alt="Automotive: dime, attrezzature e ricambi fuori produzione stampati in 3D" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 12.01</span><span class="n">#15</span><span class="pill p4">Settori</span></div>
+    <h3>Automotive: dime, attrezzature e ricambi fuori produzione stampati in 3D</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampa 3D automotive</dd><dt>Target</dt><dd>Officine, carrozzerie, fornitori automotive</dd><dt>Prodotto</dt><dd>Layerloop Next / LAYRBON</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Attrezzature di linea in pochi giorni</li><li>Ricambi per auto d&#x27;epoca e fuori catalogo</li><li>Materiali per l&#x27;abitacolo e il vano motore</li><li>Piccole serie per allestitori</li><li>Esempi concreti</li></ol></details>
+  </div>
+</article><article class="card" data-p="p3">
+  <img src="immagini/16-ricambi-per-grandi-macchinari-ridurre-il.jpg" alt="Ricambi per grandi macchinari: ridurre il fermo macchina con la stampa 3D" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 19.01</span><span class="n">#16</span><span class="pill p3">Grandi componenti (Extend)</span></div>
+    <h3>Ricambi per grandi macchinari: ridurre il fermo macchina con la stampa 3D</h3>
+    <dl><dt>Keyword</dt><dd class="kw">ricambi macchinari stampa 3D</dd><dt>Target</dt><dd>Responsabili manutenzione</dd><dt>Prodotto</dt><dd>Layerloop Extend</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Quanto costa un&#x27;ora di fermo</li><li>Ricambi introvabili o con tempi lunghi</li><li>Magazzino digitale: il file al posto dello scaffale</li><li>Materiali per ricambi funzionali</li><li>Come organizzare il servizio</li></ol></details>
+  </div>
+</article><article class="card" data-p="p2">
+  <img src="immagini/17-tpu-e-materiali-flessibili-guarnizioni-p.jpg" alt="TPU e materiali flessibili: guarnizioni, protezioni e parti morbide in serie" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 26.01</span><span class="n">#17</span><span class="pill p2">Materiali</span></div>
+    <h3>TPU e materiali flessibili: guarnizioni, protezioni e parti morbide in serie</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampa 3D TPU flessibile</dd><dt>Target</dt><dd>Uffici tecnici e produzione</dd><dt>Prodotto</dt><dd>LAYFLEX / Layerloop XE</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Cosa rende difficile stampare il flessibile</li><li>Durezza Shore e applicazioni</li><li>Guarnizioni, paracolpi, grip</li><li>Stampa in serie di parti flessibili</li><li>Consigli di progetto</li></ol></details>
+  </div>
+</article></div></section><section class="month"><h2>febbraio <span>2027</span></h2><div class="grid"><article class="card" data-p="p4">
+  <img src="immagini/18-serramenti-accessori-e-componenti-su-mis.jpg" alt="Serramenti: accessori e componenti su misura per chi produce infissi" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 02.02</span><span class="n">#18</span><span class="pill p4">Settori</span></div>
+    <h3>Serramenti: accessori e componenti su misura per chi produce infissi</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampa 3D serramenti</dd><dt>Target</dt><dd>Produttori di serramenti</dd><dt>Prodotto</dt><dd>Layerloop Next</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Tappi, terminali, distanziali: i pezzi che mancano sempre</li><li>Profili lunghi grazie all&#x27;asse inclinato</li><li>Colori e resistenza UV</li><li>Serie brevi per commesse speciali</li><li>Come iniziare</li></ol></details>
+  </div>
+</article><article class="card" data-p="p1">
+  <img src="immagini/19-processo-controllato-ripetibilita-e-qual.jpg" alt="Processo controllato: ripetibilità e qualità nei dispositivi podologici su misura" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 09.02</span><span class="n">#19</span><span class="pill p1">Medical Division</span></div>
+    <h3>Processo controllato: ripetibilità e qualità nei dispositivi podologici su misura</h3>
+    <dl><dt>Keyword</dt><dd class="kw">processo controllato plantari 3D</dd><dt>Target</dt><dd>Podologi, cliniche, ortopedie</dd><dt>Prodotto</dt><dd>Medical Division</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Perché la ripetibilità conta anche nel su misura</li><li>Parametri di stampa validati</li><li>Monitoraggio dei lavori e riduzione degli errori</li><li>Documentare il processo</li><li>Checklist per lo studio</li></ol></details>
+  </div>
+</article><article class="card" data-p="p5">
+  <img src="immagini/20-dime-maschere-e-calibri-stampati-in-3d-i.jpg" alt="Dime, maschere e calibri stampati in 3D: il ROI si misura in settimane" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 16.02</span><span class="n">#20</span><span class="pill p5">Processo e strategia</span></div>
+    <h3>Dime, maschere e calibri stampati in 3D: il ROI si misura in settimane</h3>
+    <dl><dt>Keyword</dt><dd class="kw">attrezzature produzione stampa 3D</dd><dt>Target</dt><dd>Responsabili di stabilimento</dd><dt>Prodotto</dt><dd>Layerloop Next / LAYRBON</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Perché le attrezzature sono il caso d&#x27;uso numero uno</li><li>Esempi: dime di foratura, maschere di montaggio, go/no-go</li><li>Costi e tempi a confronto con il fresato</li><li>Ergonomia e peso</li><li>Calcolo del ROI</li></ol></details>
+  </div>
+</article><article class="card" data-p="p3">
+  <img src="immagini/21-condotti-canalizzazioni-e-guide-per-line.jpg" alt="Condotti, canalizzazioni e guide per linee di produzione stampati in 3D" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 23.02</span><span class="n">#21</span><span class="pill p3">Grandi componenti (Extend)</span></div>
+    <h3>Condotti, canalizzazioni e guide per linee di produzione stampati in 3D</h3>
+    <dl><dt>Keyword</dt><dd class="kw">condotti aria stampa 3D</dd><dt>Target</dt><dd>Ingegneria di produzione</dd><dt>Prodotto</dt><dd>Layerloop Extend</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Geometrie complesse senza saldature</li><li>Condotti d&#x27;aria, aspirazioni, guide e scivoli</li><li>Materiali: temperatura e resistenza chimica</li><li>Modifiche di linea senza fermo lungo</li><li>Esempio di progetto</li></ol></details>
+  </div>
+</article></div></section><section class="month"><h2>marzo <span>2027</span></h2><div class="grid"><article class="card" data-p="p5">
+  <img src="immagini/22-design-for-additive-manufacturing-7-rego.jpg" alt="Design for Additive Manufacturing: 7 regole per pezzi da produrre in serie" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 02.03</span><span class="n">#22</span><span class="pill p5">Processo e strategia</span></div>
+    <h3>Design for Additive Manufacturing: 7 regole per pezzi da produrre in serie</h3>
+    <dl><dt>Keyword</dt><dd class="kw">design for additive manufacturing</dd><dt>Target</dt><dd>Progettisti</dd><dt>Prodotto</dt><dd>Layerloop Academy</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Pensare al processo, non solo al pezzo</li><li>Spessori, raccordi, tolleranze</li><li>Orientamento e asse inclinato</li><li>Consolidare assiemi in un solo pezzo</li><li>Checklist finale</li></ol></details>
+  </div>
+</article><article class="card" data-p="p4">
+  <img src="immagini/23-nautica-componenti-stampati-in-3d-che-re.jpg" alt="Nautica: componenti stampati in 3D che resistono a salsedine e UV" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 09.03</span><span class="n">#23</span><span class="pill p4">Settori</span></div>
+    <h3>Nautica: componenti stampati in 3D che resistono a salsedine e UV</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampa 3D nautica</dd><dt>Target</dt><dd>Cantieri e accessoristi nautici</dd><dt>Prodotto</dt><dd>Materiali tecnici Layerloop</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Ambiente marino: nemico dei materiali</li><li>Quali polimeri scegliere</li><li>Supporti, clip, passacavi, ricambi di bordo</li><li>Ricambi introvabili per barche datate</li><li>Test e verifiche</li></ol></details>
+  </div>
+</article><article class="card" data-p="p1">
+  <img src="immagini/24-podologi-e-stampa-3d-formazione-e-avvio-.jpg" alt="Podologi e stampa 3D: formazione e avvio con la Medical Division" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 16.03</span><span class="n">#24</span><span class="pill p1">Medical Division</span></div>
+    <h3>Podologi e stampa 3D: formazione e avvio con la Medical Division</h3>
+    <dl><dt>Keyword</dt><dd class="kw">corso stampa 3D podologi</dd><dt>Target</dt><dd>Podologi</dd><dt>Prodotto</dt><dd>Layerloop XE / Layerloop Academy</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Le competenze che servono in studio</li><li>Il percorso: scansione, CAD, stampa, rifinitura</li><li>Assistenza e sedi sul territorio</li><li>I primi 30 giorni</li><li>Domande frequenti</li></ol></details>
+  </div>
+</article><article class="card" data-p="p5">
+  <img src="immagini/25-controllo-qualita-nella-produzione-addit.jpg" alt="Controllo qualità nella produzione additiva: ripetibilità dal primo all&#x27;ultimo pezzo" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 23.03</span><span class="n">#25</span><span class="pill p5">Processo e strategia</span></div>
+    <h3>Controllo qualità nella produzione additiva: ripetibilità dal primo all&#x27;ultimo pezzo</h3>
+    <dl><dt>Keyword</dt><dd class="kw">controllo qualità stampa 3D</dd><dt>Target</dt><dd>Responsabili qualità</dd><dt>Prodotto</dt><dd>Tutta la gamma</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Cosa può variare nel lotto</li><li>Parametri e profili bloccati</li><li>Misure a campione e SPC</li><li>Materiale: umidità e stoccaggio</li><li>Documentare la qualità</li></ol></details>
+  </div>
+</article><article class="card" data-p="p5">
+  <img src="immagini/26-internalizzare-la-stampa-3d-o-affidarsi-.jpg" alt="Internalizzare la stampa 3D o affidarsi al conto terzi? Guida alla scelta" loading="lazy" width="1344" height="752">
+  <div class="body">
+    <div class="meta"><span class="date">mar 30.03</span><span class="n">#26</span><span class="pill p5">Processo e strategia</span></div>
+    <h3>Internalizzare la stampa 3D o affidarsi al conto terzi? Guida alla scelta</h3>
+    <dl><dt>Keyword</dt><dd class="kw">stampa 3D in azienda o conto terzi</dd><dt>Target</dt><dd>Imprenditori</dd><dt>Prodotto</dt><dd>Tutta la gamma</dd></dl>
+    <details><summary>Scaletta</summary><ol><li>Quando conviene il service</li><li>Quando conviene internalizzare</li><li>Volumi, riservatezza, tempi</li><li>Il modello ibrido</li><li>Domande da farsi prima di decidere</li></ol></details>
+  </div>
+</article></div></section>
+<footer>Immagini generate con AI. Dove compare una stampante è sempre una Layerloop (Next, XE o Extend), ricreata dalle foto ufficiali; nelle altre immagini non compaiono stampanti. I dati tecnici di Extend vanno confermati prima della pubblicazione.</footer>
+</div>
+<script>
+const chips=[...document.querySelectorAll('.chip')];
+chips.forEach(c=>c.addEventListener('click',()=>{
+  const on=c.getAttribute('aria-pressed')!=='true';
+  chips.forEach(x=>x.setAttribute('aria-pressed','false'));
+  if(on)c.setAttribute('aria-pressed','true');
+  const f=on?c.dataset.f:null;
+  document.querySelectorAll('.card').forEach(k=>k.hidden=!!f&&k.dataset.p!==f);
+  document.querySelectorAll('.month').forEach(m=>m.classList.toggle('empty',![...m.querySelectorAll('.card')].some(k=>!k.hidden)));
+}));
+</script>

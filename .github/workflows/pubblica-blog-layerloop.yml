@@ -1,0 +1,42 @@
+# Pubblica su WordPress gli articoli Layerloop approvati.
+# L'approvazione è il merge della PR aperta dall'agente: solo allora parte la pubblicazione.
+name: Pubblica blog Layerloop
+
+on:
+  push:
+    paths:
+      - "layerloop-blog/articoli/*.md"
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "Articolo da (ri)pubblicare, es. layerloop-blog/articoli/2026-10-06-....md"
+        required: true
+
+jobs:
+  pubblica:
+    if: github.event_name == 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install markdown pyyaml
+      - name: Articoli modificati
+        id: files
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "list=${{ inputs.file }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "list=$(git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} -- 'layerloop-blog/articoli/*.md' | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Pubblica
+        if: steps.files.outputs.list != ''
+        env:
+          WP_URL: ${{ secrets.WP_URL }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+          WP_CATEGORY: ${{ vars.WP_CATEGORY }}
+        run: python layerloop-blog/scripts/publish_wp.py ${{ steps.files.outputs.list }}
