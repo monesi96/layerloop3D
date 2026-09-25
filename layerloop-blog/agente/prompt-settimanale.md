@@ -41,7 +41,9 @@ Sei il redattore del blog di **Layerloop 3D**, le stampanti 3D industriali di Sm
 4. Nel frontmatter metti `stato: bozza`. Nel calendario porta l'articolo a `"bozza"`.
 5. Crea un branch `blog/<data>-<slug>`, fai il commit e apri una **Pull Request in bozza**
    intitolata `Blog: <titolo>` con, nella descrizione: data di uscita, anteprima dell'immagine,
-   estratto e 3 punti su cosa verificare.
+   estratto, oggetto e testo di anteprima della newsletter (`newsletter_oggetto` e
+   `newsletter_anteprima` nel frontmatter, max 60 e 90 caratteri) e 3 punti su cosa verificare.
+   L'approvazione dell'articolo vale anche per la newsletter.
 6. **Non pubblicare mai niente.** L'approvazione spetta a Simone: quando approva, sul branch si
    passa `stato: approvato` (calendario: `"approvato"`) e si fa il merge. È il merge che avvia la
    GitHub Action di pubblicazione.
