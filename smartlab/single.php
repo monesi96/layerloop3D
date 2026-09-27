@@ -55,6 +55,13 @@ get_header( 'blog' ); ?>
   </div>
 
   <?php
+  // Foto e video della stampa. Le due funzioni non stampano
+  // niente se i campi dell'articolo sono vuoti.
+  smartlab_blocco_galleria();
+  smartlab_blocco_video();
+  ?>
+
+  <?php
   $slb_prev = get_previous_post();
   $slb_next = get_next_post();
   if ( $slb_prev || $slb_next ) : ?>

@@ -318,3 +318,120 @@ footer.site{background:var(--bg-soft); border-radius:var(--r-band) var(--r-band)
 /* Nasconde l'admin bar fixed offset di WP quando loggati */
 body.admin-bar .top{top:52px}
 @media (min-width:783px){body.admin-bar .top{top:52px}}
+
+/* ============================================================
+   SHORTCODE CASE STUDY — [case_study settore="..."]
+   Pensato per le pagine settore costruite in Elementor: porta
+   con sé font, colori e card del blog senza dipendere dal
+   template della pagina ospite.
+   ============================================================ */
+
+.cs-block{
+  max-width:1140px; margin-inline:auto;
+  padding-inline:clamp(20px,4vw,56px);
+  padding-block:clamp(1.8rem,3.5vw,3rem);
+  font-family:"Familjen Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+}
+.cs-head{display:flex; align-items:end; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+.cs-head h2{font-size:clamp(1.45rem,2.5vw,2.05rem); line-height:1.14; letter-spacing:-.022em; margin:0}
+.cs-kicker{
+  font-family:"Fragment Mono",ui-monospace,monospace; font-size:.74rem;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--teal);
+  margin:0 0 .45rem;
+}
+
+/* Frecce del carosello */
+.cs-nav{display:flex; gap:.5rem}
+.cs-nav button{
+  width:42px; height:42px; border:0; border-radius:50%; cursor:pointer;
+  background:var(--card); color:var(--ink); box-shadow:var(--shadow-card);
+  display:grid; place-items:center;
+  transition:transform .25s, background .25s, color .25s;
+}
+.cs-nav button:hover:not(:disabled){background:var(--teal); color:#fff; transform:translateY(-2px)}
+.cs-nav button:disabled{opacity:.35; cursor:default}
+
+/* Carosello: scroll-snap, nessuna libreria esterna */
+.cs-carousel{
+  display:grid; grid-auto-flow:column; grid-auto-columns:minmax(280px,calc(33.333% - .94rem));
+  gap:clamp(.9rem,1.6vw,1.4rem);
+  padding-block:clamp(1.6rem,3vw,2.4rem);
+  overflow-x:auto; scroll-snap-type:x mandatory;
+  scrollbar-width:none; -ms-overflow-style:none;
+  /* spazio per non tagliare l'ombra delle card in hover */
+  margin-inline:-4px; padding-inline:4px;
+}
+.cs-carousel::-webkit-scrollbar{display:none}
+.cs-carousel > *{scroll-snap-align:start}
+
+@media (max-width:1060px){
+  .cs-carousel{grid-auto-columns:minmax(260px,calc(50% - .7rem))}
+}
+@media (max-width:640px){
+  .cs-carousel{grid-auto-columns:minmax(240px,86%)}
+  .cs-nav{display:none}
+}
+
+/* ============================================================
+   FOTO E VIDEO DELLA STAMPA — blocchi del case study
+   Riusano il contenitore .cs-block (e quindi le frecce del
+   carosello) per restare allineati alla copertina dell'articolo.
+   ============================================================ */
+
+.slb-media{padding-block:clamp(1.2rem,2.4vw,2rem)}
+.slb-media .cs-head h2{font-size:clamp(1.35rem,2.3vw,1.9rem)}
+
+/* Il carosello foto: due per schermo, piu' grandi delle card */
+.cs-carousel.cs-foto{grid-auto-columns:minmax(300px,calc(50% - .7rem))}
+@media (max-width:1060px){.cs-carousel.cs-foto{grid-auto-columns:minmax(280px,calc(50% - .7rem))}}
+@media (max-width:640px){.cs-carousel.cs-foto{grid-auto-columns:minmax(240px,88%)}}
+
+/* Una foto sola: niente carosello, larghezza piena */
+.slb-foto-sola{padding-block:clamp(1.4rem,2.6vw,2rem)}
+
+.slb-foto{margin:0}
+.slb-zoom{
+  display:block; width:100%; padding:0; border:0; background:none; cursor:zoom-in;
+  border-radius:var(--r-card); overflow:hidden; box-shadow:var(--shadow-card);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+}
+.slb-zoom:hover{transform:translateY(-4px); box-shadow:var(--shadow-pop)}
+.slb-zoom:focus-visible{outline:2px solid var(--teal); outline-offset:3px}
+.slb-foto img{display:block; width:100%; height:100%; object-fit:cover; aspect-ratio:4/3}
+.slb-foto-sola .slb-foto img{aspect-ratio:16/9}
+.slb-foto figcaption{
+  font-family:"Fragment Mono",ui-monospace,monospace; font-size:.66rem;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--subtle); margin-top:.75rem;
+}
+
+/* Video: player nativo o incorporato, stessa cornice */
+.slb-video{padding-block:clamp(1.4rem,2.6vw,2rem)}
+.slb-video video,
+.slb-video iframe,
+.slb-embed iframe{
+  display:block; width:100%; height:auto; aspect-ratio:16/9; border:0;
+  border-radius:var(--r-card); box-shadow:var(--shadow-pop); background:#000;
+}
+.slb-embed{line-height:0}
+
+/* Ingrandimento della foto */
+.slb-lb{
+  position:fixed; inset:0; z-index:9999; display:none;
+  align-items:center; justify-content:center; gap:clamp(.5rem,2vw,1.5rem);
+  padding:clamp(16px,4vw,56px); background:rgba(8,10,11,.93);
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+.slb-lb.aperto{display:flex}
+.slb-lb img{max-width:min(1200px,100%); max-height:88vh; border-radius:14px; object-fit:contain}
+.slb-lb button{
+  flex:0 0 auto; width:46px; height:46px; border:0; border-radius:50%; cursor:pointer;
+  background:rgba(255,255,255,.12); color:#fff; font-size:22px; line-height:1;
+  display:grid; place-items:center; transition:background .25s;
+}
+.slb-lb button:hover{background:rgba(255,255,255,.26)}
+.slb-lb-x{position:absolute; top:clamp(12px,3vw,24px); right:clamp(12px,3vw,24px)}
+@media (max-width:640px){
+  .slb-lb-prev,.slb-lb-next{position:absolute; bottom:clamp(12px,4vw,28px)}
+  .slb-lb-prev{left:28%} .slb-lb-next{right:28%}
+}
