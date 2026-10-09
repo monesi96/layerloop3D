@@ -1,7 +1,7 @@
 ---
 titolo: "Plantari su misura con la stampa 3D: il flusso digitale dello studio podologico"
 slug: plantari-su-misura-con-la-stampa-3d-il-flusso-digitale-dello-studio-po
-data: 2026-10-13
+data: 2026-10-09
 ora: "09:00"
 keyword: plantari stampa 3D podologo
 estratto: "Plantari stampa 3D per il podologo: dalla scansione al CAD fino alla stampa in studio, il flusso digitale che sostituisce gesso e fresatura."
@@ -9,7 +9,7 @@ immagine: immagini/02-plantari-su-misura-con-la-stampa-3d-il-f.jpg
 immagine_alt: "Podologo che esegue la scansione 3D del piede di un paziente, con il modello digitale del plantare sullo schermo"
 newsletter_oggetto: "Plantari su misura: dal gesso al file in studio"
 newsletter_anteprima: "Scansione, CAD e stampa 3D: come cambia il lavoro del podologo, passo dopo passo."
-stato: bozza   # bozza -> approvato (solo dopo l'ok di Simone)
+stato: approvato
 ---
 
 Calco in gesso o schiuma, spedizione al laboratorio, attesa, prova, eventuale rifacimento: per molti
