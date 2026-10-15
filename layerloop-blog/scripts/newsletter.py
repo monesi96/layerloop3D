@@ -13,7 +13,7 @@ Variabili d'ambiente:
     MAILCHIMP_LIST_ID   id del pubblico (Audience); se manca si cerca per nome MAILCHIMP_AUDIENCE
     MAILCHIMP_AUDIENCE  nome del pubblico (default "Smartlab Industrie 3D")
     MAILCHIMP_TAG       opzionale: invia solo ai contatti con questo tag
-    MAILCHIMP_MODE      bozza | programma
+    MAILCHIMP_MODE      bozza | programma | invia (invio immediato)
     MAILCHIMP_FROM_NAME opzionale: nome mittente (default "Layerloop 3D")
     MAILCHIMP_REPLY_TO  opzionale: email mittente (default newsletter@layerloop3d.com)
 
@@ -157,7 +157,10 @@ def crea_campagna(meta, info, post_url, image_url):
         cid = mc("POST", "campaigns", {"type": "regular", "recipients": recipients, "settings": settings})["id"]
     mc("PUT", f"campaigns/{cid}/content", {"html": email_html(meta, info, post_url, image_url)})
 
-    if modo == "programma":
+    if modo == "invia":
+        mc("POST", f"campaigns/{cid}/actions/send")
+        print(f"newsletter INVIATA {cid} '{settings['subject_line']}' (pubblico {lista['name']})")
+    elif modo == "programma":
         quando = orario_invio(meta)
         mc("POST", f"campaigns/{cid}/actions/schedule", {"schedule_time": quando.strftime("%Y-%m-%dT%H:%M:%S+00:00")})
         print(f"newsletter programmata {cid} per {quando.astimezone(ROMA):%d/%m %H:%M} (pubblico {lista['name']})")
