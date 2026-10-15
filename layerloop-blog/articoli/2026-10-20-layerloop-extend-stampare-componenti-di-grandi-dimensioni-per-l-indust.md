@@ -1,7 +1,7 @@
 ---
 titolo: "Layerloop Extend: stampare componenti di grandi dimensioni per l'industria"
 slug: layerloop-extend-stampare-componenti-di-grandi-dimensioni-per-l-indust
-data: 2026-10-20
+data: 2026-10-15
 ora: "09:00"
 keyword: stampante 3D grande formato industriale
 estratto: "Una stampante 3D grande formato industriale con camera calda e moduli plug-in: come Layerloop Extend produce carter, supporti e condotti in tecnopolimeri."

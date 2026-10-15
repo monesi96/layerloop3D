@@ -14,6 +14,9 @@ on:
       newsletter:
         description: "Crea/aggiorna anche la campagna Mailchimp (si/no)"
         default: "si"
+      newsletter_modo:
+        description: "bozza | programma | invia (vuoto = variabile MAILCHIMP_MODE)"
+        default: ""
 
 jobs:
   pubblica:
@@ -46,7 +49,7 @@ jobs:
           MAILCHIMP_LIST_ID: ${{ vars.MAILCHIMP_LIST_ID }}
           MAILCHIMP_AUDIENCE: ${{ vars.MAILCHIMP_AUDIENCE }}
           MAILCHIMP_TAG: ${{ vars.MAILCHIMP_TAG }}
-          MAILCHIMP_MODE: ${{ vars.MAILCHIMP_MODE }}
+          MAILCHIMP_MODE: ${{ inputs.newsletter_modo || vars.MAILCHIMP_MODE }}
           MAILCHIMP_REPLY_TO: ${{ vars.MAILCHIMP_REPLY_TO }}
           MAILCHIMP_FROM_NAME: ${{ vars.MAILCHIMP_FROM_NAME }}
           NEWSLETTER: ${{ inputs.newsletter || 'si' }}
