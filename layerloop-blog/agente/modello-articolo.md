@@ -9,7 +9,7 @@ immagine: immagini/01-nome-file.jpg
 immagine_alt: "Descrizione dell'immagine per l'accessibilità"
 newsletter_oggetto: "Oggetto della mail (max 60 caratteri)"
 newsletter_anteprima: "Testo di anteprima nella casella di posta (max 90 caratteri)"
-stato: bozza   # bozza -> approvato (solo dopo l'ok di Simone)
+stato: approvato   # la pubblicazione parte solo con il merge della PR, fatto da Simone
 ---
 
 Paragrafo di apertura: il problema concreto del lettore, in 3–4 righe, con la keyword.

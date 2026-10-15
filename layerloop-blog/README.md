@@ -15,7 +15,7 @@ Claude scrive l'articolo della settimana dopo + immagine (Higgsfield se manca)
         ▼  apre una Pull Request in bozza su GitHub  ◄── QUI CHIEDE LA TUA APPROVAZIONE
 Tu leggi l'anteprima: chiedi modifiche nei commenti, oppure approvi
         │
-        ▼  merge della PR (con stato: approvato)
+        ▼  merge della PR = approvazione
 GitHub Action "Pubblica blog Layerloop" → scripts/publish_wp.py
         │
         ▼  WordPress REST API: carica l'immagine, crea il post
@@ -77,8 +77,8 @@ Senza merge non viene pubblicato niente: la PR è la richiesta di approvazione.
 
 1. Arriva la notifica della PR `Blog: <titolo>` → apri *Files changed* e leggi il `.md`.
 2. Vuoi modifiche? Scrivile nei commenti della PR: l'agente le applica.
-3. Va bene? Nel file porta `stato: bozza` a `stato: approvato` (o chiedilo a Claude), segna la PR
-   *Ready for review* e fai **Merge**. L'Action programma il post.
+3. Va bene? Segna la PR *Ready for review* e fai **Merge**: il merge è l'approvazione, l'Action
+   programma il post e crea la newsletter.
 4. Per ripubblicare o correggere un articolo già uscito: *Actions → Pubblica blog Layerloop →
    Run workflow* indicando il file (il post con lo stesso slug viene aggiornato).
 

@@ -9,7 +9,7 @@ immagine: immagini/03-layerloop-extend-stampare-componenti-di-.jpg
 immagine_alt: "Stampante 3D Layerloop Extend con modulo plug-in in un reparto industriale, accanto a un grande componente stampato su un pallet"
 newsletter_oggetto: "Quando il pezzo non entra nella stampante"
 newsletter_anteprima: "Camera calda e moduli plug-in: come Extend stampa componenti grandi in ABS e nylon."
-stato: bozza   # bozza -> approvato (solo dopo l'ok di Simone)
+stato: approvato
 ---
 
 Un carter da sostituire, un supporto fuori produzione, un condotto che il fornitore consegna in otto
