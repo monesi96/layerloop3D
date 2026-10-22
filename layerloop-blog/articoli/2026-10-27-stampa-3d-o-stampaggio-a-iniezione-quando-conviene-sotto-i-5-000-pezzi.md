@@ -1,7 +1,7 @@
 ---
 titolo: "Stampa 3D o stampaggio a iniezione? Quando conviene sotto i 5.000 pezzi"
 slug: stampa-3d-o-stampaggio-a-iniezione-quando-conviene-sotto-i-5-000-pezzi
-data: 2026-10-27
+data: 2026-10-22
 ora: "09:00"
 keyword: stampa 3D vs stampaggio a iniezione
 estratto: "Stampa 3D vs stampaggio a iniezione: come calcolare il punto di pareggio, quanto pesa lo stampo e quando conviene produrre in 3D sotto i 5.000 pezzi."
