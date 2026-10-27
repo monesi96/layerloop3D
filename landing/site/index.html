@@ -257,7 +257,9 @@ html body .hero-card,html body .heroimg,html body .reveal-media,html body .gal f
 html body .app,html body .feat>div{border-top-color:rgba(255,255,255,.14)}
 html body .fcta .btn,html body .footer .btn{box-shadow:none}
 
-.bg{transform:scale(var(--bs,1));opacity:var(--bo,1);transform-origin:50% 50%}
+.bg .blob{filter:blur(var(--bl,128px));translate:calc(var(--sy)*var(--kx)*1px + var(--c,0)*var(--tx,0px)) calc(var(--sy)*var(--ky)*1px + var(--c,0)*var(--ty,0px));rotate:calc(var(--r,0deg) + var(--c,0)*var(--spin,200deg));scale:calc(1 - var(--c,0)*.82);opacity:calc(var(--o,1)*(1 - var(--cf,0)));will-change:translate,rotate,scale,opacity}
+.bg .blob.d1{--bl:70px}
+@keyframes morph{0%{border-radius:56% 44% 52% 48%/50% 56% 44% 50%}50%{border-radius:46% 54% 48% 52%/54% 46% 54% 46%}100%{border-radius:52% 48% 44% 56%/48% 52% 56% 44%}}
 .axes{position:relative;height:460vh;margin-top:clamp(60px,10vh,120px)}
 .axs{position:sticky;top:0;height:100vh;overflow:hidden}
 .axh{position:absolute;left:0;right:0;top:clamp(78px,11vh,110px);z-index:2;pointer-events:none}
@@ -510,7 +512,10 @@ var MATS=[{"id": "pla", "n": "LAYPLA", "a": "PLA", "img": "data:image/webp;base6
 <script>
 (function(){
  var sec=document.getElementById('axes');if(!sec)return;
- var sv=document.getElementById('axsv'),NS='http://www.w3.org/2000/svg',bg=document.querySelector('.bg');
+ var sv=document.getElementById('axsv'),NS='http://www.w3.org/2000/svg',bg=document.querySelector('.bg'),blobs=bg?[].slice.call(bg.querySelectorAll('.blob')):[];
+ var SPIN=[240,-280,200,-220,320];
+ function aim(){blobs.forEach(function(b,i){var cxp=b.offsetLeft+b.offsetWidth/2,cyp=b.offsetTop+b.offsetHeight/2;b.style.setProperty('--tx',(bg.clientWidth/2-cxp)+'px');b.style.setProperty('--ty',(bg.clientHeight/2-cyp)+'px');b.style.setProperty('--spin',SPIN[i%SPIN.length]+'deg')})}
+ aim();addEventListener('resize',aim);
  var L=180,K=1.45,CX=650,CY=420,C=.866*K,S=.5*K,TAN=Math.tan(Math.PI/6),PL=62,PH=40,PW=70;
  function P(x,y,z){return[CX+(x-y)*C,CY+(x+y)*S-z*K]}
  function pts(a){return a.map(function(p){var q=P(p[0],p[1],p[2]);return q[0].toFixed(1)+','+q[1].toFixed(1)}).join(' ')}
@@ -550,7 +555,7 @@ var MATS=[{"id": "pla", "n": "LAYPLA", "a": "PLA", "img": "data:image/webp;base6
  var capA=document.getElementById('axa'),capB=document.getElementById('axb'),b1=document.getElementById('axb1'),b2=document.getElementById('axb2'),bar=document.getElementById('axp');
  function draw(p){
   var c=sm(p/.11),ex=sm((p-.93)/.07);
-  if(bg){var bs=1-c*(1-ex);bg.style.setProperty('--bs',bs.toFixed(3));bg.style.setProperty('--bo',bs.toFixed(3))}
+  if(bg){var cc=c*(1-ex),cf=sm((p-.05)/.1)*(1-ex);bg.style.setProperty('--c',cc.toFixed(4));bg.style.setProperty('--cf',cf.toFixed(4))}
   sv.style.opacity=sm((p-.03)/.1)*(1-ex);
   var tt=sm((p-.46)/.17),Z=L*TAN*tt,Eb=520*sm((p-.52)/.16);
   K=1.45-.5*tt;CX=650-214*tt;CY=420+20*tt;C=.866*K;S=.5*K;
