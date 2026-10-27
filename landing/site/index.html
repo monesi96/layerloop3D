@@ -391,8 +391,8 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 .sv-play::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.6))}
 .sv-pl{position:absolute;z-index:2;top:50%;left:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;font-size:19px;padding-left:4px;transition:transform .3s,background .3s}.sv-play:hover .sv-pl{transform:scale(1.08);background:rgba(127,224,210,.9);color:#06201d}
 .sv-t{position:absolute;z-index:2;left:16px;right:16px;bottom:16px;font:500 15px/1.25 var(--font)}
-html body .pc.wide{min-height:clamp(600px,92vh,900px)}
-html body .pc.wide .vid{display:flex;align-items:flex-end;justify-content:center;min-height:0;padding:0}
+html body .pc.wide{min-height:clamp(520px,54vw,780px)}
+html body .pc.wide .vid{display:flex;align-items:center;justify-content:center;min-height:0;padding:0}
 html body .pc.wide .vid canvas{position:relative;inset:auto;display:block;width:auto;height:clamp(380px,64vh,640px);max-width:100%;margin:0 auto;filter:drop-shadow(0 28px 34px rgba(0,0,0,.35))}
 html body .pc,html body .pc.wide{background:linear-gradient(to top left,#eee 0%,#ccc 100%);color:#0e0e0e}
 html body .pc .shot .ph{color:#fff}
@@ -401,10 +401,9 @@ html body .pc .specs li{border-color:rgba(14,14,14,.35);color:#0e0e0e}
 html body .pc .go{background:rgba(14,14,14,.08);color:#0e0e0e}
 html body .pc:hover .go{background:var(--teal);color:#06201d}
 html body .pc.wide .vid canvas{filter:drop-shadow(0 24px 30px rgba(0,0,0,.28))}
-html body .pc.wide .vid{position:absolute;inset:0;width:auto;z-index:0}
+html body .pc.wide .vid{position:absolute;top:0;bottom:0;right:0;left:42%;width:auto;z-index:0}
 html body .pc.wide .tx{position:relative;z-index:2}
-html body .pc.wide .specs{flex-direction:column;align-items:flex-start;gap:8px}
-html body .pc.wide .vid canvas{height:clamp(380px,58vh,600px)}
+html body .pc.wide .vid canvas{height:82%;width:auto;max-width:100%}
 @media(max-width:640px){.cx-card{flex-basis:78vw}.sv-card{flex-basis:62vw}.duo{grid-template-columns:1fr}.duo figure{height:70vh}}
 </style>
 </head>
