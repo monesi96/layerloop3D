@@ -282,6 +282,90 @@ table.sp tr.g th{color:var(--teal)}
 .ctaimg{border-radius:16px;overflow:hidden;margin-top:30px;aspect-ratio:21/9}.ctaimg img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
 @media(max-width:900px){.anat,.deg,.mod,.cab,.soft,.gal{grid-template-columns:1fr}.gal{grid-template-rows:none}.gal figure:first-child{grid-row:auto}.gal figure{aspect-ratio:4/3}.flow2{grid-template-columns:1fr 1fr}.kp,.mats .fam,.appsx{grid-template-columns:1fr}.soft .ph9{aspect-ratio:9/12}.cmp{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.belt .track2,.belt .roll{animation:none}.anat .lines path{transition:none}}
+
+/* ===== tour 3D guidato dallo scroll ===== */
+.tour{position:relative;height:640vh;margin-top:clamp(70px,11vh,130px)}
+.tour .tsticky{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(20px,3vw,52px);align-items:center;padding:clamp(78px,11vh,110px) 0 clamp(20px,4vh,40px)}
+.tour .tt{display:flex;flex-direction:column;gap:clamp(14px,2.4vh,26px);min-width:0}
+.tour .tt h2{font-size:clamp(1.5rem,3.4vw,3rem)}
+.tframe{position:relative;overflow:hidden;border-radius:18px;height:100%;min-height:0;background:radial-gradient(120% 90% at 50% 20%,#14262a 0%,#0b0c0d 70%);border:1px solid rgba(255,255,255,.1);touch-action:pan-y}
+.tframe::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(77,182,169,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(77,182,169,.07) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.cv{position:absolute;transform-origin:0 0;will-change:transform}
+.cv img{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none}
+.cv .ph{opacity:var(--o,0);-webkit-mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%),#000 var(--mr,0px),transparent calc(var(--mr,0px)*2.3));mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%),#000 var(--mr,0px),transparent calc(var(--mr,0px)*2.3));filter:brightness(.72) contrast(1.08) saturate(.85)}
+.tframe.photo .cv .ph{opacity:var(--ow,0);-webkit-mask-image:none;mask-image:none}
+.cv .ed{filter:drop-shadow(0 0 5px rgba(77,182,169,.55))}
+.cv svg.tl{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tl path{fill:none;stroke:var(--teal);stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1) var(--dl,0s)}
+.tl circle{fill:var(--teal);opacity:0;transition:opacity .4s var(--dl,0s)}
+.cv.lin .tl path{stroke-dashoffset:0}.cv.lin .tl circle{opacity:1}
+.cv .pin{transform:scale(var(--iz,1));transition:opacity .4s var(--dl,0s),transform .3s;pointer-events:auto;cursor:pointer;opacity:0}
+.cv.lin .pin{opacity:1}.cv .pin.act{background:#fff;box-shadow:0 0 0 6px rgba(77,182,169,.35)}
+.tctl{position:absolute;left:14px;top:14px;display:flex;gap:6px;z-index:3}
+.tctl button{background:rgba(14,14,14,.75);color:#fff;border:1px solid rgba(255,255,255,.35);padding:8px 12px;font:600 11px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.tctl button[aria-pressed="true"]{background:var(--teal);color:var(--ink);border-color:var(--teal)}
+.tdet{position:absolute;left:14px;bottom:14px;width:min(240px,52%);border-radius:12px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.18);z-index:3;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.tdet.on{opacity:1;transform:none}.tdet img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}.tdet span{display:block;padding:8px 10px;font:600 10px/1.3 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.thint{position:absolute;right:14px;bottom:14px;z-index:3;font:500 10px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tlist{counter-reset:h;list-style:none;margin:0;padding:0}
+.tlist li{counter-increment:h;border-top:1px solid rgba(255,255,255,.16);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:4px 10px;cursor:pointer;opacity:.45;transition:opacity .3s}
+.tlist li::before{content:counter(h,decimal-leading-zero);font:500 11px/1.9 var(--font);color:var(--teal);letter-spacing:.1em}
+.tlist li.act{opacity:1}.tlist li b{font:700 clamp(.85rem,1.2vw,1.05rem)/1.1 var(--display);text-transform:uppercase}
+.tlist li span{grid-column:2;color:var(--muted);font-size:.92rem;display:none}.tlist li.act span{display:block}
+.tbar{height:2px;background:rgba(255,255,255,.14);position:relative}.tbar i{position:absolute;inset:0 auto 0 0;background:var(--teal);width:0}
+@media(max-width:900px){.tour{height:560vh}.tour .tsticky{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:14px;padding-top:70px}.tour .tt h2,.tour .tt>p{display:none}.tlist li{display:none;border:0}.tlist li.act{display:grid}.tdet{width:38%}}
+@media(prefers-reduced-motion:reduce){.cv{transition:none}}
+
+/* tour a tutto schermo: didascalie sopra il disegno */
+.tour{margin-top:clamp(70px,11vh,130px);height:620vh}
+.tour .tsticky{display:block;padding:0;height:100vh;width:100%;max-width:none;margin:0}
+.tour .tframe{position:absolute;inset:0;height:auto;border:0;border-radius:0;touch-action:pan-y}
+.tctl{left:auto;right:max(16px,env(safe-area-inset-right,0px));top:78px}
+.tcap{position:absolute;left:max(24px,calc((100vw - 1180px)/2));bottom:clamp(90px,14vh,140px);width:min(440px,calc(100vw - 48px));z-index:3;min-height:150px}
+.tci{position:absolute;left:0;bottom:0;width:100%;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s;pointer-events:none}
+.tci.act{opacity:1;transform:none}
+.tci h2{font-size:clamp(1.6rem,4vw,3.4rem)}
+.tci h3{font:800 clamp(1.3rem,2.6vw,2.2rem)/1 var(--display);text-transform:uppercase;margin:10px 0 12px}
+.tci p{color:rgba(255,255,255,.78);font-size:clamp(.95rem,1.15vw,1.08rem);max-width:380px;margin:14px 0 0}.tci h3+p{margin-top:0}
+.tci .n{font:600 11px/1 var(--font);letter-spacing:.14em;color:var(--teal)}
+.tdet{left:auto;right:max(24px,calc((100vw - 1180px)/2));bottom:clamp(90px,14vh,140px);width:min(280px,34vw)}
+.tnav{position:absolute;left:0;right:0;bottom:0;z-index:4;padding:0 max(24px,calc((100vw - 1180px)/2)) clamp(18px,3vh,30px);display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.tdots{list-style:none;margin:0;padding:0;display:flex;gap:8px;counter-reset:none}
+.tdots li{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;font:600 12px/1 var(--font);cursor:pointer;opacity:1;grid-template-columns:none;padding:0;transition:background .3s,color .3s}
+.tdots li::before{content:none}.tdots li.act{background:var(--teal);color:var(--ink);border-color:var(--teal)}.tdots li:hover{background:rgba(77,182,169,.3)}
+.tnav .tbar{width:100%}
+.thint{display:none}
+@media(max-width:900px){.tour .tsticky{grid-template-columns:none}.tcap{bottom:clamp(96px,16vh,130px);width:calc(100vw - 40px);left:20px}.tdet{width:34%;bottom:clamp(96px,16vh,130px);right:16px}.tdots li{display:grid}.tctl{top:74px}}
+
+/* tour a tutto schermo: didascalie sopra il disegno */
+.tour{margin-top:clamp(70px,11vh,130px);height:700vh}
+.tour .tsticky{display:block;padding:0;height:100vh;width:100%;max-width:none;margin:0}
+.tour .tframe{position:absolute;inset:0;height:auto;border:0;border-radius:0}
+.tctl{left:auto;right:max(16px,env(safe-area-inset-right,0px));top:78px}
+.tcap,.scap{position:absolute;left:max(24px,calc((100vw - 1180px)/2));bottom:clamp(96px,15vh,150px);width:min(440px,calc(100vw - 48px));z-index:3;min-height:170px}
+.tci{position:absolute;left:0;bottom:0;width:100%;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s;pointer-events:none}
+.tci.act{opacity:1;transform:none}
+.tci h2{font-size:clamp(1.6rem,4vw,3.4rem)}
+.tci h3{font:800 clamp(1.3rem,2.6vw,2.2rem)/1 var(--display);text-transform:uppercase;margin:10px 0 12px}
+.tci p{color:rgba(255,255,255,.8);font-size:clamp(.95rem,1.15vw,1.08rem);max-width:400px;margin:14px 0 0}.tci h3+p{margin-top:0}
+.tci .n{font:600 11px/1 var(--font);letter-spacing:.14em;color:var(--teal)}
+.tdet{left:auto;right:max(24px,calc((100vw - 1180px)/2));bottom:clamp(96px,15vh,150px);width:min(280px,34vw)}
+.tnav{position:absolute;left:0;right:0;bottom:0;z-index:4;padding:0 max(24px,calc((100vw - 1180px)/2)) clamp(18px,3vh,30px);display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.tdots{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+.tdots li{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;font:600 12px/1 var(--font);cursor:pointer;opacity:1;grid-template-columns:none;padding:0;transition:background .3s,color .3s}
+.tdots li::before{content:none}.tdots li.act{background:var(--teal);color:var(--ink);border-color:var(--teal)}.tdots li:hover{background:rgba(77,182,169,.3)}
+.tnav .tbar{width:100%}.thint{display:none}
+@media(max-width:900px){.tour{height:640vh}.tcap,.scap{bottom:clamp(100px,17vh,140px);width:calc(100vw - 40px);left:20px}.tdet{width:34%;bottom:clamp(100px,17vh,140px);right:16px}.tdots li{display:grid}.tctl{top:74px}}
+/* scena stampa in serie */
+.sscene{position:relative;height:560vh}
+.sst{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(120% 90% at 50% 20%,#14262a 0%,#0b0c0d 70%);border-block:1px solid rgba(255,255,255,.1)}
+.sst::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(77,182,169,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(77,182,169,.07) 1px,transparent 1px);background-size:40px 40px}
+.sst svg{position:absolute;left:0;right:0;top:9vh;width:100%;height:58vh}
+.sst svg .m{fill:rgba(77,182,169,.06);stroke:var(--teal);stroke-width:2}.sst svg .rl{fill:#1b1d1e;stroke:rgba(255,255,255,.4);stroke-width:1.5}.sst svg .pt{fill:rgba(77,182,169,.28);stroke:#4db6a9;stroke-width:2}.sst svg .pt.done{fill:rgba(240,180,92,.0)}.sst svg .hd{fill:#fff}.sst svg .rail{stroke:rgba(255,255,255,.5);stroke-width:2;stroke-dasharray:6 6}.sst svg text{font:600 13px var(--font);fill:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+.sst svg .bk{fill:none;stroke:#f0b45c;stroke-width:3}
+.scount{position:absolute;right:max(24px,calc((100vw - 1180px)/2));top:86px;z-index:3;text-align:right;font:600 11px/1.2 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.scount b{display:block;font:800 clamp(2rem,5vw,4rem)/1 var(--display);color:var(--teal);margin-top:6px}
+.sbar{position:absolute;left:max(24px,calc((100vw - 1180px)/2));right:max(24px,calc((100vw - 1180px)/2));bottom:clamp(20px,4vh,34px);width:auto}
+@media(max-width:900px){.sst svg{top:12vh;height:44vh}.sscene{height:480vh}}
 </style>
 </head>
 <body>
@@ -310,12 +394,19 @@ table.sp tr.g th{color:var(--teal)}
  </div>
 </section>
 
-<section class="wrap sec-t">
- <div class="head"><h2>Dentro<br>la macchina.</h2><p>Sei punti per capire come Layerloop Next trasforma un file in una serie di pezzi uguali.</p></div>
- <div class="anat" id="anat">
-  <div class="stage"><div style="position:relative"><img src="media/next/machine.webp" alt="Layerloop Next 200 con Cabinet" width="715" height="1500">
-   <svg class="lines" viewBox="0 0 715 1500" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" style="--dl:0.2s" d="M472 60 L800 60"/><circle style="--dl:0.2s" cx="472" cy="60" r="6"/><path pathLength="1" style="--dl:0.35s" d="M558 210 L800 150"/><circle style="--dl:0.35s" cx="558" cy="210" r="6"/><path pathLength="1" style="--dl:0.5s" d="M522 172 L800 240"/><circle style="--dl:0.5s" cx="522" cy="172" r="6"/><path pathLength="1" style="--dl:0.6499999999999999s" d="M550 322 L800 330"/><circle style="--dl:0.6499999999999999s" cx="550" cy="322" r="6"/><path pathLength="1" style="--dl:0.8s" d="M143 180 L-85 190"/><circle style="--dl:0.8s" cx="143" cy="180" r="6"/><path pathLength="1" style="--dl:0.95s" d="M357 930 L-85 930"/><circle style="--dl:0.95s" cx="357" cy="930" r="6"/></svg><span class="pin" style="left:111.89%;top:4.00%;--dl:0.5s">1</span><span class="pin" style="left:111.89%;top:10.00%;--dl:0.65s">2</span><span class="pin" style="left:111.89%;top:16.00%;--dl:0.8s">3</span><span class="pin" style="left:111.89%;top:22.00%;--dl:0.95s">4</span><span class="pin" style="left:-11.89%;top:12.67%;--dl:1.1s">5</span><span class="pin" style="left:-11.89%;top:62.00%;--dl:1.25s">6</span></div></div>
-  <ol class="hot"><li data-i="0"><b>Touchscreen</b><span>Avvio, coda lavori e stato macchina direttamente a bordo.</span></li><li data-i="1"><b>Camera con finestra</b><span>Camera aperta, completamente chiusa da pannelli: vedi il pezzo mentre cresce.</span></li><li data-i="2"><b>Testa di stampa</b><span>Estrusori Standard, Alta velocità, Tech o Metal. Fino a 300 °C. Ugelli da 0,4 a 0,8 mm.</span></li><li data-i="3"><b>Uscita del pezzo</b><span>Il rullo di stampa integrato porta il pezzo fuori: parti di lunghezza infinita.</span></li><li data-i="4"><b>Asse inclinato a 30°</b><span>La copertura inclinata è il segno della tecnologia: pezzi finiti senza supporti.</span></li><li data-i="5"><b>Cabinet</b><span>Opzionale. Spazio per i filamenti, asciugatura attiva fino a 70 °C.</span></li></ol>
+<section class="tour" id="tour" data-steps='[["Touchscreen", "Avvio, coda lavori e stato macchina direttamente a bordo.", "touch.webp", "Touchscreen"], ["Camera con finestra", "Camera aperta, completamente chiusa da pannelli: vedi il pezzo mentre cresce.", "chamber-head.webp", "Camera di stampa"], ["Testa di stampa", "Estrusori Standard, Alta velocità, Tech o Metal. Ugelli da 0,4 a 0,8 mm.", "head-macro.webp", "Testa di stampa"], ["Rullo di stampa", "Il piano è un rullo integrato: il pezzo non resta fermo, scorre fuori. Sostiene pezzi lunghi e complessi.", "exit.webp", "Uscita sul rullo"], ["Calibrazione digitale", "Tre attuatori regolano il livellamento del piano e l&#39;angolo tra l&#39;asse e il rullo.", "chamber-belt.webp", "Piano di stampa"], ["Asse inclinato a 30°", "La copertura inclinata è il segno della tecnologia: pezzi finiti senza supporti.", "side.webp", "Fianco della macchina"], ["Cabinet", "Opzionale. Spazio per i filamenti, asciugatura e deumidificazione attive fino a 70 °C.", "hinge.webp", "Cabinet"]]'>
+ <div class="tsticky">
+  <div class="tframe" id="tframe">
+   <div class="cv" id="cv">
+    <img class="ph" data-v="0" src="media/next/viewer/front.webp" alt="" loading="lazy"><img class="ph" data-v="1" src="media/next/viewer/three.webp" alt="Layerloop Next 200" loading="lazy"><img class="ph" data-v="2" src="media/next/viewer/side.webp" alt="" loading="lazy">
+    <img class="ed" data-v="0" src="media/next/viewer/front-edge.webp" alt="" loading="lazy"><img class="ed" data-v="1" src="media/next/viewer/three-edge.webp" alt="Layerloop Next 200, disegno a contorni" loading="lazy"><img class="ed" data-v="2" src="media/next/viewer/side-edge.webp" alt="" loading="lazy">
+    <svg class="tl" id="tl" viewBox="0 0 1100 2200" preserveAspectRatio="none" aria-hidden="true"></svg>
+   </div>
+   <div class="tctl"><button type="button" id="bdraw" aria-pressed="true">Disegno</button><button type="button" id="bphoto" aria-pressed="false">Foto</button></div>
+   <div class="tcap" id="tcap"><div class="tci intro act"><h2>Dentro<br>la macchina.</h2><p>Scorri: la macchina gira e ti porta sui punti che contano. Oppure clicca un numero.</p></div><div class="tci"><span class="n">01 / 07</span><h3>Touchscreen</h3><p>Avvio, coda lavori e stato macchina direttamente a bordo.</p></div><div class="tci"><span class="n">02 / 07</span><h3>Camera con finestra</h3><p>Camera aperta, completamente chiusa da pannelli: vedi il pezzo mentre cresce.</p></div><div class="tci"><span class="n">03 / 07</span><h3>Testa di stampa</h3><p>Estrusori Standard, Alta velocità, Tech o Metal. Ugelli da 0,4 a 0,8 mm.</p></div><div class="tci"><span class="n">04 / 07</span><h3>Rullo di stampa</h3><p>Il piano è un rullo integrato: il pezzo non resta fermo, scorre fuori. Sostiene pezzi lunghi e complessi.</p></div><div class="tci"><span class="n">05 / 07</span><h3>Calibrazione digitale</h3><p>Tre attuatori regolano il livellamento del piano e l'angolo tra l'asse e il rullo.</p></div><div class="tci"><span class="n">06 / 07</span><h3>Asse inclinato a 30°</h3><p>La copertura inclinata è il segno della tecnologia: pezzi finiti senza supporti.</p></div><div class="tci"><span class="n">07 / 07</span><h3>Cabinet</h3><p>Opzionale. Spazio per i filamenti, asciugatura e deumidificazione attive fino a 70 °C.</p></div></div>
+   <div class="tdet" id="tdet"><img id="tdimg" src="media/next/touch.webp" alt=""><span id="tdlab"></span></div>
+   <div class="tnav"><ol class="tdots" id="tlist"><li data-i="0" aria-label="Touchscreen">1</li><li data-i="1" aria-label="Camera con finestra">2</li><li data-i="2" aria-label="Testa di stampa">3</li><li data-i="3" aria-label="Rullo di stampa">4</li><li data-i="4" aria-label="Calibrazione digitale">5</li><li data-i="5" aria-label="Asse inclinato a 30°">6</li><li data-i="6" aria-label="Cabinet">7</li></ol><div class="tbar"><i id="tbar"></i></div></div>
+  </div>
  </div>
 </section>
 
@@ -335,14 +426,25 @@ table.sp tr.g th{color:var(--teal)}
  </div>
 </section>
 
-<section class="wrap sec-t" id="serie">
- <div class="head"><h2>Dal file<br>alla serie.</h2><p>Prepari il lotto, avvii, il nastro fa uscire i pezzi uno dopo l'altro. Al mattino li trovi pronti.</p></div>
- <div class="belt">
-  <div class="lot"><span>Lotto <b>#014</b></span><span>Pezzi <b data-count="120">120</b></span><span>Stato <b>in produzione</b></span></div>
-  <div class="run"><div class="track2"><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span><span class="pz"></span></div><div class="roll"></div></div>
-  <div class="flow2"><div><b>CAD</b><span>Il file del pezzo</span></div><div><b>Layerloop Slicer</b><span>Orientamento a 30° e lotto</span></div><div><b>Layerloop I.M.</b><span>Coda lavori e stato macchina</span></div><div><b>Stampa</b><span>Rullo integrato, 24/7</span></div><div><b>Pezzi finiti</b><span>Uguali tra loro, senza supporti</span></div></div>
+<section class="wrap sec-t" id="serie"><div class="head"><h2>Stampa<br>in serie.</h2><p>Il rullo porta fuori un pezzo mentre ne parte un altro. Nessuno deve restare accanto alla macchina.</p></div></section>
+<section class="sscene" id="sscene">
+ <div class="sst">
+  <svg id="sv" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Schema della stampa in serie sul rullo"></svg>
+  <div class="scount"><span>Pezzi nel cestello</span><b id="scnt">00</b></div>
+  <div class="scap" id="scap">
+   <div class="tci act"><span class="n">01 / 05</span><h3>Parte il primo pezzo</h3><p>La testa deposita il materiale con l'asse a 30° mentre il rullo avanza.</p></div>
+   <div class="tci"><span class="n">02 / 05</span><h3>Il rullo porta fuori il pezzo</h3><p>Il pezzo finito scorre fuori dall'area di stampa e parte subito il successivo.</p></div>
+   <div class="tci"><span class="n">03 / 05</span><h3>Pezzi lunghi, senza limiti</h3><p>Il rullo sostiene pezzi lunghi e complessi: la lunghezza non è vincolata dal piano.</p></div>
+   <div class="tci"><span class="n">04 / 05</span><h3>Cestello di scarico</h3><p>L'accessorio di scarico automatico raccoglie i pezzi e riduce l'intervento manuale.</p></div>
+   <div class="tci"><span class="n">05 / 05</span><h3>Produzione che non si ferma</h3><p>Se il filamento finisce, il sensore mette in pausa la stampa: niente scarti. Dalla piattaforma remota controlli stato e coda.</p></div>
+  </div>
+  <div class="tbar sbar"><i id="sbar"></i></div>
  </div>
- <div class="kp"><div><b>24/7</b><span>produzione continua senza operatore</span></div><div><b>15+</b><span>materiali compatibili</span></div><div><b>&lt; 5.000</b><span>pezzi: dove la stampa 3D batte lo stampaggio</span></div></div>
+</section>
+<section class="wrap sec-t">
+ <div class="flow2"><div><b>CAD</b><span>Il file del pezzo</span></div><div><b>Layerloop Slicer</b><span>Orientamento a 30° e lotto</span></div><div><b>Layerloop I.M.</b><span>Coda lavori e stato macchina</span></div><div><b>Stampa</b><span>Rullo integrato, 24/7</span></div><div><b>Pezzi finiti</b><span>Uguali tra loro, senza supporti</span></div></div>
+<div class="kp"><div><b>24/7</b><span>produzione continua senza operatore</span></div><div><b>15+</b><span>materiali compatibili</span></div><div><b>&lt; 5.000</b><span>pezzi: dove la stampa 3D batte lo stampaggio</span></div></div>
+
 </section>
 
 <section class="wrap sec-t">
@@ -422,6 +524,89 @@ table.sp tr.g th{color:var(--teal)}
   document.querySelectorAll('.tabs2 button').forEach(function(x){x.setAttribute('aria-selected',x===b?'true':'false')});
   var k=b.dataset.w;document.getElementById('volbig').textContent=data[k][0];document.getElementById('barw').style.setProperty('--w',bw[k]);
   document.getElementById('voltxt').textContent='Dimensioni '+data[k][1]+'. Peso 60–70 kg.'})});
+(function(){
+ var sec=document.getElementById('tour');if(!sec)return;
+ var frame=document.getElementById('tframe'),cv=document.getElementById('cv'),tl=document.getElementById('tl'),list=document.getElementById('tlist'),bar=document.getElementById('tbar'),det=document.getElementById('tdet'),dimg=document.getElementById('tdimg'),dlab=document.getElementById('tdlab');
+ var steps=JSON.parse(sec.getAttribute('data-steps')),lis=[].slice.call(list.children),caps=[].slice.call(document.querySelectorAll('#tcap .tci'));
+ var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ // punti nella vista 3/4 (px della foto 715x1500) -> frazioni della tela 1100x2200
+ var MW=1049,ML=(1100-MW)/2,MH=2200;
+ function fx(x){return (ML+x/715*MW)/1100} function fy(y){return y/1500}
+ var pts=[[472,60],[558,210],[522,172],[550,322],[505,272],[143,180],[357,930]];
+ var pins=[[800,60],[800,150],[800,240],[800,330],[800,420],[-85,190],[-85,930]];
+ var tgt=[[470,70,3.4],[550,200,2.5],[525,178,3.8],[550,322,3.4],[505,275,3.4],[200,150,2.1],[357,900,2.0]];
+ var NS='http://www.w3.org/2000/svg',html='';
+ pts.forEach(function(p,i){var q=pins[i];var X=fx(p[0])*1100,Y=fy(p[1])*2200,PX=fx(q[0])*1100,PY=fy(q[1])*2200;
+  html+='<path pathLength="1" style="--dl:'+(.1*i)+'s" d="M'+X+' '+Y+' L'+PX+' '+PY+'"/><circle style="--dl:'+(.1*i)+'s" cx="'+X+'" cy="'+Y+'" r="9"/>'});
+ tl.innerHTML=html;
+ var pinEls=pins.map(function(q,i){var s=document.createElement('span');s.className='pin';s.textContent=i+1;s.style.left=(fx(q[0])*100)+'%';s.style.top=(fy(q[1])*100)+'%';s.style.setProperty('--dl',(.1*i)+'s');s.addEventListener('click',function(e){e.stopPropagation();go(i)});cv.appendChild(s);return s});
+ lis.forEach(function(li,i){li.addEventListener('click',function(){go(i)})});
+ // keyframes: p, v (0 fronte,1 3/4,2 lato), zoom s, punto px,py
+ var rest={s:1,px:.5,py:.5},K=[{p:0,v:0},{p:.07,v:1}];
+ tgt.forEach(function(t,i){K.push({p:.13+i*.098,v:1,s:t[2],px:fx(t[0]),py:fy(t[1]),i:i})});
+ K.push({p:.83,v:1},{p:.94,v:2},{p:1,v:2});
+ K.forEach(function(k){if(k.s==null){k.s=1;k.px=.5;k.py=.5}});
+ var L,T,cw,ch,fw,fh;
+ function size(){fw=frame.clientWidth;fh=frame.clientHeight;ch=fh*.9;cw=ch/2;if(cw>fw*.8){cw=fw*.8;ch=cw*2}L=(fw-cw)/2;T=(fh-ch)/2;cv.style.left=L+'px';cv.style.top=T+'px';cv.style.width=cw+'px';cv.style.height=ch+'px'}
+ function sm(t){return t*t*(3-2*t)}
+ function at(p){var a=K[0],b=K[K.length-1];for(var i=0;i<K.length-1;i++){if(p>=K[i].p&&p<=K[i+1].p){a=K[i];b=K[i+1];var t=sm((p-a.p)/(b.p-a.p));return{v:a.v+(b.v-a.v)*t,s:a.s+(b.s-a.s)*t,px:a.px+(b.px-a.px)*t,py:a.py+(b.py-a.py)*t}}}return{v:b.v,s:b.s,px:b.px,py:b.py}}
+ var cur=-1;
+ function render(p){var st=at(p),s=st.s;
+  var kk=Math.min(1,Math.max(0,(s-1)/1.5)),cxo=fw>900?.12:0,tx=fw*(.5+cxo*kk)-L-st.px*cw*s,ty=fh*.46-T-st.py*ch*s; if(s===1){tx=0;ty=0}
+  // tra i rest e gli zoom: sposta il punto verso il centro solo quanto serve
+  tx*=kk;ty*=kk;
+  cv.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';cv.style.setProperty('--iz',1/s);
+  var imgs=cv.querySelectorAll('img');[].forEach.call(imgs,function(im){var w=Math.max(0,1-Math.abs(st.v-(+im.dataset.v)));im.style.opacity=im.classList.contains('ph')?'':w;if(im.classList.contains('ph')){var bl=Math.min(1,Math.max(0,(s-1.15)/1.4));im.style.setProperty('--o',w*bl*.95);im.style.setProperty('--ow',w*.95);im.style.setProperty('--mx',st.px*cw+'px');im.style.setProperty('--my',st.py*ch+'px');im.style.setProperty('--mr',(fw*.15/s)+'px')}});
+  var w1=Math.max(0,1-Math.abs(st.v-1));cv.classList.toggle('lin',w1>.9&&p>.05);tl.style.opacity=w1;pinEls.forEach(function(e){e.style.visibility=w1>.5?'visible':'hidden'});
+  var ai=-1;K.forEach(function(kk){if(kk.i!=null&&Math.abs(p-kk.p)<.047)ai=kk.i});
+  if(ai!==cur){cur=ai;lis.forEach(function(li,i){li.classList.toggle('act',i===ai)});caps.forEach(function(c,i){c.classList.toggle('act',i===ai+1)});caps.forEach(function(c,i){c.classList.toggle('act',i===ai+1)});pinEls.forEach(function(e,i){e.classList.toggle('act',i===ai)});
+   if(ai>=0){dimg.src='media/next/'+steps[ai][2];dlab.textContent=steps[ai][3];det.classList.add('on')}else det.classList.remove('on')}
+  bar.style.width=(p*100)+'%';[].forEach.call(tl.querySelectorAll('circle'),function(c){c.setAttribute('r',9/s*2)});var sw=1.6/(s*cw/1100);[].forEach.call(tl.querySelectorAll('path'),function(q){q.style.strokeWidth=sw})}
+ function prog(){var r=sec.getBoundingClientRect(),tot=sec.offsetHeight-innerHeight;return Math.min(1,Math.max(0,-r.top/tot))}
+ function tick(){render(prog());requestAnimationFrame(tick)}
+ function go(i){var tot=sec.offsetHeight-innerHeight,p=K.filter(function(k){return k.i===i})[0].p,y=sec.getBoundingClientRect().top+scrollY+p*tot;window.scrollTo({top:y,behavior:reduce?'auto':'smooth'})}
+ document.getElementById('bdraw').addEventListener('click',function(){frame.classList.remove('photo');this.setAttribute('aria-pressed','true');document.getElementById('bphoto').setAttribute('aria-pressed','false')});
+ document.getElementById('bphoto').addEventListener('click',function(){frame.classList.add('photo');this.setAttribute('aria-pressed','true');document.getElementById('bdraw').setAttribute('aria-pressed','false')});
+ size();addEventListener('resize',size);tick();
+})();
+
+(function(){
+ var sec=document.getElementById('sscene');if(!sec)return;
+ var sv=document.getElementById('sv'),cnt=document.getElementById('scnt'),bar=document.getElementById('sbar'),caps=[].slice.call(document.querySelectorAll('#scap .tci'));
+ var NS='http://www.w3.org/2000/svg';
+ function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(p||sv).appendChild(e);return e}
+ var BY=540,XH=520,XB=1360,W=300,H=80,LEAN=H*0.577,NP=6,PERIOD=1.15;
+ // macchina (profilo con copertura a 30°)
+ el('path',{class:'m',d:'M150 '+(BY+40)+' V330 L450 157 H650 V'+(BY+40)+' Z'});
+ el('line',{class:'rail',x1:190,y1:372,x2:470,y2:200});
+ el('rect',{class:'hd',x:XH-8,y:BY-H-48,width:18,height:30,transform:'rotate(-30 '+XH+' '+(BY-H-48)+')'});
+ el('text',{x:150,y:BY+80},sv).textContent='Layerloop Next';
+ // rullo
+ var rolls=[];for(var i=0;i<40;i++){rolls.push(el('circle',{class:'rl',cx:0,cy:BY+12,r:11}))}
+ el('line',{x1:150,y1:BY,x2:1520,y2:BY,stroke:'rgba(255,255,255,.55)','stroke-width':2});
+ el('line',{x1:150,y1:BY+24,x2:1520,y2:BY+24,stroke:'rgba(255,255,255,.25)','stroke-width':2});
+ // cestello
+ el('path',{class:'bk',d:'M'+(XB+60)+' '+(BY-20)+' V'+(BY+110)+' H1560 V'+(BY-20)});
+ el('text',{x:XB+60,y:BY+140},sv).textContent='Cestello di scarico';
+ var parts=[];for(var k=0;k<NP;k++){parts.push(el('path',{class:'pt'}))}
+ var sens=el('text',{x:700,y:90,fill:'#f0b45c',style:'fill:#f0b45c;opacity:0'},sv);sens.textContent='Sensore fine filamento: pausa automatica';
+ var T=0,VB=420; // px per unità di tempo
+ function draw(p){T=p*(NP+2.2);var inb=0;
+  var off=(T*VB)%36;rolls.forEach(function(r,i){r.setAttribute('cx',150+i*36+off-36*0)});
+  parts.forEach(function(el_,k){var t=T-k*PERIOD;if(t<0){el_.setAttribute('d','');return}
+   var front=XH+t*VB,w=Math.min(W,t*VB),rear=front-w;var drop=0,op=1;
+   if(front>XB+40){var q=Math.min(1,(front-(XB+40))/160);drop=q*q*150;op=1-q*.2;if(q>=1)inb++}
+   var x0=rear,x1=front,y0=BY-drop,y1=BY-H-drop;
+   el_.setAttribute('d','M'+x0+' '+y0+' L'+x1+' '+y0+' L'+(x1+LEAN)+' '+y1+' L'+(x0+LEAN)+' '+y1+' Z');
+   el_.style.opacity=(front>XB+60+W)?0:op});
+  cnt.textContent=(inb<10?'0':'')+inb;
+  var ai=p<.18?0:p<.40?1:p<.58?2:p<.80?3:4;caps.forEach(function(c,i){c.classList.toggle('act',i===ai)});
+  sens.style.opacity=(p>.86&&Math.floor(p*40)%2===0)?1:(p>.86?.4:0);
+  bar.style.width=(p*100)+'%'}
+ function prog(){var r=sec.getBoundingClientRect(),tot=sec.offsetHeight-innerHeight;return Math.min(1,Math.max(0,-r.top/tot))}
+ function tick(){draw(prog());requestAnimationFrame(tick)}tick();
+})();
+
 })();
 </script>
 </body>
