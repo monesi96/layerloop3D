@@ -279,6 +279,69 @@ html body .tdots li.act{background:rgba(127,224,210,.92);box-shadow:0 0 18px rgb
 html body .hero-card,html body .heroimg,html body .reveal-media,html body .gal figure,html body .two figure{border-radius:26px}
 html body .app,html body .feat>div{border-top-color:rgba(255,255,255,.14)}
 html body .fcta .btn,html body .footer .btn{box-shadow:none}
+
+.secpick{display:grid;gap:clamp(22px,3vw,36px)}
+.sec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,22px)}
+.sec-item{position:relative;text-align:left;color:#fff;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:clamp(22px,2.4vw,32px);cursor:pointer;display:flex;flex-direction:column;gap:10px;font:inherit;transition:background .3s,border-color .3s,transform .3s,box-shadow .3s}
+.sec-item:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.sec-item .sn{font:500 11px/1 var(--font);letter-spacing:.12em;color:rgba(255,255,255,.55)}
+.sec-item b{font:500 clamp(1.25rem,1.9vw,1.7rem)/1.1 var(--font);letter-spacing:-.015em}
+.sec-item .sd{font-size:.95rem;line-height:1.45;color:rgba(255,255,255,.62)}
+.sec-item em{font:600 10.5px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;font-style:normal;color:#7fe0d2;margin-top:4px}
+.sec-item[aria-pressed="true"]{background:linear-gradient(145deg,rgba(127,224,210,.2),rgba(127,224,210,.05));border-color:rgba(127,224,210,.7);box-shadow:0 0 0 1px rgba(127,224,210,.35),0 16px 40px rgba(0,0,0,.35)}
+.sec-item[aria-pressed="true"] .sn{color:#7fe0d2}
+.sec-item:focus-visible{outline:2px solid #7fe0d2;outline-offset:3px}
+.sec-detail{border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);padding:clamp(26px,3.4vw,48px);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.sd-in{display:grid;grid-template-columns:1.2fr 1fr 1.3fr 1.3fr;gap:clamp(20px,3vw,44px);align-items:start;animation:sdin .45s cubic-bezier(.22,1,.36,1)}
+@keyframes sdin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sd-k{display:block;font:500 10.5px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:14px}
+.sd-main h3{font:500 clamp(1.6rem,2.6vw,2.4rem)/1.05 var(--font);letter-spacing:-.02em;margin:0 0 10px;text-transform:none}.sd-main p{margin:0;color:rgba(255,255,255,.7);font-size:.98rem}
+.sd-chips{display:flex;flex-wrap:wrap;gap:8px}.sd-chips a{display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);color:#fff;text-decoration:none;font:500 13px/1 var(--font);transition:background .25s,border-color .25s}.sd-chips a.m{padding:9px 16px}.sd-chips a:hover{background:rgba(127,224,210,.2);border-color:rgba(127,224,210,.6)}
+.sd-chips img{width:26px;height:26px;border-radius:50%;object-fit:contain;background:#e8e8e6}
+.sd-case{display:block;color:#fff;text-decoration:none;font:500 1.02rem/1.3 var(--font);letter-spacing:-.01em}.sd-case:hover{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:900px){.sec-grid{grid-template-columns:1fr 1fr}.sd-in{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.sec-grid{grid-template-columns:1fr}.sd-in{grid-template-columns:1fr}}
+
+.mats.mxs{background:linear-gradient(180deg,#f3f3f1 0%,#e9e9e6 100%);overflow:hidden}
+.mp{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(28px,5vw,80px);align-items:center;width:min(1180px,100% - 48px);margin-inline:auto}
+.mp-feat{display:grid;gap:clamp(22px,3vw,34px)}
+.mp-stage{position:relative;aspect-ratio:4/3;border-radius:32px;background:radial-gradient(70% 60% at 50% 38%,#fff 0%,#f0f0ee 55%,#e2e2df 100%);box-shadow:0 30px 70px rgba(20,22,26,.12),inset 0 1px 0 #fff;display:grid;place-items:center;overflow:hidden}
+.mp-stage::after{content:"";position:absolute;left:18%;right:18%;bottom:9%;height:7%;background:radial-gradient(50% 50% at 50% 50%,rgba(20,22,26,.2),transparent);filter:blur(8px)}
+.mp-stage img{position:relative;z-index:1;width:78%;height:78%;object-fit:contain;filter:drop-shadow(0 26px 30px rgba(20,22,26,.22));animation:mxin .6s cubic-bezier(.22,1,.36,1)}
+@keyframes mxin{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.mp-info{animation:mxin .55s cubic-bezier(.22,1,.36,1)}
+.mp-info .k{display:block;font:500 11px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:#6b7280;margin-bottom:12px}
+.mp-info h3{font:500 clamp(1.8rem,3vw,2.8rem)/1.02 var(--font);letter-spacing:-.025em;text-transform:none;margin:0;color:#14161a}
+.mp-info .al{margin:6px 0 16px;color:#6b7280;font-size:1rem}
+.mp-info p{margin:0;color:#3d4147;font-size:1.02rem;line-height:1.6;max-width:46ch}
+.mp-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.mp-chips span{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(20,22,26,.1);font:500 12.5px/1 var(--font);color:#2a2d33;box-shadow:inset 0 1px 0 #fff}
+.mp-on{display:flex;align-items:center;gap:8px;margin-top:20px;font:500 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:#6b7280}.mp-on a{padding:8px 13px;border-radius:999px;background:#14161a;color:#fff;text-decoration:none;font:600 11px/1 var(--font);letter-spacing:.08em}.mp-on a:hover{background:#2f8f88}
+.mp-go{display:inline-flex;margin-top:24px;padding:13px 22px;border-radius:999px;background:#14161a;color:#fff;text-decoration:none;font:500 13px/1 var(--font);letter-spacing:.02em;transition:background .25s,transform .25s}.mp-go:hover{background:#2f8f88;transform:translateY(-2px)}
+.mp-side{position:relative;min-width:0}
+.mp-nav{display:flex;gap:8px;justify-content:flex-end;margin-bottom:18px;padding-right:max(0px,calc((100vw - 1180px)/2))}.mp-nav button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(20,22,26,.2);background:rgba(255,255,255,.55);backdrop-filter:blur(10px);color:#14161a;font-size:16px;cursor:pointer;transition:background .2s,color .2s}.mp-nav button:hover{background:#14161a;color:#fff}
+.mp-rail{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:14px 0 26px;margin-right:calc(-1 * max(24px,(100vw - 1180px)/2));-webkit-mask-image:linear-gradient(90deg,#000 0,#000 52%,transparent 96%);mask-image:linear-gradient(90deg,#000 0,#000 52%,transparent 96%)}.mp-rail::-webkit-scrollbar{display:none}
+.mp-card{flex:0 0 clamp(190px,17vw,240px);text-align:left;background:rgba(255,255,255,.72);border:1px solid rgba(20,22,26,.08);border-radius:26px;padding:12px 12px 18px;cursor:pointer;font:inherit;color:#14161a;box-shadow:0 10px 26px rgba(20,22,26,.06),inset 0 1px 0 #fff;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s,border-color .3s}
+.mp-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(20,22,26,.12)}
+.mp-card .pic{aspect-ratio:1;border-radius:18px;background:radial-gradient(70% 70% at 50% 40%,#fff,#ececea);display:grid;place-items:center;margin-bottom:14px}.mp-card .pic img{width:82%;height:82%;object-fit:contain;filter:drop-shadow(0 12px 14px rgba(20,22,26,.2))}
+.mp-card b{display:block;font:600 .95rem/1.1 var(--font);letter-spacing:-.005em;padding:0 6px}.mp-card span{display:block;margin-top:4px;padding:0 6px;font-size:.85rem;color:#6b7280}
+.mp-card.on{border-color:#2f8f88;box-shadow:0 0 0 1px #2f8f88,0 22px 44px rgba(47,143,136,.2);transform:translateY(-6px)}
+.mxs .fam{display:flex;flex-wrap:wrap;gap:12px 40px;width:min(1180px,100% - 48px);margin:clamp(30px,5vw,56px) auto 0;padding:0;color:#3d4147;font-size:.92rem}.mxs .fam>div{flex:1 1 240px}.mxs .fam b{display:block;font:600 11px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;color:#6b7280;margin-bottom:8px}
+.mxs .cta{width:min(1180px,100% - 48px);margin:clamp(28px,4vw,44px) auto 0}
+@media(max-width:900px){.mp{grid-template-columns:1fr}.mp-rail{margin-right:-24px;-webkit-mask-image:linear-gradient(90deg,#000 0,#000 70%,transparent 100%);mask-image:linear-gradient(90deg,#000 0,#000 70%,transparent 100%)}.mp-nav{padding-right:0}}
+
+html body .pc{padding:clamp(34px,4.4vw,60px)}
+html body .pc.wide{padding:0}
+html body .pc.wide .tx{padding:clamp(34px,5vw,72px)}
+html body .feat{padding:clamp(38px,5vw,72px);gap:clamp(26px,3.6vw,56px)}
+html body .sect-box{padding:clamp(38px,5.4vw,80px)}
+html body .cab,html body .opt,html body .anat,html body .mod .vol{padding:clamp(34px,4.6vw,68px)}
+html body .csc .bd{padding:28px 30px 32px;gap:14px}
+html body .belt .lot{padding:0 36px 22px}html body .belt{padding-top:36px}
+html body .flow2 div{padding:24px 26px}
+html body .calc{padding:20px}
+html body .axcap,html body .tci{padding-inline:0}
+html body .sec-detail{padding:clamp(30px,4vw,56px)}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}
 </style>
 </head>
 <body>
@@ -408,15 +471,14 @@ html body .fcta .btn,html body .footer .btn{box-shadow:none}
         <p class="lead">Layerloop non stampa i tuoi pezzi: ti dà la macchina per farlo. Prototipi, ricambi e piccole serie escono dal tuo reparto, giorno e notte, con il materiale giusto per ogni applicazione.</p>
       </div>
       <div class="price">
-        <b>Da 4.000 €</b>
         <p>Stampanti 3D industriali a nastro, asse inclinato a 30°.</p>
-        <div class="fcta-btns"><a class="btn" href="#contatti" data-scroll>Richiedi il listino →</a><a class="btn ghost" href="#contatti" data-scroll>Parla con un tecnico →</a></div>
+        <div class="fcta-btns"><a class="btn" href="#contatti" data-scroll>Richiedi informazioni →</a><a class="btn ghost" href="#contatti" data-scroll>Parla con un tecnico →</a></div>
       </div>
     </div>
   </section>
 
   <footer class="footer" id="contatti"><div class="wrap">
- <div class="fcta"><div><h2>Bring production<br>in house.</h2><span class="price">Stampanti industriali da 4.000 €</span></div><div class="bt"><a class="btn dark" href="mailto:info@layerloop3d.com?subject=Richiesta%20demo">Richiedi una demo →</a><a class="btn outline" href="mailto:info@layerloop3d.com?subject=Parlo%20con%20un%20esperto">Parla con un esperto →</a></div></div>
+ <div class="fcta"><div><h2>Bring production<br>in house.</h2></div><div class="bt"><a class="btn dark" href="mailto:info@layerloop3d.com?subject=Richiesta%20demo">Richiedi una demo →</a><a class="btn outline" href="mailto:info@layerloop3d.com?subject=Parlo%20con%20un%20esperto">Parla con un esperto →</a></div></div>
  <div class="foot-grid"><div><p>Sistemi di stampa 3D a nastro per la produzione industriale. Progettati e costruiti in Italia.</p></div><div><h4>Contatti</h4><ul><li>Via Calabria 12 – Z.I.</li><li>70021 Acquaviva delle Fonti (BA)</li><li><a href="mailto:info@layerloop3d.com">info@layerloop3d.com</a></li><li><a href="tel:+390808890568">080 8890568</a></li></ul></div><div><h4>Stampanti</h4><ul><li><a href="extend.html">Extend</a></li><li><a href="next.html">Next</a></li><li><a href="xe.html">XE</a></li><li><a href="materiali.html">Materiali</a></li></ul></div><div><h4>Azienda</h4><ul><li>Layerloop S.r.l.</li><li>Consociata Gruppo Finlogic SpA</li><li><a href="#">Privacy Policy</a></li><li><a href="#">Cookie Policy</a></li></ul></div></div>
  <p class="foot-bottom">© 2026 Layerloop S.r.l. Tutti i diritti riservati.</p></div></footer>
 
@@ -610,5 +672,20 @@ html body .fcta .btn,html body .footer .btn{box-shadow:none}
 <script>(function(){var h=document.getElementById('sitehdr');if(!h)return;var m=h.querySelector('.mnu'),dd=h.querySelector('.dd');
 function s(){h.classList.toggle('solid',scrollY>40)}addEventListener('scroll',s,{passive:true});s();
 m.addEventListener('click',function(){var o=h.classList.toggle('open');m.setAttribute('aria-expanded',o)});
-dd.querySelector('.ddt').addEventListener('click',function(){dd.classList.toggle('open')});})();</script></body>
+dd.querySelector('.ddt').addEventListener('click',function(){dd.classList.toggle('open')});})();</script><script>(function(){var root=document.documentElement;if(root.classList.contains('lenis')||!window.Lenis||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var l=new Lenis({lerp:.085,smoothWheel:true,wheelMultiplier:.9});window.__lenis=l;(function raf(t){l.raf(t);requestAnimationFrame(raf)})(0);
+[].forEach.call(document.querySelectorAll('a[href^="#"]'),function(a){var h=a.getAttribute('href');if(h.length<2)return;a.addEventListener('click',function(e){var t=document.querySelector(h);if(!t)return;e.preventDefault();l.scrollTo(t,{offset:-70})})})})();(function(){[].forEach.call(document.querySelectorAll('.secpick'),function(w){var D=JSON.parse(w.getAttribute('data-sec')),its=[].slice.call(w.querySelectorAll('.sec-item')),det=w.querySelector('.sec-detail');
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function show(i){its.forEach(function(b,k){b.setAttribute('aria-pressed',k===i?'true':'false')});var s=D[i];
+ det.innerHTML='<div class="sd-in"><div class="sd-main"><span class="sd-k">Settore</span><h3>'+esc(s.n)+'</h3><p>'+esc(s.d)+'</p></div><div><span class="sd-k">Macchine</span><div class="sd-chips">'+s.mc.map(function(m){return '<a class="m" href="'+m[1]+'">'+m[0]+'</a>'}).join('')+'</div></div><div><span class="sd-k">Materiali</span><div class="sd-chips">'+s.ml.map(function(m){return '<a href="materiali.html#'+m[0]+'"><img src="media/mat/'+m[0]+'.webp" alt="">'+esc(m[1])+'</a>'}).join('')+'</div></div><div><span class="sd-k">Case study</span><a class="sd-case" href="'+s.c[1]+'">'+esc(s.c[0])+' →</a></div></div>'}
+its.forEach(function(b,k){b.addEventListener('click',function(){show(k)})});show(+w.getAttribute('data-first')||0)})})();(function(){[].forEach.call(document.querySelectorAll('.mp'),function(w){var D=JSON.parse(w.getAttribute('data-mats')),feat=w.querySelector('.mp-feat'),rail=w.querySelector('.mp-rail'),cur=0;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+rail.innerHTML=D.map(function(m,i){return '<button type="button" class="mp-card" role="listitem" data-i="'+i+'"><div class="pic"><img src="media/mat/'+m.id+'.webp" alt="" loading="lazy"></div><b>'+esc(m.n)+'</b><span>'+esc(m.a)+'</span></button>'}).join('');
+var cards=[].slice.call(rail.children);
+function show(i,scroll){cur=(i+D.length)%D.length;var m=D[cur];cards.forEach(function(c,k){c.classList.toggle('on',k===cur)});
+ feat.innerHTML='<div class="mp-stage"><img src="media/mat/'+m.id+'.webp" alt="Pezzo stampato in '+esc(m.n)+'"></div><div class="mp-info"><span class="k">'+esc(m.k)+'</span><h3>'+esc(m.n)+'</h3><div class="al">'+esc(m.a)+'</div><p>'+esc(m.d)+'</p><div class="mp-chips">'+m.t.map(function(t){return '<span>'+esc(t)+'</span>'}).join('')+'</div><div class="mp-on">Stampabile su '+m.m.map(function(x){return '<a href="'+x.toLowerCase()+'.html">'+x+'</a>'}).join('')+'</div><a class="mp-go" href="materiali.html#'+m.id+'">Scopri la scheda →</a></div>';
+ if(scroll!==false){var c=cards[cur];rail.scrollTo({left:c.offsetLeft-rail.offsetLeft,behavior:'smooth'})}}
+cards.forEach(function(c,k){c.addEventListener('click',function(){show(k)})});
+w.querySelector('.mp-prev').addEventListener('click',function(){show(cur-1)});w.querySelector('.mp-next').addEventListener('click',function(){show(cur+1)});
+show(0,false)})})();</script></body>
 </html>
