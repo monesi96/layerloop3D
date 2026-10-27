@@ -283,7 +283,7 @@ html body .fcta .btn,html body .footer .btn{box-shadow:none}
 .axhud div{display:flex;justify-content:space-between;align-items:baseline;gap:22px;padding:10px 14px;border-radius:16px}.axhud div+div{border-top:1px solid rgba(255,255,255,.08)}
 .axhud span{font:500 10.5px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55)}.axhud b{font:500 16px/1 var(--font);color:#fff;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .axc{position:absolute;left:0;right:0;bottom:clamp(22px,5vh,54px);z-index:3}
-.axcap{position:absolute;left:0;bottom:60px;width:min(540px,100%);padding:22px 26px 24px;border-radius:26px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);box-shadow:0 18px 50px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18);opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s;pointer-events:none}
+.axcap{position:absolute;left:0;bottom:56px;width:min(520px,100%);opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s;pointer-events:none}
 .axcap.on{opacity:1;transform:none}
 .axcap h3{font-size:clamp(1.6rem,3vw,2.6rem);margin:10px 0 12px}
 .axcap p{color:rgba(255,255,255,.8);font-size:clamp(.98rem,1.2vw,1.1rem);max-width:460px}
@@ -516,14 +516,25 @@ var MATS=[{"id": "pla", "n": "LAYPLA", "a": "PLA", "img": "data:image/webp;base6
  function pts(a){return a.map(function(p){var q=P(p[0],p[1],p[2]);return q[0].toFixed(1)+','+q[1].toFixed(1)}).join(' ')}
  var root=null;function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(root||sv).appendChild(e);return e}
  function cl01(v,a,b){return Math.min(b,Math.max(a,v))}function sm(t){t=cl01(t,0,1);return t*t*(3-2*t)}
- sv.innerHTML='<defs><linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8f84" stop-opacity=".62"/><stop offset="1" stop-color="#5a1a18" stop-opacity=".72"/></linearGradient><linearGradient id="gw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8f84" stop-opacity=".3"/><stop offset="1" stop-color="#5a1a18" stop-opacity=".38"/></linearGradient><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8f5e9" stop-opacity=".4"/><stop offset="1" stop-color="#1d7a82" stop-opacity=".5"/></linearGradient><linearGradient id="gt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4fff8" stop-opacity=".3"/><stop offset=".5" stop-color="#7fe0d2" stop-opacity=".12"/><stop offset="1" stop-color="#2a8a86" stop-opacity=".16"/></linearGradient><radialGradient id="gl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#4db6a9" stop-opacity=".35"/><stop offset="1" stop-color="#4db6a9" stop-opacity="0"/></radialGradient></defs><ellipse id="glow" cx="650" cy="560" rx="520" ry="110" fill="url(#gl)"/>';
- root=el('g',{style:'filter:drop-shadow(0 18px 36px rgba(0,0,0,.45))'});
+ sv.innerHTML='<defs>'
+ +'<linearGradient id="gr" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb3a8" stop-opacity=".85"/><stop offset=".35" stop-color="#e0645a" stop-opacity=".72"/><stop offset="1" stop-color="#4a1210" stop-opacity=".85"/></linearGradient>'
+ +'<linearGradient id="gwl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a2f2a" stop-opacity=".4"/><stop offset="1" stop-color="#2a0c0b" stop-opacity=".55"/></linearGradient>'
+ +'<linearGradient id="gwr" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a8f" stop-opacity=".5"/><stop offset="1" stop-color="#5a1a18" stop-opacity=".5"/></linearGradient>'
+ +'<linearGradient id="gsd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8554c" stop-opacity=".6"/><stop offset="1" stop-color="#3a1210" stop-opacity=".7"/></linearGradient>'
+ +'<linearGradient id="gtop" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#e6fffb" stop-opacity=".5"/><stop offset=".5" stop-color="#9ff0e4" stop-opacity=".32"/><stop offset="1" stop-color="#3fb2a8" stop-opacity=".28"/></linearGradient>'
+ +'<linearGradient id="gside" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6fd8cb" stop-opacity=".46"/><stop offset="1" stop-color="#0f5a62" stop-opacity=".62"/></linearGradient>'
+ +'<linearGradient id="gin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b7f86" stop-opacity=".55"/><stop offset="1" stop-color="#062a30" stop-opacity=".8"/></linearGradient>'
+ +'<linearGradient id="gfl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a9aa0" stop-opacity=".6"/><stop offset="1" stop-color="#06262b" stop-opacity=".85"/></linearGradient>'
+ +'<linearGradient id="gcap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b8f96" stop-opacity=".38"/><stop offset="1" stop-color="#0a3a40" stop-opacity=".5"/></linearGradient>'
+ +'<linearGradient id="gsh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".45" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+ +'</defs>';
+ root=el('g',{});
  // ---- nastro (dietro): pavimento alla quota della base del piano, tetto alla punta del piano
- var tFloor=el('polygon',{fill:'url(#gg)'}),tLeft=el('polygon',{fill:'url(#gg)'});
- var NP=7,parts=[];for(var k=0;k<NP;k++){parts.push([el('polygon',{fill:'rgba(255,255,255,.2)',stroke:'rgba(255,255,255,.9)','stroke-width':1.1}),el('polygon',{fill:'rgba(255,255,255,.34)',stroke:'rgba(255,255,255,.9)','stroke-width':1.1}),el('polygon',{fill:'rgba(255,255,255,.5)',stroke:'rgba(255,255,255,.9)','stroke-width':1.1})])}
- var tRight=el('polygon',{fill:'url(#gt)',stroke:'rgba(255,255,255,.55)','stroke-width':1.1}),tTop=el('polygon',{fill:'url(#gt)',stroke:'rgba(255,255,255,.65)','stroke-width':1.1}),tEnd=el('polygon',{fill:'rgba(127,224,210,.12)',stroke:'rgba(255,255,255,.8)','stroke-width':1.3});
+ var tFloor=el('polygon',{fill:'url(#gfl)'}),tLeft=el('polygon',{fill:'url(#gin)'});
+ var NP=7,parts=[];for(var k=0;k<NP;k++){parts.push([el('polygon',{fill:'rgba(255,255,255,.62)',stroke:'rgba(255,255,255,.95)','stroke-width':1.1}),el('polygon',{fill:'rgba(190,240,232,.3)',stroke:'rgba(255,255,255,.9)','stroke-width':1.1}),el('polygon',{fill:'rgba(90,190,180,.34)',stroke:'rgba(255,255,255,.9)','stroke-width':1.1})])}
+ var tRight=el('polygon',{fill:'url(#gside)',stroke:'rgba(255,255,255,.55)','stroke-width':1.1}),tTop=el('polygon',{fill:'url(#gtop)',stroke:'rgba(255,255,255,.8)','stroke-width':1.3}),tEnd=el('polygon',{fill:'url(#gcap)',stroke:'rgba(255,255,255,.7)','stroke-width':1.1}),tRightS=el('polygon',{fill:'url(#gsh)'}),tTopS=el('polygon',{fill:'url(#gsh)'});
  // ---- cubo che si trasforma nel cuneo inclinato
- var wallL=el('polygon',{fill:'url(#gw)'}),wallR=el('polygon',{fill:'url(#gw)'}),floor=el('polygon',{fill:'url(#gr)',stroke:'rgba(255,255,255,.9)','stroke-width':1.4}),sideR=el('polygon',{fill:'url(#gw)'});
+ var wallL=el('polygon',{fill:'url(#gwl)'}),wallR=el('polygon',{fill:'url(#gwr)'}),floor=el('polygon',{fill:'url(#gr)',stroke:'rgba(255,255,255,.95)','stroke-width':1.5}),floorS=el('polygon',{fill:'url(#gsh)'}),sideR=el('polygon',{fill:'url(#gsd)'});
  var cx=[[0,0],[L,0],[L,L],[0,L]],edges=[];for(var i=0;i<12;i++)edges.push(el('line',{class:'edge'}));
  var partA=[el('polygon',{fill:'rgba(77,182,169,.35)',stroke:'#7fe0d2','stroke-width':1.2}),el('polygon',{fill:'rgba(77,182,169,.5)',stroke:'#7fe0d2','stroke-width':1.2}),el('polygon',{fill:'rgba(77,182,169,.65)',stroke:'#7fe0d2','stroke-width':1.2})];
  var srail=el('line',{class:'railo'}),srail2=el('line',{class:'rail'});
@@ -550,7 +561,8 @@ var MATS=[{"id": "pla", "n": "LAYPLA", "a": "PLA", "img": "data:image/webp;base6
   tFloor.setAttribute('points',pts([[0,0,0],[L,0,0],[L,-Eb,0],[0,-Eb,0]]));
   tLeft.setAttribute('points',pts([[0,0,0],[0,-Eb,0],[0,-Eb,Z],[0,0,Z]]));
   tRight.setAttribute('points',pts([[L,0,0],[L,-Eb,0],[L,-Eb,Z],[L,0,Z]]));tTop.setAttribute('points',pts([[0,0,Z],[L,0,Z],[L,-Eb,Z],[0,-Eb,Z]]));tEnd.setAttribute('points',pts([[0,-Eb,0],[L,-Eb,0],[L,-Eb,Z],[0,-Eb,Z]]));
-  [tFloor,tLeft,tRight,tTop,tEnd].forEach(function(e){e.style.opacity=tv});
+  [tFloor,tLeft,tRight,tTop,tEnd,tRightS,tTopS].forEach(function(e){e.style.opacity=tv});
+  tRightS.setAttribute('points',tRight.getAttribute('points'));tTopS.setAttribute('points',tTop.getAttribute('points'));
   // pezzi in serie sul pavimento del nastro, sotto la punta del piano
   var T=Math.max(0,(p-.6)/.31)*(NP-.4),n=0;
   parts.forEach(function(g,k){var age=T-k,vis=tt>.95&&age>0;if(!vis){g.forEach(function(q){q.style.opacity=0});return}
@@ -559,7 +571,7 @@ var MATS=[{"id": "pla", "n": "LAYPLA", "a": "PLA", "img": "data:image/webp;base6
   // cubo -> cuneo: pareti, piano, bordi
   wallR.setAttribute('points',pts([[0,0,0],[L,0,0],[L,0,hw],[0,0,hw]]));wallL.setAttribute('points',pts([[0,0,0],[0,L,0],[0,L,hl],[0,0,hw]]));
   sideR.setAttribute('points',pts([[L,L,0],[L,0,0],[L,0,hw],[L,L,hl]]));sideR.style.opacity=tt*.9;
-  floor.setAttribute('points',pts([[0,L,0],[L,L,0],[L,0,Z],[0,0,Z]]));
+  floor.setAttribute('points',pts([[0,L,0],[L,L,0],[L,0,Z],[0,0,Z]]));floorS.setAttribute('points',floor.getAttribute('points'));floorS.style.opacity=.35+.65*tt;
   var top=[[0,0,hw],[L,0,hw],[L,L,hl],[0,L,hl]],bot=[[0,0,0],[L,0,0],[L,L,0],[0,L,0]],k2=0;
   for(var q=0;q<4;q++){seg(edges[k2++],bot[q],bot[(q+1)%4])}
   for(var q=0;q<4;q++){seg(edges[k2++],top[q],top[(q+1)%4])}
