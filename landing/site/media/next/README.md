@@ -9,6 +9,6 @@ Le immagini sono ricavate dalle foto originali di Layerloop Next 200 (cartella D
 | `chamber-belt.webp` | Poster del video hero |
 | `chamber-head.webp`, `head-macro.webp`, `exit.webp` | Galleria "Costruita per lavorare" |
 | `operator-tablet.webp` | Chiusura pagina |
-| `hero.mp4` | **Da aggiungere.** Video hero, 16:9, muto, loop. Finché manca, la pagina mostra il poster. |
+| `hero.mp4` | Video hero generato da una foto reale (camera di stampa), 4 s più riavvolgimento per un loop continuo, muto. |
 
 Immagini dei materiali: `landing/media/mat/`, estratte dalla home.
