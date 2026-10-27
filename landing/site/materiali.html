@@ -340,7 +340,9 @@ html body .belt .lot{padding:0 36px 22px}html body .belt{padding-top:36px}
 html body .flow2 div{padding:24px 26px}
 html body .calc{padding:20px}
 html body .axcap,html body .tci{padding-inline:0}
-html body .sec-detail{padding:clamp(30px,4vw,56px);border-radius:12px}
+html body .sec-detail{padding:clamp(30px,4vw,56px);border-radius:12px;text-align:left}
+html body .sec-item b,html body .sd-main h3{text-transform:uppercase;letter-spacing:.02em}
+.sd-cta{display:inline-flex;align-items:center;margin-top:clamp(24px,3vw,36px);padding:14px 26px;border-radius:999px;background:#fff;color:#0e0e0e;font:600 12px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background .25s,transform .25s}.sd-cta:hover{background:#7fe0d2;transform:translateY(-1px)}
 html body .sec-item{background:none;border:0;border-top:1px solid rgba(255,255,255,.18);border-radius:0;box-shadow:none;padding:22px 4px 18px;transform:none}
 html body .sec-item:hover{background:none;transform:none}
 html body .sec-item b{color:rgba(255,255,255,.62);transition:color .3s}
@@ -683,7 +685,7 @@ var l=new Lenis({lerp:.085,smoothWheel:true,wheelMultiplier:.9});window.__lenis=
 [].forEach.call(document.querySelectorAll('a[href^="#"]'),function(a){var h=a.getAttribute('href');if(h.length<2)return;a.addEventListener('click',function(e){var t=document.querySelector(h);if(!t)return;e.preventDefault();l.scrollTo(t,{offset:-70})})})})();(function(){[].forEach.call(document.querySelectorAll('.secpick'),function(w){var D=JSON.parse(w.getAttribute('data-sec')),its=[].slice.call(w.querySelectorAll('.sec-item')),det=w.querySelector('.sec-detail');
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function show(i){its.forEach(function(b,k){b.setAttribute('aria-pressed',k===i?'true':'false')});var s=D[i];
- det.innerHTML='<div class="sd-in"><div class="sd-main"><span class="sd-k">Settore</span><h3>'+esc(s.n)+'</h3><p>'+esc(s.d)+'</p></div><div><span class="sd-k">Macchine</span><div class="sd-chips">'+s.mc.map(function(m){return '<a class="m" href="'+m[1]+'">'+m[0]+'</a>'}).join('')+'</div></div><div><span class="sd-k">Materiali</span><div class="sd-chips">'+s.ml.map(function(m){return '<a href="materiali.html#'+m[0]+'"><img src="media/mat/'+m[0]+'.webp" alt="">'+esc(m[1])+'</a>'}).join('')+'</div></div><div><span class="sd-k">Case study</span><a class="sd-case" href="'+s.c[1]+'">'+esc(s.c[0])+' →</a></div></div>'}
+ det.innerHTML='<div class="sd-in"><div class="sd-main"><span class="sd-k">Settore</span><h3>'+esc(s.n)+'</h3><p>'+esc(s.d)+'</p></div><div><span class="sd-k">Macchine</span><div class="sd-chips">'+s.mc.map(function(m){return '<a class="m" href="'+m[1]+'">'+m[0]+'</a>'}).join('')+'</div></div><div><span class="sd-k">Materiali</span><div class="sd-chips">'+s.ml.map(function(m){return '<a href="materiali.html#'+m[0]+'"><img src="media/mat/'+m[0]+'.webp" alt="">'+esc(m[1])+'</a>'}).join('')+'</div></div><div><span class="sd-k">Case study</span><a class="sd-case" href="'+s.c[1]+'">'+esc(s.c[0])+' →</a></div></div>'+(s.u?'<a class="sd-cta" href="'+s.u+'">Scopri il settore '+esc(s.n)+' →</a>':'')}
 its.forEach(function(b,k){b.addEventListener('click',function(){show(k)})});show(+w.getAttribute('data-first')||0)})})();(function(){[].forEach.call(document.querySelectorAll('.mp'),function(w){var D=JSON.parse(w.getAttribute('data-mats')),feat=w.querySelector('.mp-feat'),rail=w.querySelector('.mp-rail'),cur=0;
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 rail.innerHTML=D.map(function(m,i){return '<button type="button" class="mp-card" role="listitem" data-i="'+i+'"><div class="pic"><img src="media/mat/'+m.id+'.webp" alt="" loading="lazy"></div><b>'+esc(m.n)+'</b><span>'+esc(m.a)+'</span></button>'}).join('');
