@@ -480,6 +480,24 @@ html body .fcta .btn,html body .footer .btn{box-shadow:none}
 .mxs .cta{width:min(1180px,100% - 48px);margin:clamp(28px,4vw,44px) auto 0}
 @media(max-width:900px){.mp{grid-template-columns:1fr}.mp-rail{margin-right:-24px;-webkit-mask-image:linear-gradient(90deg,#000 0,#000 70%,transparent 100%);mask-image:linear-gradient(90deg,#000 0,#000 70%,transparent 100%)}.mp-nav{padding-right:0}}
 
+html body .mp-nav{display:none}
+html body .mp-side{width:min(760px,100%);margin:0 auto;border-radius:28px;background:#fff;border:1px solid rgba(20,22,26,.08);box-shadow:0 20px 50px rgba(20,22,26,.08);overflow:hidden;position:relative}
+html body .mp-side::before{content:"";position:absolute;left:0;top:0;bottom:0;width:120px;background:linear-gradient(180deg,#e6e6e4,#efefed);z-index:0}
+html body .mp-side::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 92%);pointer-events:none;z-index:3;transition:opacity .3s}
+html body .mp-side.end::after{opacity:0}
+html body .mp-rail{display:block;position:relative;z-index:1;height:385px;overflow-y:auto;overflow-x:hidden;padding:0;margin:0;scroll-snap-type:none;scrollbar-width:none}
+html body .mp-rail::-webkit-scrollbar{display:none}
+.mp-row{display:grid;grid-template-columns:120px 1fr;height:77px;text-decoration:none;color:#14161a;align-items:stretch}
+.mp-row{overflow:hidden;flex:none}.mp-row .th{position:relative;height:77px}.mp-row .th img{position:absolute;left:14px;top:8px;width:calc(100% - 28px);height:61px;object-fit:contain;border-radius:14px;transition:transform .3s}
+.mp-row.on .th img{background:#fff;border:2px solid #7fb9b2;padding:3px;transform:scale(1.04)}
+.mp-row .nm{display:flex;align-items:center;gap:10px;margin-right:30px;border-top:1px solid rgba(20,22,26,.12);position:relative;padding-left:19px}
+.mp-row:first-child .nm{border-top:0}
+.mp-row .nm b{font:700 1.15rem/1 var(--font);letter-spacing:.005em;color:rgba(20,22,26,.62);transition:color .25s}
+.mp-row .nm i{font:400 .88rem/1 var(--font);font-style:normal;color:rgba(20,22,26,.55)}
+.mp-row .nm u{margin-left:auto;text-decoration:none;color:#2f8f88;opacity:0;transition:opacity .25s}
+.mp-row .nm::before{content:"";position:absolute;left:0;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:#7fb9b2;opacity:0}
+.mp-row.on .nm{padding-left:19px}.mp-row.on .nm b{color:#14161a}.mp-row.on .nm u,.mp-row.on .nm::before{opacity:1}
+@media(max-width:560px){.mp-row{grid-template-columns:84px 1fr}html body .mp-side::before{width:84px}.mp-row .nm i{display:none}}
 html body .mp{display:block}
 html body .mp-nav{padding-right:0;margin-bottom:14px}
 html body .mp-nav button:disabled{opacity:.35;cursor:default}
@@ -489,7 +507,7 @@ html body .mp-card{flex:0 0 clamp(250px,72vw,320px);scroll-snap-align:start;text
 html body .mp-card:hover{transform:translateY(-4px)}
 html body .mp-card b{font-size:1.15rem;padding:0 6px}
 html body .mp-card p{margin:8px 0 0;padding:0 6px;font-size:.92rem;line-height:1.5;color:#4b5058}
-html body .mxs .cta{text-align:left}
+html body .mxs .cta{text-align:center}
 html body .mp-card .pic{aspect-ratio:4/3;position:relative;overflow:hidden}
 html body .mp-card .pic img{position:absolute;left:9%;top:9%;width:82%;height:82%}
 html body .mstrip[hidden]{display:none!important}
@@ -562,9 +580,8 @@ function show(i){its.forEach(function(b,k){b.setAttribute('aria-pressed',k===i?'
  det.innerHTML='<div class="sd-in"><div class="sd-main"><span class="sd-k">Settore</span><h3>'+esc(s.n)+'</h3><p>'+esc(s.d)+'</p></div><div><span class="sd-k">Macchine</span><div class="sd-chips">'+s.mc.map(function(m){return '<a class="m" href="'+m[1]+'">'+m[0]+'</a>'}).join('')+'</div></div><div><span class="sd-k">Materiali</span><div class="sd-chips">'+s.ml.map(function(m){return '<a href="materiali.html#'+m[0]+'"><img src="media/mat/'+m[0]+'.webp" alt="">'+esc(m[1])+'</a>'}).join('')+'</div></div><div><span class="sd-k">Case study</span><a class="sd-case" href="'+s.c[1]+'">'+esc(s.c[0])+' →</a></div></div>'+(s.u?'<a class="sd-cta" href="'+s.u+'">Scopri il settore '+esc(s.n)+' →</a>':'')}
 its.forEach(function(b,k){b.addEventListener('click',function(){show(k)})});show(+w.getAttribute('data-first')||0)})})();(function(){[].forEach.call(document.querySelectorAll('.mp'),function(w){var D=JSON.parse(w.getAttribute('data-mats')),rail=w.querySelector('.mp-rail');
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-rail.innerHTML=D.map(function(m,i){return '<a class="mp-card" role="listitem" href="materiali.html#'+m.id+'"><div class="pic"><img src="media/mat/'+m.id+'.webp" alt="" loading="lazy"></div><b>'+esc(m.n)+'</b><p>'+esc(m.d)+'</p></a>'}).join('')});
-[].forEach.call(document.querySelectorAll('.mp'),function(w){var rail=w.querySelector('.mp-rail'),pv=w.querySelector('.mp-prev'),nx=w.querySelector('.mp-next');
-function step(){var c=rail.firstElementChild;return c?c.getBoundingClientRect().width+18:300}
-function upd(){pv.disabled=rail.scrollLeft<4;nx.disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-4}
-pv.addEventListener('click',function(){rail.scrollBy({left:-step(),behavior:'smooth'})});nx.addEventListener('click',function(){rail.scrollBy({left:step(),behavior:'smooth'})});rail.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd()})})();</script>
+rail.innerHTML=D.map(function(m,i){return '<a class="mp-row'+(i===0?' on':'')+'" role="listitem" href="materiali.html#'+m.id+'"><span class="th"><img src="media/mat/'+m.id+'.webp" alt="" loading="lazy"></span><span class="nm"><b>'+esc(m.n)+'</b><i>'+esc(m.a)+'</i><u>→</u></span></a>'}).join('');
+var rows=[].slice.call(rail.children);function on(r){rows.forEach(function(x){x.classList.toggle('on',x===r)})}
+rows.forEach(function(r){r.addEventListener('mouseenter',function(){on(r)});r.addEventListener('focus',function(){on(r)})});
+var box=w.querySelector('.mp-side');function fade(){box.classList.toggle('end',rail.scrollTop+rail.clientHeight>=rail.scrollHeight-4)}rail.addEventListener('scroll',fade,{passive:true});fade()})})();</script>
 </body></html>
