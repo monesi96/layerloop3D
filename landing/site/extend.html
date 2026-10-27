@@ -387,6 +387,26 @@ table.sp tr.g th{color:var(--teal)}
 .opt .im2{border-radius:14px;background:linear-gradient(170deg,#a9abae,#2b2c2e 60%,#0f0f10);display:grid;place-items:end center;overflow:hidden;min-height:340px}.opt .im2 img{max-height:480px;max-width:92%;width:auto;object-fit:contain;display:block}
 .cs-track .csc .im img{width:100%;height:100%;object-fit:cover}
 @media(max-width:900px){.prod,.two,.opt{grid-template-columns:1fr}.prod .pk{min-height:320px}}
+
+@font-face{font-family:"DIN";src:url(fonts/DIN-Light.ttf) format("truetype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"DIN";src:url(fonts/D-DIN.ttf) format("truetype");font-weight:400 500;font-style:normal;font-display:swap}
+@font-face{font-family:"DIN";src:url(fonts/DIN-Bold.ttf) format("truetype");font-weight:600 800;font-style:normal;font-display:swap}
+:root{--font:"DIN","din-2014","Barlow","Helvetica Neue",Arial,sans-serif;--display:var(--font)}
+body{font-family:var(--font)}
+html body h1,html body .hero h1,html body .hero2 h1,html body main h1{font-family:"Monument Extended","Helvetica Neue",Arial,sans-serif!important;font-weight:800;text-transform:uppercase}
+html body h2,html body h3,html body h4,html body .h2,html body .fh,html body .tci h2,html body .tci h3{font-family:var(--font);font-weight:400;text-transform:none;letter-spacing:-.02em;line-height:1.06}
+html body h2,html body .h2{font-size:clamp(2rem,4.6vw,3.9rem)}
+html body .feat b,html body .app h3,html body .csc h3,html body .hot b,html body .kp b,html body .cab li b,html body .deg li b,html body .prod .tx b,html body .flow2 b,html body .tlist li b,html body .mi b,html body .fam b,html body .opt h2,html body .cab h2,html body .scount b,html body .vol .big{font-family:var(--font);font-weight:600;text-transform:none;letter-spacing:-.01em}
+html body .feat b{font-size:clamp(1.5rem,2.6vw,2.3rem);font-weight:500}
+html body .app h3,html body .csc h3{font-size:clamp(1.15rem,1.7vw,1.5rem);line-height:1.12}
+html body .mi b{font-size:.95rem;letter-spacing:.01em}
+html body .tci h3{font-size:clamp(1.6rem,3.2vw,2.8rem)}
+html body .tci h2{font-size:clamp(2rem,4.6vw,3.9rem)}
+html body .fcta h2,html body .footer h2{font-weight:400;font-size:clamp(2rem,4.4vw,3.6rem)}
+html body .lead{letter-spacing:-.01em}
+html body .btn,html body .tctl button,html body .tabs2 button{font-family:var(--font)}
+html body .specs li,html body .crumb,html body .n,html body .tdots li{font-family:var(--font);letter-spacing:.08em}
+html body .mega{font-family:inherit}
 </style>
 </head>
 <body>
