@@ -1,0 +1,10 @@
+.mv-sec{padding:clamp(70px,11vh,130px) 0 0}
+.mv-sec .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,52px)}
+.mv-sec .head p{max-width:460px;color:var(--muted)}
+.mv-stage{position:relative;height:clamp(420px,76vh,780px);border-radius:26px;overflow:hidden;background:radial-gradient(80% 70% at 50% 35%,#f6f6f4 0%,#dededb 60%,#c9c9c6 100%);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.mv-wrap{position:absolute;inset:0}.mv-wrap model-viewer{--poster-color:transparent;background:none;outline:none}
+.mv-hint{position:absolute;left:24px;bottom:20px;font:600 11px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;color:#14161a;opacity:.6;pointer-events:none}
+.mv-hs{display:block;width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:rgba(20,22,26,.85);box-shadow:0 2px 10px rgba(0,0,0,.35);cursor:pointer;padding:0;position:relative}
+.mv-hs::after{content:"";position:absolute;inset:7px;border-radius:50%;background:#7fe0d2}
+.mv-hs span{position:absolute;left:34px;top:50%;transform:translateY(-50%);white-space:nowrap;background:rgba(20,22,26,.9);color:#fff;font:600 11px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;opacity:0;pointer-events:none;transition:opacity .2s}
+.mv-hs:hover span,.mv-hs:focus span{opacity:1}

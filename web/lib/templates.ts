@@ -139,3 +139,9 @@ ${ctx.cases}
 <div class="fade" aria-hidden="true"></div>
 </main>`
 }
+
+// ---------------- visualizzatore 3D (web component <model-viewer>)
+export const modelSectionHtml = (src: string, name: string) => `<section class="wrap mv-sec" id="modello-3d">
+<div class="head"><h2>Esplora<br>la macchina.</h2><p>Il modello 3D di Layerloop ${esc(name)}: trascina per ruotarla, avvicina con la rotella o con due dita.</p></div>
+<div class="mv-stage"><div class="mv-wrap"><model-viewer src="${esc(src)}" alt="Modello 3D di Layerloop ${esc(name)}" camera-controls auto-rotate auto-rotate-delay="2500" rotation-per-second="14deg" interaction-prompt="none" shadow-intensity="1.1" shadow-softness="1" exposure="1.05" tone-mapping="aces" camera-orbit="35deg 74deg auto" loading="lazy" style="width:100%;height:100%"></model-viewer></div><span class="mv-hint">Trascina per ruotare</span></div>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script></section>`

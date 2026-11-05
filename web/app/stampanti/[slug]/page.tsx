@@ -1,8 +1,10 @@
 import './../../css/next.css'
 import {notFound} from 'next/navigation'
+import {q} from '@/lib/sanity'
 import type {Metadata} from 'next'
+import './../../css/model.css'
 import {Shell, Raw, fragment, loadShared} from '@/lib/shell'
-import {headerHtml, footerHtml, sectorsHtml, materialsHtml, casesHtml, printerPageHtml, featHtml, specsHtml, heroHtml} from '@/lib/templates'
+import {modelSectionHtml, headerHtml, footerHtml, sectorsHtml, materialsHtml, casesHtml, printerPageHtml, featHtml, specsHtml, heroHtml} from '@/lib/templates'
 
 export const revalidate = 60
 
@@ -39,10 +41,19 @@ export default async function PrinterPage({params}: {params: Promise<{slug: stri
   } else {
     main = printerPageHtml(p, {sectors: sec, materials: mat, cases: cs})
   }
+  const model: string = await q(`*[_type=="printer" && slug.current==$s][0].model3d.asset->url`, {s: slug})
   const scripts = slug === 'next' ? ['/js/next.js'] : ['/js/extend.js']
   return (
     <Shell header={headerHtml(settings, printers, sectors, materials, cases, {active: slug})} footer={footerHtml(settings)} scripts={scripts}>
-      <Raw html={main} />
+      <Raw html={model ? withModel(main, model, p.name) : main} />
     </Shell>
   )
+}
+
+/** Inserisce il visualizzatore 3D prima del tour della macchina (Next) o dopo la hero (altre pagine). */
+function withModel(main: string, model: string, name: string) {
+  const block = modelSectionHtml(model, name)
+  const marker = main.includes('<section class="tour"') ? '<section class="tour"' : '<section class="wrap sec-t"'
+  const i = main.indexOf(marker)
+  return i > 0 ? main.slice(0, i) + block + main.slice(i) : main + block
 }
