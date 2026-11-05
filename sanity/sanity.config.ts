@@ -7,8 +7,8 @@ import {structure} from './structure'
 export default defineConfig({
   name: 'layerloop',
   title: 'Layerloop',
-  projectId: 'ip459cev',
-  dataset: 'layerloop',
+  projectId: '5033nuuu',
+  dataset: 'production',
   plugins: [structureTool({structure}), visionTool()],
   schema: {types: schemaTypes},
 })

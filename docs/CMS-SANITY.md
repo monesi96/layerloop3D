@@ -12,7 +12,7 @@ landing/site/      Prototipo statico approvato (resta come riferimento visivo)
 ```
 
 ## Dove stanno i dati
-- Progetto Sanity **Astrolancer** (`ip459cev`), dataset dedicato **`layerloop`** (pubblico in lettura).
+- Progetto Sanity **Astrolancer** (`5033nuuu`), dataset dedicato **`layerloop`** (pubblico in lettura).
   Il dataset `production` è dell'agenzia e non viene toccato.
 
 ## Modelli (schema)
@@ -43,7 +43,7 @@ Aggiungi `https://layerloop.sanity.studio` e il dominio del sito tra le origini 
 
 ## Vercel
 - Root directory: `web`
-- Variabili: `NEXT_PUBLIC_SANITY_PROJECT_ID=ip459cev`, `NEXT_PUBLIC_SANITY_DATASET=layerloop`, `NEXT_PUBLIC_SITE_URL=https://www.layerloop3d.com`
+- Variabili: `NEXT_PUBLIC_SANITY_PROJECT_ID=5033nuuu`, `NEXT_PUBLIC_SANITY_DATASET=production`, `NEXT_PUBLIC_SITE_URL=https://www.layerloop3d.com`
 - Le pagine si rigenerano ogni 60 s (ISR). Per aggiornamento immediato: webhook Sanity → `/api/revalidate` (da aggiungere con il segreto scelto).
 
 ## Blog automatico

@@ -5,8 +5,8 @@ Uso:
     python publish_sanity.py articoli/2026-10-06-stampa-3d-a-nastro.md [altri.md ...]
 
 Variabili d'ambiente:
-    SANITY_PROJECT   (default ip459cev)
-    SANITY_DATASET   (default layerloop)
+    SANITY_PROJECT   (default 5033nuuu)
+    SANITY_DATASET   (default production)
     SANITY_TOKEN     token con permesso di scrittura (Editor)
     SITE_URL         (default https://www.layerloop3d.com) per il link nella newsletter
     NEWSLETTER       "no" per non creare la campagna Mailchimp

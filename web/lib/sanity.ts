@@ -1,8 +1,8 @@
 import {createClient} from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ip459cev'
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'layerloop'
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '5033nuuu'
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
 
 export const client = createClient({
   projectId, dataset, apiVersion: '2025-01-01', useCdn: false,

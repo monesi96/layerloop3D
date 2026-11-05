@@ -41,8 +41,8 @@ jobs:
       - name: Pubblica
         if: steps.files.outputs.list != ''
         env:
-          SANITY_PROJECT: ip459cev
-          SANITY_DATASET: layerloop
+          SANITY_PROJECT: 5033nuuu
+          SANITY_DATASET: production
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
           SITE_URL: ${{ vars.SITE_URL }}
           BLOG_CATEGORY: ${{ vars.BLOG_CATEGORY }}

@@ -2,8 +2,8 @@
 import hashlib, json, mimetypes, os, re, urllib.parse, urllib.request, urllib.error
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-PROJECT = os.environ.get('SANITY_PROJECT', 'ip459cev')
-DATASET = os.environ.get('SANITY_DATASET', 'layerloop')
+PROJECT = os.environ.get('SANITY_PROJECT', '5033nuuu')
+DATASET = os.environ.get('SANITY_DATASET', 'production')
 TOKEN = os.environ.get('SANITY_API_KEY') or os.environ.get('SANITY_TOKEN') or ''
 API = f'https://{PROJECT}.api.sanity.io/v2021-06-07'
 UA = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36'}
