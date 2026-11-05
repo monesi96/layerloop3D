@@ -4,7 +4,7 @@
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   // 1) quando la sezione diventa nera (#111) le palle salgono insieme e liberano lo sfondo
   var solids=[].slice.call(document.querySelectorAll('.sv,.duo,.footer'));
-  if(bg&&solids.length&&!reduce){
+  if(bg&&!reduce){
     var vh=innerHeight;addEventListener('resize',function(){vh=innerHeight});
     var cur=0;
     (function tick(){
@@ -15,7 +15,8 @@
         var leave=Math.min(1,Math.max(0,r.bottom/(vh*.7)));
         target=Math.max(target,Math.min(enter,leave));
       });
-      cur+=(target-cur)*.12;
+      target=Math.max(target,window.__bgLift||0);
+      cur+=(target-cur)*.09;
       bg.style.transform=cur>.001?'translate3d(0,'+(-cur*118)+'vh,0)':'';
       requestAnimationFrame(tick);
     })();

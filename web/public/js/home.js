@@ -118,7 +118,7 @@ var MATS=[];
  var capA=document.getElementById('axa'),capB=document.getElementById('axb'),b1=document.getElementById('axb1'),b2=document.getElementById('axb2'),bar=document.getElementById('axp');
  function draw(p){
   var eio=function(t){t=cl01(t,0,1);return .5-.5*Math.cos(Math.PI*t)},c=eio(p/.15),ex=eio((p-.92)/.08);
-  if(bg){var cc=c*(1-ex),cf=eio((p-.05)/.12)*(1-ex);bg.style.setProperty('--c',cc.toFixed(4));bg.style.setProperty('--cf',cf.toFixed(4));bg.classList.toggle('flow',cc>.003&&cc<.997)}
+  if(bg){var cc=c*(1-ex),cf=eio((p-.05)/.12)*(1-ex);window.__bgLift=cc;bg.style.setProperty('--c','0');bg.style.setProperty('--cf','0')}
   sv.style.opacity=sm((p-.03)/.1)*(1-ex);
   var tt=sm((p-.46)/.17),Z=L*TAN*tt,Eb=520*sm((p-.52)/.16);
   K=1.45-.5*tt;CX=650-214*tt;CY=420+20*tt;C=.866*K;S=.5*K;

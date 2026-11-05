@@ -117,3 +117,12 @@ html body .footer .wrap{width:min(1180px,100% - 48px);margin-inline:auto}
 
 .hero .btn{margin-top:clamp(26px,4vh,44px)}
 .hero2 .row,.pg-hero .row{margin-top:clamp(24px,3vh,36px)}
+
+/* ---------- gradienti più vivi e fluidi ---------- */
+.bg .blob{--bl:110px!important;filter:blur(110px)!important;animation:flow1 var(--d,18s) ease-in-out infinite alternate,morph2 var(--m,22s) ease-in-out infinite alternate!important}
+.bg .blob:nth-child(even){animation-name:flow2,morph2!important}
+.b1{--o:.85!important}.b2{--o:.8!important}.b3{--o:.7!important}.b4{--o:.55!important}.b5{--o:.6!important}
+.d1{filter:blur(60px)!important}
+@keyframes flow1{0%{transform:translate3d(0,0,0) rotate(0) scale(1)}33%{transform:translate3d(9vw,6vh,0) rotate(14deg) scale(1.22,.9)}66%{transform:translate3d(-7vw,11vh,0) rotate(-10deg) scale(.92,1.2)}100%{transform:translate3d(5vw,-6vh,0) rotate(8deg) scale(1.12,1)}}
+@keyframes flow2{0%{transform:translate3d(0,0,0) rotate(0) scale(1)}33%{transform:translate3d(-10vw,-5vh,0) rotate(-16deg) scale(.9,1.2)}66%{transform:translate3d(8vw,-10vh,0) rotate(12deg) scale(1.24,.92)}100%{transform:translate3d(-4vw,7vh,0) rotate(-6deg) scale(1,1.14)}}
+.bg{transition:none}
