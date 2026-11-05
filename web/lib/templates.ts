@@ -38,7 +38,7 @@ export function headerHtml(settings: any, printers: any[], sectors: any[], mater
     return `<a href="${esc(l.href)}"${l.external ? ' target="_blank" rel="noopener"' : ''}>${esc(l.label)}</a>`
   }).join('')
   const cta = settings?.headerCta
-  const pr = printers.map((p) => `<a class="mm-card" href="/stampanti/${p.slug}"${opts.active === p.slug ? ' aria-current="page"' : ''}><span class="im"><img src="${cdn(p.menuImage || p.cardImage || p.heroImage, 700)}" alt="Layerloop ${esc(p.name)}" loading="lazy"></span><b>${esc(p.name)}</b><small>${esc(p.tagline)}</small></a>`).join('')
+  const pr = printers.map((p) => `<a class="mm-card" href="/stampanti/${p.slug}"${opts.active === p.slug ? ' aria-current="page"' : ''}><b>Layerloop ${esc(p.name)}</b><small>${esc(p.tagline)}</small><u>→</u></a>`).join('')
   const se = sectors.map((s) => { const h = sectorHref(s) || '/#settori'; return `<a class="mm-row" href="${esc(h)}"${h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}><b>${esc(s.name)}</b><small>${esc(s.summary)}</small><u>→</u></a>` }).join('')
   const ma = materials.map((m) => `<a class="mm-chip" href="/materiali#${m.id}">${esc(m.n)}</a>`).join('')
   const ca = cases.slice(0, 3).map((c) => `<a class="mm-row" href="/case-study/${c.slug}"><b>${esc(c.title)}</b><u>→</u></a>`).join('')
