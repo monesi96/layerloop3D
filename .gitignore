@@ -1,2 +1,6 @@
-layerloop-blog/calendario-editoriale.html
-__pycache__/
+node_modules
+.next
+.env*
+!.env.example
+dist
+.sanity
