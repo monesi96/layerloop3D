@@ -17,7 +17,7 @@
       });
       target=Math.max(target,window.__bgLift||0);
       cur+=(target-cur)*.09;
-      bg.style.transform=cur>.001?'translate3d(0,'+(-cur*118)+'vh,0)':'';
+      bg.style.setProperty('--lift',cur.toFixed(4));
       requestAnimationFrame(tick);
     })();
   }

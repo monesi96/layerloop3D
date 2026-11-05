@@ -126,3 +126,7 @@ html body .footer .wrap{width:min(1180px,100% - 48px);margin-inline:auto}
 @keyframes flow1{0%{transform:translate3d(0,0,0) rotate(0) scale(1)}33%{transform:translate3d(9vw,6vh,0) rotate(14deg) scale(1.22,.9)}66%{transform:translate3d(-7vw,11vh,0) rotate(-10deg) scale(.92,1.2)}100%{transform:translate3d(5vw,-6vh,0) rotate(8deg) scale(1.12,1)}}
 @keyframes flow2{0%{transform:translate3d(0,0,0) rotate(0) scale(1)}33%{transform:translate3d(-10vw,-5vh,0) rotate(-16deg) scale(.9,1.2)}66%{transform:translate3d(8vw,-10vh,0) rotate(12deg) scale(1.24,.92)}100%{transform:translate3d(-4vw,7vh,0) rotate(-6deg) scale(1,1.14)}}
 .bg{transition:none}
+
+/* le palle salgono una per una (il contenitore resta fermo: nessun bordo/maschera) */
+html body .bg .blob{translate:calc(var(--sy,0)*var(--kx)*1px + var(--ent)*var(--ex,0px)) calc(var(--sy,0)*var(--ky)*1px + var(--ent)*var(--ey,0px) - var(--lift,0)*210vh);scale:calc(1 - var(--ent)*.45);opacity:calc(var(--o,1)*(1 - var(--ent)))}
+.bg{transform:none!important}
