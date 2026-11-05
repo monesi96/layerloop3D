@@ -132,3 +132,11 @@ html body .bg .blob{translate:calc(var(--sy,0)*var(--kx)*1px + var(--ent)*var(--
 .bg{transform:none!important}
 
 .b2,.b4,.b5{--rs:-1}.b3{--rs:.6}
+
+/* ---------- pulsanti: hover fluido (sostituisce l'effetto a scatti) ---------- */
+.btn::before,.cx-cta::before,.sd-cta::before,.mp-go::before,.mm-all::before{transform:translateY(101%);transform-origin:center;transition:transform .55s cubic-bezier(.22,1,.36,1);border-radius:0}
+.btn::after,.cx-cta::after,.sd-cta::after,.mp-go::after,.mm-all::after{display:none!important;animation:none!important}
+.btn:hover::before,.cx-cta:hover::before,.sd-cta:hover::before,.mp-go:hover::before,.mm-all:hover::before,.btn:focus-visible::before{transform:translateY(0)}
+.btn,.cx-cta,.sd-cta,.mp-go,.mm-all{transition:color .35s cubic-bezier(.22,1,.36,1),border-color .35s cubic-bezier(.22,1,.36,1),box-shadow .5s cubic-bezier(.22,1,.36,1)!important}
+.btn:hover,.cx-cta:hover,.sd-cta:hover,.mp-go:hover,.mm-all:hover{box-shadow:0 0 0 1px var(--teal),0 10px 34px rgba(65,201,192,.28)!important}
+.btn:active{transform:scale(.985)!important}
