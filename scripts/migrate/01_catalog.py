@@ -25,7 +25,7 @@ for i, m in enumerate(mats):
     props = [{'_key': key(f'p{m["id"]}{j}'), '_type': 'prop', 'label': k, 'value': v} for j, (k, v) in enumerate((m.get('props') or {}).items())] if isinstance(m.get('props'), dict) else []
     docs.append({
         '_id': f'material-{m["id"]}', '_type': 'material', 'name': m['n'], 'slug': {'_type': 'slug', 'current': m['id']},
-        'alias': m['a'], 'family': fam, 'order': i, 'description': m['d'], 'tags': m['t'],
+        'alias': m['a'], 'family': fam, 'order': i, 'categories': m.get('f') or [], 'keyTrait': m.get('key'), 'colors': m.get('c') or [], 'description': m['d'], 'tags': m['t'],
         'image': image_ref(img(f'media/mat/{m["id"]}.webp'), alt=f'Pezzo stampato in {m["n"]}'),
         'printers': [ref(PID[x.lower()], key(f'mp{m["id"]}{x}')) for x in m['m'] if x.lower() in PID],
         'properties': props,
@@ -46,6 +46,20 @@ def printer_doc(k, name, headline, tagline, lead, chips, card, hero, highlights,
         'seo': {'_type': 'seo', 'title': f'Layerloop {name}', 'description': lead[:160]},
         'legacyUrl': f'https://www.layerloop3d.com/layerloop-{k}/',
     }
+    P = pr.get({'extend': 'EXT', 'xe': 'XE'}.get(k, ''), None)
+    if P:
+        d.update({
+            'sectionTitle': P['prodh'], 'sectionText': P['prodp'], 'sectionImage': image_ref(img(P['pk']), alt=f'Layerloop {name}'),
+            'points': [{'_key': key(f'{k}pt{i}'), '_type': 'point', 'title': a, 'text': b} for i, (a, b) in enumerate(P['points'])],
+            'gallery': [image_ref(img(a), alt=b, caption=b, k=key(f'{k}g{i}')) for i, (a, b) in enumerate(P['two'])],
+            'optionTitle': P['opt'][0], 'optionText': P['opt'][1], 'optionImage': image_ref(img(P['opt_img']), alt=P['opt'][0]),
+            'specIntro': P['specp'], 'materialsIntro': P['matp'],
+            'materialFamilies': [{'_key': key(f'{k}f{i}'), '_type': 'family', 'title': a, 'text': b} for i, (a, b) in enumerate(P['fam'])],
+            'sectorHighlights': [ref('sector-' + slug(html.unescape(n_)), key(f'{k}sh{n_}')) for n_ in P['on']],
+        })
+        mm = re.search(r'<h2>(.*?)</h2><p>(.*?)</p></div></section><div class="reveal-media" data-reveal[^>]*><img src="([^"]+)"', P.get('reveal','').replace('<br>', ' '))
+        if mm:
+            d.update({'revealTitle': mm.group(1), 'revealText': mm.group(2), 'revealImage': image_ref(img(mm.group(3)), alt=mm.group(1))})
     if steps:
         d['tourSteps'] = [{'_key': key(f'{k}t{i}'), '_type': 'tourStep', 'title': s[0], 'text': s[1], 'image': image_ref(img(f'media/next/{s[2]}'), alt=s[3])} for i, s in enumerate(steps)]
     return d
@@ -55,6 +69,11 @@ mats_for = lambda key_: [m['id'] for m in mats if key_.upper() in m['m']]
 nxt = open(f'{SITE}/next.html').read()
 steps = json.loads(html.unescape(re.search(r"data-steps='(\[.*?\])'", nxt, re.S).group(1)))
 next_specs = re.findall(r'<tr><th>(.*?)</th><td>(.*?)</td>', nxt)
+CARD = {
+    'extend': ('Feel the warm side of 3D printing.', 'Con la camera calda della nuova Layerloop Extend stampi materiali tecnici con estrema precisione, anche nei dettagli più piccoli.', ['500 × 300 × ∞ mm', 'Estrusore 450 °C', 'Camera 90 °C']),
+    'next': ('What if the power of 3D was infinity.', 'Layerloop Next è una stampante a camera aperta con asse di stampa a 30°, pensata per la produzione continua senza limiti di lunghezza.', ['200 / 300 / 400 mm', '∞ profondità', 'Produzione 24/7']),
+    'xe': ('When proficiency meets design.', 'Consigliata nel medicale e in podologia, Layerloop XE lavora bene con i materiali flessibili come la gomma, in formato desktop.', ['Desktop', '200 × 180 × ∞ mm', 'Fino a 250 °C']),
+}
 docs += [
     printer_doc('extend', 'Extend', E_['h1'], 'Camera chiusa · materiali tecnici', E_['lead'], E_['chips'], 'media/extend/machine.webp', 'media/extend/machine.webp', E_['feat'], E_['specs'], 0, mat_ids=mats_for('extend')),
     printer_doc('next', 'Next', 'What if the power of 3D was infinity.', 'Produzione in serie 24/7', 'Layerloop Next è la stampante 3D a camera aperta con asse a 30° e rullo di stampa integrato. Produce pezzi di lunghezza infinita, giorno e notte, senza operatore.',
@@ -120,5 +139,12 @@ docs.append({
     'legal': 'Layerloop S.r.l. · Consociata Gruppo Finlogic SpA',
 })
 
+for d in docs:
+    if d['_type'] == 'printer':
+        t, x, c = CARD[d['slug']['current']]
+        d.update({'cardTitle': t, 'cardText': x, 'cardChips': c})
+        if d['slug']['current'] == 'extend':
+            d['cardVideo'] = file_ref(upload_path(os.path.join(SITE, 'media/home/extend.mp4'), 'file'))
+            d['cardPoster'] = image_ref(upload_path(os.path.join(ROOT, 'web/public/media/home/extend-poster.jpg')), alt='Layerloop Extend')
 upsert(docs)
 print('importati', len(docs), 'documenti:', {t: sum(1 for d in docs if d['_type'] == t) for t in sorted({d['_type'] for d in docs})})
