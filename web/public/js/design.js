@@ -17,9 +17,9 @@
       });
       target=Math.max(target,window.__bgLift||0);
       // uscita: salgono fuori da sopra; rientro: ricompaiono da sotto (salto invisibile da +1 a -1)
-      if(target<prevT-.002&&cur>.55){cur=-1}
+      if(target<prevT-.002&&cur>.45){cur=-.85}
       prevT=target;
-      cur+=(target-cur)*.075;
+      cur+=(target-cur)*.06;
       bg.style.setProperty('--lift',cur.toFixed(4));
       bg.style.setProperty('--al',Math.abs(cur).toFixed(4));
       requestAnimationFrame(tick);

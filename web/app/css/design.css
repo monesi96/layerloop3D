@@ -140,3 +140,12 @@ html body .bg .blob{translate:calc(var(--sy,0)*var(--kx)*1px + var(--ent)*var(--
 .btn,.cx-cta,.sd-cta,.mp-go,.mm-all{transition:color .35s cubic-bezier(.22,1,.36,1),border-color .35s cubic-bezier(.22,1,.36,1),box-shadow .5s cubic-bezier(.22,1,.36,1)!important}
 .btn:hover,.cx-cta:hover,.sd-cta:hover,.mp-go:hover,.mm-all:hover{box-shadow:0 0 0 1px var(--teal),0 10px 34px rgba(65,201,192,.28)!important}
 .btn:active{transform:scale(.985)!important}
+
+/* ---------- sfondo mesh morbido: uscita/rientro per dissolvenza, senza voli fuori schermo ---------- */
+.bg .blob{filter:blur(150px)!important}
+.d1{filter:blur(90px)!important}
+html body .bg .blob{
+  translate:calc(var(--sy,0)*var(--kx)*1px + var(--ent)*var(--ex,0px)) calc(var(--sy,0)*var(--ky)*1px + var(--ent)*var(--ey,0px) - var(--lift,0)*46vh);
+  rotate:calc(var(--r,0deg) + var(--lift,0)*var(--rs,1)*14deg);
+  scale:calc(1 - var(--ent)*.45 - var(--al,0)*.14);
+  opacity:calc(var(--o,1)*(1 - var(--ent))*(1 - var(--al,0)*var(--al,0)*1.0))}
