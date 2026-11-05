@@ -236,3 +236,12 @@ html body .feat>div>p{margin-top:0}
   html body .mm-card:hover u{transform:translateX(5px)}
   html body .mm-card:hover b{color:var(--teal)}
 }
+
+/* ---------- pulsanti: hover = diventano bianchi, solo transizione di colore ---------- */
+.btn::before,.btn::after,.cx-cta::before,.cx-cta::after,.sd-cta::before,.sd-cta::after,.mp-go::before,.mp-go::after,.mm-all::before,.mm-all::after{content:none!important;display:none!important;animation:none!important}
+.btn,.cx-cta,.sd-cta,.mp-go,.mm-all{transition:background-color .4s ease,color .4s ease,border-color .4s ease!important;box-shadow:none!important;transform:none!important}
+.btn:hover,.cx-cta:hover,.sd-cta:hover,.mp-go:hover,.mm-all:hover,.btn:focus-visible,
+.btn.ghost:hover,.btn.outline:hover,.btn.dark:hover,.mats .btn:hover,.cx .btn:hover,.sitehdr .btn:hover{
+  background-color:#fff!important;color:#111!important;border-color:#fff!important;box-shadow:none!important;transform:none!important}
+/* nelle sezioni chiare il bianco non si vedrebbe: bordo scuro */
+.cx .btn:hover,.cx-cta:hover,.mats .btn:hover,.cta .btn.dark:hover{border-color:#111!important}
