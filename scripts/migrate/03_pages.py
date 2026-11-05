@@ -91,6 +91,30 @@ def block_of(sec, first):
     out = {'_type': 'richTextBlock', '_key': K(), 'title': title, 'body': body}
     return out
 
+def split_blocks(sec, first):
+    """Sezione con un unico widget HTML (es. Medical Division): spezzo il contenuto ai titoli H2."""
+    body = html_to_pt(str(sec), upload=False)
+    groups, cur = [], {'title': '', 'body': []}
+    for b in body:
+        if b.get('_type') == 'block' and b['style'] == 'h2':
+            if cur['title'] or cur['body']: groups.append(cur)
+            cur = {'title': ' '.join(''.join(c['text'] for c in b['children']).split()), 'body': []}
+        else:
+            cur['body'].append(b)
+    groups.append(cur)
+    out = []
+    for i, g in enumerate(groups):
+        pt = [b for b in g['body'] if b.get('_type') == 'block']
+        if not g['title'] and not pt: continue
+        if i == 0 and first:
+            out.append({'_type': 'heroBlock', '_key': K(), 'title': g['title'] or 'Layerloop', 'lead': ' '.join(''.join(c['text'] for c in b['children']) for b in pt[:1])})
+        else:
+            out.append({'_type': 'richTextBlock', '_key': K(), 'title': g['title'], 'body': pt})
+    ims = imgs_of(sec)
+    imgs = [r for r in (up(a, b) for a, b in ims[:10]) if r]
+    if len(imgs) > 1: out.append({'_type': 'galleryBlock', '_key': K(), 'title': '', 'images': imgs})
+    return out
+
 def convert(slug):
     p = PAGES[slug]
     s = BeautifulSoup(p['content']['rendered'], 'html.parser')
@@ -98,6 +122,11 @@ def convert(slug):
     tops = s.select('.elementor-top-section') or s.select('section')
     blocks, first = [], True
     for sec in tops:
+        if len(str(sec)) > 12000 and len(sec.select('.elementor-widget-html')) == 1 and len(sec.find_all('h2')) >= 3:
+            for b in split_blocks(sec, first):
+                blocks.append(b); first = False if b['_type'] == 'heroBlock' else first
+            first = False
+            continue
         b = block_of(sec, first)
         if b:
             blocks.append(b)
