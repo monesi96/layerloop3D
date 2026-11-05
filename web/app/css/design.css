@@ -254,3 +254,18 @@ html body .pc.wide .vid video{
   mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 100%),linear-gradient(180deg,transparent 0,#000 5%,#000 97%,transparent 100%)!important;
   -webkit-mask-composite:source-in!important;mask-composite:intersect!important}
 html body .pc .go{top:auto!important;bottom:clamp(18px,2vw,28px)!important;right:clamp(18px,2vw,28px)!important}
+
+/* ---------- settori: sezione nera con titolo gigante e righe indicizzate (come il footer di Intrepid) ---------- */
+html body .sect{position:relative;z-index:1;background:#111;padding:clamp(110px,18vh,220px) 0 clamp(90px,14vh,170px)}
+html body .sect .wrap.sect-box{width:min(1320px,100% - 48px)}
+html body .sect .sect-box>h2{font-size:clamp(3rem,9.4vw,9rem)!important;line-height:.94;letter-spacing:-.045em;font-weight:500;text-align:center;margin:0 0 clamp(56px,9vh,110px)}
+html body .sx{margin-top:0;border-top:1px solid rgba(255,255,255,.22);padding-top:clamp(28px,4vw,56px)}
+html body .sx-item{display:grid;grid-template-columns:clamp(46px,5vw,72px) 1fr auto;align-items:baseline;column-gap:12px;border-top:1px solid rgba(255,255,255,.12)}
+.sx-list li:first-child .sx-item{border-top:0}
+.sx-i{font:500 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:rgba(255,255,255,.4)}
+.sx-item.on .sx-i{color:var(--teal)}
+.sx-ar{font-size:1.2rem;color:rgba(255,255,255,.35);transition:transform .45s cubic-bezier(.22,1,.36,1),color .35s}
+.sx-item.on .sx-ar,.sx-item:hover .sx-ar{color:var(--teal);transform:translate(4px,-4px)}
+html body .sx-n{font-size:clamp(1.7rem,3vw,2.7rem)}
+html body .sx-item em,html body .sx-d{grid-column:2/-1}
+html body .sx-stage{background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/48px 48px;border-color:rgba(255,255,255,.14)}

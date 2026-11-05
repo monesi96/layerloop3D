@@ -108,7 +108,7 @@ export function sectorsHtml(sectors: any[], on: string[] = [], machine = '') {
   const first = Math.max(0, sectors.findIndex((s) => on.includes(s.name)))
   const items = sectors.map((s, i) => {
     const href = sectorHref(s)
-    return `<li><button type="button" class="sx-item${i === first ? ' on' : ''}" data-k="${esc(s.slug)}" data-i="${i}" aria-pressed="${i === first}"><span class="sx-n">${esc(s.name)}</span>${on.includes(s.name) && machine ? `<em>Con Layerloop ${esc(machine)}</em>` : ''}<span class="sx-d">${esc(s.summary)}${href ? ` <a class="sx-go" href="${esc(href)}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>Scopri il settore →</a>` : ''}</span></button></li>`
+    return `<li><button type="button" class="sx-item${i === first ? ' on' : ''}" data-k="${esc(s.slug)}" data-i="${i}" aria-pressed="${i === first}"><span class="sx-i">A${String(i + 1).padStart(2, '0')}</span><span class="sx-n">${esc(s.name)}</span><span class="sx-ar" aria-hidden="true">↗</span>${on.includes(s.name) && machine ? `<em>Con Layerloop ${esc(machine)}</em>` : ''}<span class="sx-d">${esc(s.summary)}${href ? ` <a class="sx-go" href="${esc(href)}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>Scopri il settore →</a>` : ''}</span></button></li>`
   }).join('')
   const groups = sectors.map((s, i) => `<g class="wf${i === first ? ' on' : ''}" data-k="${esc(s.slug)}">${WF[s.slug] || ''}</g>`).join('')
   const recs = sectors.map((s, i) => {
