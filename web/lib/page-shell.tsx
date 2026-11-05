@@ -1,4 +1,5 @@
 import '../app/css/home.css'
+import '../app/css/design.css'
 import '../app/css/blocks.css'
 import {Shell, Raw, loadShared} from './shell'
 import {headerHtml, footerHtml} from './templates'

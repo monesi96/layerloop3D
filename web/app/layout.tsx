@@ -16,7 +16,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body>
         <div className="bg" aria-hidden="true">
-          <i className="blob b1" /><i className="blob b2" /><i className="blob b3" /><i className="blob b4" /><i className="blob dodge d1" />
+          <i className="blob b1" /><i className="blob b2" /><i className="blob b3" /><i className="blob b4" /><i className="blob b5" /><i className="blob dodge d1" />
         </div>
         {children}
       </body>

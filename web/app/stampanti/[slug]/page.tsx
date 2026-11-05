@@ -1,4 +1,5 @@
 import './../../css/next.css'
+import './../../css/design.css'
 import {notFound} from 'next/navigation'
 import {q} from '@/lib/sanity'
 import type {Metadata} from 'next'

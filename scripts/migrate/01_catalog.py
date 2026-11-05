@@ -146,5 +146,7 @@ for d in docs:
         if d['slug']['current'] == 'extend':
             d['cardVideo'] = file_ref(upload_path(os.path.join(SITE, 'media/home/extend.mp4'), 'file'))
             d['cardPoster'] = image_ref(upload_path(os.path.join(ROOT, 'web/public/media/home/extend-poster.jpg')), alt='Layerloop Extend')
+if query('count(*[_id=="siteSettings"])'):
+    docs = [d for d in docs if d['_id'] != 'siteSettings']  # non sovrascrivo menu/footer già curati nello Studio
 upsert(docs)
 print('importati', len(docs), 'documenti:', {t: sum(1 for d in docs if d['_type'] == t) for t in sorted({d['_type'] for d in docs})})

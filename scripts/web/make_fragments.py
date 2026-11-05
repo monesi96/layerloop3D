@@ -1,3 +1,4 @@
+# ATTENZIONE (SOURCE OF TRUTH): dal 5/11 il sito vive in web/ (content/*.html, app/css/design.css). Non rilanciare questo script: sovrascrive le modifiche.
 #!/usr/bin/env python3
 """Estrae dalle pagine statiche (landing/site/*.html) i frammenti usati dall'app Next.js:
 - web/content/<pagina>.html : markup del <main> con segnaposto <!--@...--> per le parti alimentate da Sanity

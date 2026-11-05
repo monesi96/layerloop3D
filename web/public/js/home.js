@@ -9,9 +9,9 @@ var MATS=[];
   // sequenza di apertura: logo al centro -> sale -> titolo e pulsante -> si apre la maschera del video
   var openT0=null, OPEN_MS=1400;
   function seq(){
-    setTimeout(function(){body.classList.add('s1')},reduce?0:1500);
-    setTimeout(function(){body.classList.add('s2')},reduce?0:2300);
-    setTimeout(function(){openT0=performance.now();body.classList.remove('lock');if(lenis)lenis.start();},reduce?0:2700);
+    setTimeout(function(){body.classList.add('s1')},reduce?0:2900);
+    setTimeout(function(){body.classList.add('s2')},reduce?0:3700);
+    setTimeout(function(){openT0=performance.now();body.classList.remove('lock');if(lenis)lenis.start();},reduce?0:4100);
   }
   seq();
 

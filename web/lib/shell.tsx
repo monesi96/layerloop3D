@@ -27,7 +27,7 @@ export function Shell({header, footer, children, scripts = []}: {header: string;
       <Raw html={header} />
       {children}
       <Raw html={footer} />
-      <Scripts files={['/js/site.js', ...scripts]} />
+      <Scripts files={['/js/site.js', '/js/design.js', ...scripts]} />
     </>
   )
 }

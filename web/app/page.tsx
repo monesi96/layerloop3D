@@ -1,6 +1,7 @@
 import './css/home.css'
+import './css/design.css'
 import {Shell, Raw, fragment, loadShared} from '@/lib/shell'
-import {headerHtml, footerHtml, printersHtml, sectorsHtml, materialsHtml, casesHtml} from '@/lib/templates'
+import {pressHtml, headerHtml, footerHtml, printersHtml, sectorsHtml, materialsHtml, casesHtml} from '@/lib/templates'
 
 export const revalidate = 60
 
@@ -9,6 +10,7 @@ export default async function Home() {
   const html = fragment('home')
     .replace('<!--@header-->', '')
     .replace('<!--@footer-->', '')
+    .replace('<!--@press-->', pressHtml(settings))
     .replace('<!--@printers-->', printersHtml(printers))
     .replace('<!--@sectors-->', sectorsHtml(sectors))
     .replace('<!--@materials-->', materialsHtml(materials))

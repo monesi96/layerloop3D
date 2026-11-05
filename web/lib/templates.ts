@@ -52,12 +52,26 @@ ${cta ? `<a class="btn" href="${esc(cta.href)}">${esc(cta.label)}</a>` : ''}<but
 }
 
 export function footerHtml(s: any) {
-  const cols = (s?.footerColumns || []).map((c: any) => `<div><h4>${esc(c.title)}</h4><ul>${(c.links || []).map((l: any) => `<li><a href="${esc(l.href)}">${esc(l.label)}</a></li>`).join('')}</ul></div>`).join('')
   const mail = s?.email || 'info@layerloop3d.com'
+  const cols = (s?.footerColumns || []).map((c: any) => `<div><h4>${esc(c.title)}</h4><ul>${(c.links || []).map((l: any) => `<li><a href="${esc(l.href)}">${esc(l.label)}</a></li>`).join('')}</ul></div>`).join('')
+  const seat = (s?.legalSeat || s?.address || '').split('\n').map((l: string) => esc(l)).join('<br>')
+  const notes = (s?.companyNotes || []).map((n: string) => `<li>${esc(n)}</li>`).join('')
   return `<footer class="footer" id="contatti"><div class="wrap">
- <div class="fcta"><div><h2>Bring production<br>in house.</h2></div><div class="bt"><a class="btn dark" href="mailto:${esc(s?.demoEmail || mail)}?subject=Richiesta%20demo">Richiedi una demo →</a><a class="btn outline" href="mailto:${esc(s?.demoEmail || mail)}?subject=Parlo%20con%20un%20esperto">Parla con un esperto →</a></div></div>
- <div class="foot-grid"><div><p>${esc(s?.footerClaim)}</p></div><div><h4>Contatti</h4><ul>${(s?.address || '').split('\n').map((l: string) => `<li>${esc(l)}</li>`).join('')}<li><a href="mailto:${esc(mail)}">${esc(mail)}</a></li>${s?.phone ? `<li><a href="tel:${esc(String(s.phone).replace(/\s/g, ''))}">${esc(s.phone)}</a></li>` : ''}</ul></div>${cols}</div>
- <p class="foot-bottom">© ${new Date().getFullYear()} ${esc(s?.legal || 'Layerloop S.r.l.')} Tutti i diritti riservati.</p></div></footer>`
+ <div class="fcta"><div><span class="eyebrow">Layerloop</span><h2>Bring production<br>in house.</h2></div><div class="bt"><a class="btn" href="mailto:${esc(s?.demoEmail || mail)}?subject=Richiesta%20demo">Richiedi una demo</a><a class="btn ghost" href="mailto:${esc(s?.demoEmail || mail)}?subject=Parlo%20con%20un%20esperto">Parla con un esperto</a></div></div>
+ <div class="foot-grid">
+  <div class="fb"><a class="flogo" href="/" aria-label="Layerloop">${PICTO}</a><p>${esc(s?.footerClaim)}</p></div>
+  <div><h4>Sede legale</h4><address>${seat}</address><ul class="fnotes">${notes}</ul>${s?.affiliateOffices ? `<h4 style="margin-top:22px">Sedi affiliate</h4><p>${esc(s.affiliateOffices)}</p>` : ''}</div>
+  <div><h4>Contatti</h4><ul><li><a href="mailto:${esc(mail)}">${esc(mail)}</a></li>${s?.phone ? `<li><a href="tel:${esc(String(s.phone).replace(/\s/g, ''))}">${esc(s.phone)}</a></li>` : ''}</ul></div>
+  ${cols}
+ </div>
+ <p class="foot-bottom"><span>${esc(s?.legal || 'Layerloop S.r.l.')}${s?.vat ? ` – P.IVA ${esc(s.vat)}` : ''}</span><span>${esc(s?.credits)}</span></p></div></footer>`
+}
+
+// ---------------- "Siamo presenti su" (loghi chiari su trasparente)
+export function pressHtml(s: any) {
+  const logos = (s?.pressLogos || []).filter((l: any) => l.url_img)
+  if (!logos.length) return ''
+  return `<section class="press" aria-label="${esc(s?.pressTitle)}"><div class="wrap"><p class="press-t">${esc(s?.pressTitle || 'Siamo presenti su:')}</p><ul class="press-l">${logos.map((l: any) => `<li>${l.url ? `<a href="${esc(l.url)}" target="_blank" rel="noopener">` : ''}<img src="${cdn(l.url_img, 360)}" alt="${esc(l.name)}" loading="lazy">${l.url ? '</a>' : ''}</li>`).join('')}</ul></div></section>`
 }
 
 // ---------------- card stampanti (home)
@@ -70,10 +84,13 @@ export function printersHtml(printers: any[]) {
       <div class="tx"><h2>${esc(p.cardTitle)}</h2><p>${esc(p.cardText)}</p><ul class="specs">${chips}</ul></div>
       <div class="vid"><video muted playsinline preload="auto" poster="${cdn(p.cardPoster)}" aria-label="Layerloop ${esc(p.name)} in funzione"><source src="${p.cardVideo}" type="video/mp4"></video></div></a>`
     }
-    return `<a class="pc" href="/stampanti/${p.slug}">${head}<h2>${esc(p.cardTitle)}</h2><p>${esc(p.cardText)}</p><ul class="specs">${chips}</ul>
-      <div class="shot"><img src="${cdn(p.cardImage, 1100)}" alt="Layerloop ${esc(p.name)}" loading="lazy"></div></a>`
+    const shot = p.model3d
+      ? `<div class="shot mv"><model-viewer src="${esc(p.model3d)}" poster="${cdn(p.cardImage, 900)}" alt="Layerloop ${esc(p.name)} in 3D" auto-rotate rotation-per-second="10deg" interaction-prompt="none" disable-zoom disable-pan shadow-intensity="1" shadow-softness="1" exposure=".9" camera-orbit="30deg 72deg auto" field-of-view="26deg" loading="lazy" reveal="auto"></model-viewer><span class="mv-tag">3D · muovi il mouse</span></div>`
+      : `<div class="shot"><img src="${cdn(p.cardImage, 1100)}" alt="Layerloop ${esc(p.name)}" loading="lazy"></div>`
+    return `<a class="pc" href="/stampanti/${p.slug}">${head}<h2>${esc(p.cardTitle)}</h2><p>${esc(p.cardText)}</p><ul class="specs">${chips}</ul>${shot}</a>`
   }).join('\n')
-  return `<section class="wrap printers" id="stampanti" aria-label="Le stampanti Layerloop">${cards}</section>`
+  const mvScript = printers.some((p) => p.model3d) ? `<script type="module">import {ModelViewerElement} from "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js";ModelViewerElement.meshoptDecoderLocation="https://cdn.jsdelivr.net/npm/meshoptimizer@0.20.0/meshopt_decoder.js";</script>` : ''
+  return `<section class="wrap printers" id="stampanti" aria-label="Le stampanti Layerloop">${cards}${mvScript}</section>`
 }
 
 // ---------------- settori (selettore con dettaglio)

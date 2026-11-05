@@ -1,4 +1,5 @@
 import '../css/materiali.css'
+import '../css/design.css'
 import type {Metadata} from 'next'
 import {Shell, Raw, fragment, loadShared} from '@/lib/shell'
 import {headerHtml, footerHtml} from '@/lib/templates'
