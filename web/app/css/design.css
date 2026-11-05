@@ -245,3 +245,12 @@ html body .feat>div>p{margin-top:0}
   background-color:#fff!important;color:#111!important;border-color:#fff!important;box-shadow:none!important;transform:none!important}
 /* nelle sezioni chiare il bianco non si vedrebbe: bordo scuro */
 .cx .btn:hover,.cx-cta:hover,.mats .btn:hover,.cta .btn.dark:hover{border-color:#111!important}
+
+/* ---------- card stampanti: gradiente più marcato grigio → bianco, video senza sfumatura invadente, freccia in basso a destra ---------- */
+html body .pc,html body .pc.wide{background:linear-gradient(to top left,#ffffff 0%,#b3b5b8 100%)!important}
+html body .pc.wide .vid video{
+  filter:brightness(1.22) contrast(1.08);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 100%),linear-gradient(180deg,transparent 0,#000 5%,#000 97%,transparent 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 100%),linear-gradient(180deg,transparent 0,#000 5%,#000 97%,transparent 100%)!important;
+  -webkit-mask-composite:source-in!important;mask-composite:intersect!important}
+html body .pc .go{top:auto!important;bottom:clamp(18px,2vw,28px)!important;right:clamp(18px,2vw,28px)!important}
