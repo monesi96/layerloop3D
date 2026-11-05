@@ -1,0 +1,434 @@
+{
+ "EXT": {
+  "key": "extend",
+  "name": "Extend",
+  "title": "Layerloop Extend – Stampante 3D industriale a camera chiusa",
+  "desc": "Layerloop Extend: stampante 3D industriale a camera chiusa, 500 × 300 × ∞ mm, estrusore 450 °C, camera attiva 90 °C, moduli plug-in.",
+  "h1": "Feel the warm side of 3D printing.",
+  "lead": "Layerloop Extend è la stampante industriale a camera chiusa: temperatura costante e uniforme, materiali tecnici e industriali, lunghezza estendibile con i moduli plug-in.",
+  "chips": [
+   "500 × 300 × ∞ mm",
+   "Estrusore 450 °C",
+   "Camera attiva 90 °C"
+  ],
+  "hero": "media/extend/machine.webp",
+  "feat": [
+   [
+    "90 °C",
+    "Camera riscaldata attiva a 15–90 °C: temperatura costante e uniforme per tutta la stampa. Meno deformazione sui pezzi di grande formato."
+   ],
+   [
+    "+500 mm",
+    "Ogni modulo plug-in aggiunge 500 mm di lunghezza di stampa, con riscaldamento controllato e camera calda."
+   ],
+   [
+    "450 °C",
+    "Estrusore fino a 450 °C: dai materiali standard ai polimeri industriali come PAEK, PPS CF, PPSU e PC-ABS."
+   ]
+  ],
+  "prodh": "Industriale, a camera chiusa.",
+  "prodp": "Gestione termica ottimale e ambiente di stampa controllato per risultati di alta precisione.",
+  "pk": "media/extend/machine.webp",
+  "points": [
+   [
+    "Camera calda",
+    "Temperatura costante e uniforme durante tutto il processo, completamente chiusa."
+   ],
+   [
+    "Moduli plug-in",
+    "Espandi le capacità della stampante in base alle tue esigenze, anche oltre un metro di lunghezza."
+   ],
+   [
+    "Tre estrusori",
+    "Industriale, Alta velocità, Tech: dal PETG ai materiali industriali."
+   ],
+   [
+    "Pezzi grandi in un corpo",
+    "Ad esempio un'ala da drone di 110 cm senza giunzioni."
+   ]
+  ],
+  "two": [
+   [
+    "media/extend/module.webp",
+    "Macchina e modulo estendibile"
+   ],
+   [
+    "media/extend/units.webp",
+    "Layerloop Extend"
+   ]
+  ],
+  "reveal": "<section class=\"wrap sec-t\" style=\"padding-bottom:0\"><div class=\"head\"><h2>Dentro la camera.</h2><p>Camera calda con porta in vetro: il pezzo cresce al caldo e resta visibile.</p></div></section><div class=\"reveal-media\" data-reveal style=\"height:clamp(320px,80vh,860px)\"><img src=\"media/extend/chamber.webp\" alt=\"Camera di stampa di Layerloop Extend\" loading=\"lazy\"><span class=\"cap\">Layerloop Extend · camera di stampa</span></div>",
+  "opt_img": "media/extend/module.webp",
+  "opt": [
+   "Moduli estendibili",
+   "I moduli Layerloop Extend migliorano ed estendono la macchina. Ogni modulo include un sistema di riscaldamento controllato per i materiali industriali, favorisce l'adesione tra gli strati e previene la deformazione nei pezzi di grande formato. Ogni modulo estende la lunghezza di stampa di 500 mm, senza compromettere la camera riscaldata."
+  ],
+  "specp": "Dalle schede tecniche Layerloop.",
+  "specs": [
+   [
+    "Volume di stampa",
+    "500 × 300 × ∞ mm"
+   ],
+   [
+    "Tecnologia",
+    "FFF · estrusore inclinato a 30°"
+   ],
+   [
+    "Camera",
+    "15–90 °C, riscaldamento attivo · completamente chiusa"
+   ],
+   [
+    "Temperatura nastro",
+    "20–150 °C"
+   ],
+   [
+    "Temperatura estrusore",
+    "20–450 °C"
+   ],
+   [
+    "Estrusori",
+    "Industriale · Alta velocità · Tech"
+   ],
+   [
+    "Risoluzione layer",
+    "100–800 µm, ottimizzata per 200 µm"
+   ],
+   [
+    "Ugelli",
+    "0,4–0,8 mm · filamento 1,75 mm"
+   ],
+   [
+    "Superficie nastro",
+    "Fibra di carbonio · livellamento semi-automatico"
+   ],
+   [
+    "Software",
+    "Layerloop Slicer · Layerloop I.M."
+   ],
+   [
+    "File supportati",
+    "STL · OBJ · X3D · 3MF"
+   ],
+   [
+    "Connettività",
+    "USB · Ethernet · Wi-Fi"
+   ],
+   [
+    "Alimentazione",
+    "100–240 V · 50–60 Hz · 2,7–1,3 A"
+   ],
+   [
+    "Sicurezza",
+    "Completamente chiusa · CE"
+   ],
+   [
+    "Dimensioni",
+    "1900 (H) × 1000 (L) × 1200 (P) mm"
+   ],
+   [
+    "Peso",
+    "160 kg · spedizione 220 kg"
+   ]
+  ],
+  "matp": "Dai polimeri standard ai compositi in fibra, ai materiali industriali, fino a metallo e ceramica. Sistema aperto.",
+  "mats": [
+   [
+    "pa12cf",
+    "LAYPA12CF",
+    "Nylon 12 + carbonio"
+   ],
+   [
+    "gcarb",
+    "LAYGREEN CARBON",
+    "CPE carbonio"
+   ],
+   [
+    "abs",
+    "LAYABS",
+    "ABS"
+   ],
+   [
+    "asa",
+    "LAYASA",
+    "ASA"
+   ],
+   [
+    "pps",
+    "LAYPPS",
+    "HDT 190 °C"
+   ],
+   [
+    "ppscf",
+    "LAYPPS CF",
+    "HDT 220 °C"
+   ]
+  ],
+  "fam": [
+   [
+    "Standard",
+    "LAYGREEN PRO · PETG · PETG MDT · PETG ESD · TPU · PP · PCTG · ABS · ABS V0 · ABS ESD · ASA · PA12"
+   ],
+   [
+    "Rinforzati con fibra",
+    "LAYGREEN CARBON · PPCF · PA6CF · PA12GF · PETG CARBON"
+   ],
+   [
+    "Industriali",
+    "PAEK AM200 Victrex · PPS CF · PPSU · PC-ABS"
+   ]
+  ],
+  "on": [
+   "Manufacturing",
+   "Nautical",
+   "Automotive"
+  ],
+  "cases": [
+   [
+    "Aerospace · Extend",
+    "Un'ala da drone di 110 cm in un solo pezzo",
+    "Stampata in LAYPA12CF senza giunzioni, grazie al nastro infinito.",
+    "media/mat/pa12cf.webp"
+   ],
+   [
+    "Industria",
+    "Carter di ricambio per macchinari industriali",
+    "Il ricambio si stampa in azienda, quando serve.",
+    "media/cases/carter.webp"
+   ],
+   [
+    "Industria · Nybron",
+    "Pezzi per applicazioni industriali sotto sforzo",
+    "Materiale scelto per assorbire sollecitazioni elevate. Ugello 0,8.",
+    null
+   ]
+  ]
+ },
+ "XE": {
+  "key": "xe",
+  "name": "XE",
+  "title": "Layerloop XE – Stampante 3D desktop per medicale e podologia",
+  "desc": "Layerloop XE: stampante 3D desktop a camera aperta con asse a 30°, 200 × 180 × ∞ mm, estrusore 250 °C. Ideale per medicale, podologia e materiali flessibili.",
+  "h1": "When proficiency meets design.",
+  "lead": "Layerloop XE è la stampante desktop a camera aperta con asse a 30°, per chi cerca un dispositivo entry-level senza rinunciare a qualità ed efficienza. Consigliata nel medicale e in podologia, lavora bene con i materiali flessibili come la gomma.",
+  "chips": [
+   "Desktop",
+   "200 × 180 × ∞ mm",
+   "Estrusore 250 °C"
+  ],
+  "hero": "media/xe/machine.webp",
+  "feat": [
+   [
+    "Desktop",
+    "Dimensioni ridotte, 550 × 450 × 750 mm e 50 kg: si adatta facilmente a qualsiasi ambiente."
+   ],
+   [
+    "0,4 · 0,6 · 0,8",
+    "Ugelli intercambiabili da 0,4, 0,6 e 0,8 mm: adatti la precisione di stampa a ogni progetto."
+   ],
+   [
+    "Carbon Kit",
+    "Aggiorna XE a materiali caricati carbonio e TPU. Ideale per ottimizzarla per il settore podologico."
+   ]
+  ],
+  "prodh": "Compatta, facile da usare.",
+  "prodp": "Interfaccia intuitiva e funzionalità semplici, ideali per utenti di tutti i livelli, dai principianti ai professionisti.",
+  "pk": "media/xe/machine.webp",
+  "points": [
+   [
+    "Asse a 30° e tavolo a rulli",
+    "Stampa su un asse infinito: possibilità illimitate."
+   ],
+   [
+    "Velocità di stampa",
+    "Produce in modo rapido e affidabile, riducendo i tempi di produzione."
+   ],
+   [
+    "Ampia gamma di materiali",
+    "PLA, TPU, PETG, LayGREEN e altri ancora."
+   ],
+   [
+    "Medicale e podologia",
+    "Consigliata per plantari, suole e dispositivi su misura, con materiali flessibili."
+   ]
+  ],
+  "two": [
+   [
+    "media/xe/threeq.webp",
+    "Layerloop XE"
+   ],
+   [
+    "media/xe/head.webp",
+    "Testa di stampa"
+   ]
+  ],
+  "opt_img": "media/xe/side.webp",
+  "opt": [
+   "Carbon Kit",
+   "L'optional per Layerloop XE: permette di stampare con materiali caricati con carbonio e TPU. Il kit include un nastro in fibra di carbonio, un estrusore Tech e una bobina a scelta tra PPCF o Laygreen Carbon. Ideale per ottimizzare XE per il settore podologico, con stampe di alta qualità e durevoli."
+  ],
+  "specp": "Dalle schede tecniche Layerloop.",
+  "specs": [
+   [
+    "Volume di stampa",
+    "200 × 180 × ∞ mm (7,87 × 7,09 in)"
+   ],
+   [
+    "Tecnologia",
+    "FFF · estrusore inclinato a 30°"
+   ],
+   [
+    "Camera",
+    "15–30 °C, riscaldamento passivo"
+   ],
+   [
+    "Temperatura nastro",
+    "20–70 °C"
+   ],
+   [
+    "Temperatura estrusore",
+    "20–250 °C"
+   ],
+   [
+    "Estrusori",
+    "Standard · Tech (con Carbon Kit)"
+   ],
+   [
+    "Risoluzione layer",
+    "100–800 µm, ottimizzata per 200 µm"
+   ],
+   [
+    "Ugelli",
+    "0,4–0,8 mm · filamento 1,75 mm"
+   ],
+   [
+    "Superficie nastro",
+    "Poliuretano / fibra di carbonio (con Carbon Kit)"
+   ],
+   [
+    "Livellamento piano",
+    "Semi-automatico"
+   ],
+   [
+    "Software",
+    "Layerloop Slicer · Layerloop I.M."
+   ],
+   [
+    "File supportati",
+    "STL · OBJ · X3D · 3MF"
+   ],
+   [
+    "Connettività",
+    "USB stand-alone"
+   ],
+   [
+    "Alimentazione",
+    "100–240 V · 50–60 Hz · 2,7–1,3 A"
+   ],
+   [
+    "Sicurezza",
+    "Completamente chiusa · CE · EN · UL"
+   ],
+   [
+    "Dimensioni",
+    "550 × 450 × 750 mm"
+   ],
+   [
+    "Peso",
+    "50 kg · spedizione 90 kg"
+   ]
+  ],
+  "matp": "Di serie PLA, LAYGREEN, PETG e PETG MDT. Con il Carbon Kit anche PPCF, LAYGREEN PRO CARBON e TPU.",
+  "mats": [
+   [
+    "pla",
+    "LAYPLA",
+    "PLA"
+   ],
+   [
+    "petg",
+    "LAYPETG",
+    "PETG"
+   ],
+   [
+    "gpro",
+    "LAYGREEN PRO",
+    "CPE"
+   ],
+   [
+    "tpu",
+    "LAYFLEX",
+    "TPU 80A–60D"
+   ],
+   [
+    "gcarb",
+    "LAYGREEN CARBON",
+    "con Carbon Kit"
+   ]
+  ],
+  "fam": [
+   [
+    "Di serie",
+    "PLA · LAYGREEN · PETG · PETG MDT"
+   ],
+   [
+    "Con Carbon Kit",
+    "PPCF · LAYGREEN PRO CARBON · TPU"
+   ],
+   [
+    "LAYFLEX",
+    "TPU tipo gomma, durezze Shore da 80A a 60D, oltre 10 colori"
+   ]
+  ],
+  "on": [
+   "Medical",
+   "R&amp;D",
+   "Custom production"
+  ],
+  "cases": [
+   [
+    "Medicale",
+    "Invasi transtibiali su misura a 30°",
+    "Ogni pezzo è diverso: il caso ideale per la stampa 3D rispetto allo stampo.",
+    null
+   ],
+   [
+    "Medicale · Comfort",
+    "Il cuscino ortopedico stampato in 3D",
+    "Strutture a reticolo in materiale flessibile per un comfort su misura.",
+    "media/cases/cushion.webp"
+   ],
+   [
+    "Illuminazione · LAYGREEN CARBON",
+    "Rivestimenti per apparecchi da esterno, resistenti ai raggi UV",
+    "Ugello 0,6, altezza strato 0,1, nessun supporto interno.",
+    null
+   ]
+  ]
+ },
+ "COMMON": [
+  [
+   "Tecnologia",
+   "FFF · estrusore inclinato a 30°"
+  ],
+  [
+   "Risoluzione layer",
+   "100–800 µm, ottimizzata per 200 µm"
+  ],
+  [
+   "Ugelli",
+   "0,4–0,8 mm · filamento 1,75 mm"
+  ],
+  [
+   "Software",
+   "Layerloop Slicer · Layerloop I.M."
+  ],
+  [
+   "File supportati",
+   "STL · OBJ · X3D · 3MF"
+  ],
+  [
+   "Alimentazione",
+   "100–240 V · 50–60 Hz · 2,7–1,3 A"
+  ]
+ ]
+}
