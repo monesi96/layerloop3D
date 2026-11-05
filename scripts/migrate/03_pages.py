@@ -37,6 +37,18 @@ def up(src, alt=''):
     try: return image_ref(upload_url(src), alt or None, k=K())
     except Exception as e: print('   img KO', src[-60:], str(e)[:60]); return None
 
+def dims(img):
+    try:
+        d = query('*[_id==$i][0].metadata.dimensions', i=img['asset']['_ref'])
+        return (d or {}).get('width', 9999)
+    except Exception:
+        return 9999
+
+def gallery_or_logos(title, imgs):
+    if len(imgs) >= 4 and all(dims(i) <= 520 for i in imgs):
+        return {'_type': 'logoWallBlock', '_key': K(), 'title': title, 'logos': [{'_type': 'logo', '_key': K(), 'name': i.get('alt') or '', 'image': i} for i in imgs]}
+    return {'_type': 'galleryBlock', '_key': K(), 'title': title, 'images': imgs}
+
 def block_of(sec, first):
     text = T(sec)
     if 'Sede Legale' in text or 'Iscritta nel registro' in text: return None
@@ -75,14 +87,17 @@ def block_of(sec, first):
     body = [b for b in body if b.get('_type') == 'block']
     if first:
         lead = ' '.join(''.join(s['text'] for s in b['children']) for b in body if b['style'] == 'normal')[:400]
-        hero = {'_type': 'heroBlock', '_key': K(), 'title': title or T(sec)[:80], 'lead': lead, 'ctas': ctas_of(sec)}
+        t0 = title or T(sec)[:80]
+        m0 = re.match(r'^(.{12,80}?[a-z]{3}\.)\s+([A-Z].+)$', t0)
+        if m0: t0, lead = m0.group(1), (m0.group(2) + ' ' + lead).strip()
+        hero = {'_type': 'heroBlock', '_key': K(), 'title': t0, 'lead': lead, 'ctas': ctas_of(sec)}
         if ims:
             r = up(*ims[0]);
             if r: hero['image'] = r
         return hero
     if not body and ims:
         imgs = [r for r in (up(s, a) for s, a in ims[:12]) if r]
-        return {'_type': 'galleryBlock', '_key': K(), 'title': title, 'images': imgs} if len(imgs) > 1 else (
+        return gallery_or_logos(title, imgs) if len(imgs) > 1 else (
             {'_type': 'imageTextBlock', '_key': K(), 'title': title, 'image': imgs[0], 'body': []} if imgs else None)
     if not body and not title: return None
     if len(ims) == 1 and body:
@@ -112,7 +127,7 @@ def split_blocks(sec, first):
             out.append({'_type': 'richTextBlock', '_key': K(), 'title': g['title'], 'body': pt})
     ims = imgs_of(sec)
     imgs = [r for r in (up(a, b) for a, b in ims[:10]) if r]
-    if len(imgs) > 1: out.append({'_type': 'galleryBlock', '_key': K(), 'title': '', 'images': imgs})
+    if len(imgs) > 1: out.append(gallery_or_logos('', imgs))
     return out
 
 def convert(slug):
