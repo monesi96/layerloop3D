@@ -6,7 +6,7 @@
   var solids=[].slice.call(document.querySelectorAll('.sv,.duo,.footer'));
   if(bg&&!reduce){
     var vh=innerHeight;addEventListener('resize',function(){vh=innerHeight});
-    var cur=0;
+    var cur=0,prevT=0,dir=0;
     (function tick(){
       var target=0;
       solids.forEach(function(el){
@@ -16,8 +16,12 @@
         target=Math.max(target,Math.min(enter,leave));
       });
       target=Math.max(target,window.__bgLift||0);
-      cur+=(target-cur)*.09;
+      // uscita: salgono fuori da sopra; rientro: ricompaiono da sotto (salto invisibile da +1 a -1)
+      if(target<prevT-.002&&cur>.55){cur=-1}
+      prevT=target;
+      cur+=(target-cur)*.075;
       bg.style.setProperty('--lift',cur.toFixed(4));
+      bg.style.setProperty('--al',Math.abs(cur).toFixed(4));
       requestAnimationFrame(tick);
     })();
   }

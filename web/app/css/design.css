@@ -128,5 +128,7 @@ html body .footer .wrap{width:min(1180px,100% - 48px);margin-inline:auto}
 .bg{transition:none}
 
 /* le palle salgono una per una (il contenitore resta fermo: nessun bordo/maschera) */
-html body .bg .blob{translate:calc(var(--sy,0)*var(--kx)*1px + var(--ent)*var(--ex,0px)) calc(var(--sy,0)*var(--ky)*1px + var(--ent)*var(--ey,0px) - var(--lift,0)*210vh);scale:calc(1 - var(--ent)*.45);opacity:calc(var(--o,1)*(1 - var(--ent)))}
+html body .bg .blob{translate:calc(var(--sy,0)*var(--kx)*1px + var(--ent)*var(--ex,0px)) calc(var(--sy,0)*var(--ky)*1px + var(--ent)*var(--ey,0px) - var(--lift,0)*210vh);rotate:calc(var(--r,0deg) + var(--lift,0)*var(--rs,1)*38deg);scale:calc(1 - var(--ent)*.45 - var(--al,0)*.22);opacity:calc(var(--o,1)*(1 - var(--ent)))}
 .bg{transform:none!important}
+
+.b2,.b4,.b5{--rs:-1}.b3{--rs:.6}
