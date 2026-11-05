@@ -61,3 +61,14 @@ Gli script usano `createOrReplace` con ID fissi: rilanciarli **sovrascrive le mo
 
 ## Da rivedere a mano (conversione automatica)
 Le pagine Elementor sono state convertite in blocchi ma vanno curate nello Studio: `rivenditori`, `medical-division` (+ EN), `layerloop-academy`, e le pagine dei quattro settori. Restano da importare le altre pagine WordPress (eventi/open house/webinar, garanzia, assistenza, servizi…).
+
+## Modello 3D delle stampanti (STEP → web)
+Il CAD originale (`NEXT 200 Assieme 2.step`, 96 MB) **non va caricato in Sanity** (dataset pubblico). Pipeline per generare il GLB web:
+```bash
+pip install cadquery-ocp trimesh numpy
+python3 scripts/migrate/cad_step2mesh.py 0.03      # STEP -> parts.pkl (scarta le viti sotto il 3% della parte più grande)
+python3 scripts/migrate/cad_parts2glb.py           # parts.pkl -> next_raw.glb (Y-up, metri, capovolto)
+node scripts/migrate/cad_compress.js next_raw.glb next200.glb 0.4   # meshopt (0,64 MB, 215k triangoli)
+```
+Poi in Studio: Stampanti → Next → «Modello 3D (GLB)». La pagina `/stampanti/next` mostra il visualizzatore appena il campo è compilato.
+Stato: versione 1 — 170 parti (struttura, assi, nastro, estrusore); colori dal CAD (grigio). Da migliorare: materiali realistici (alluminio/nero), hotspot collegati ai passi del tour, animazione di nastro/estrusore, esploso.
