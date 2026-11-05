@@ -13,26 +13,69 @@ def mk(items):
     return s
 def circ(cx,cy,r):
     return f'M{cx-r} {cy} a{r} {r} 0 1 0 {2*r} 0 a{r} {r} 0 1 0 {-2*r} 0'
+
+def cr(pts,n=14):
+    """Catmull-Rom: restituisce polilinea campionata che passa per pts"""
+    P=[pts[0]]+pts+[pts[-1]];out=[]
+    for i in range(1,len(P)-2):
+        p0,p1,p2,p3=P[i-1],P[i],P[i+1],P[i+2]
+        for k in range(n):
+            t=k/n;t2=t*t;t3=t2*t
+            out.append(tuple(.5*((2*p1[j])+(-p0[j]+p2[j])*t+(2*p0[j]-5*p1[j]+4*p2[j]-p3[j])*t2+(-p0[j]+3*p1[j]-3*p2[j]+p3[j])*t3) for j in (0,1)))
+    out.append(pts[-1]);return out
+def poly(pl,close=False):
+    d='M'+' L'.join(f'{x:.1f} {y:.1f}' for x,y in pl)
+    return d+(' Z' if close else '')
+def at(pl,x):
+    for (x0,y0),(x1,y1) in zip(pl,pl[1:]):
+        if (x0<=x<=x1) or (x1<=x<=x0):
+            return y0 if x1==x0 else y0+(y1-y0)*(x-x0)/(x1-x0)
+    return pl[-1][1]
+def mesh(U,L,x0,x1,step,wl=(.25,.5,.75)):
+    r=[]
+    x=x0
+    while x<=x1:
+        r.append((f"M{x:.1f} {at(U,x):.1f} L{x:.1f} {at(L,x):.1f}","f"));x+=step
+    for t in wl:
+        pts=[];xx=x0
+        while xx<=x1:
+            pts.append((xx,at(U,xx)*(1-t)+at(L,xx)*t));xx+=6
+        r.append((poly(pts),"f"))
+    return r
+def wheel(cx,cy,r):
+    w=[(circ(cx,cy,r),"a w"),(circ(cx,cy,r*.74),"w"),(circ(cx,cy,r*.22),"a w")]
+    for i in range(5):
+        a=i*2*math.pi/5
+        w.append((f"M{cx+r*.22*math.cos(a):.1f} {cy+r*.22*math.sin(a):.1f} L{cx+r*.72*math.cos(a):.1f} {cy+r*.72*math.sin(a):.1f}","w"))
+    return w
 # ---- AUTO
-car=[ "M50 252 L50 222 Q56 204 110 198 L190 132 Q206 118 236 116 L398 116 Q428 118 446 138 L500 192 Q566 198 584 222 L590 252",
- "M50 252 H132 M202 252 H418 M488 252 H590",
- "M132 252 A35 35 0 0 1 202 252","M418 252 A35 35 0 0 1 488 252",
- "M206 198 L246 136 H334 V198 Z","M348 136 V198 H452 L410 136 Z",
- ("M50 232 H590","f"),("M50 244 H590","f"),("M110 198 H500","f"),
- ("M236 116 V198","f"),("M398 116 L410 136","f"),("M60 222 Q320 214 580 222","f"),
- ("M90 198 V252","f"),("M260 200 V252","f"),("M340 198 V252","f"),("M380 198 V252","f"),("M540 200 V252","f"),
- (circ(167,252,30),"a w"),(circ(167,252,13),"w"),(circ(453,252,30),"a w"),(circ(453,252,13),"w"),
- ("M60 282 H580","g"),("M90 298 H550","g"),("M130 314 H510","g"),("M170 330 H470","g")]
+Up=cr([(64,262),(70,236),(96,214),(160,198),(232,178),(300,146),(372,124),(432,122),(488,140),(548,176),(620,200),(690,214),(722,236),(728,262)],12)
+Lo=[]
+for x in range(64,729,4):
+    y=268.0
+    for cx in (196,572):
+        dx=x-cx
+        if abs(dx)<56: y=min(y,cy_:=0) if False else min(y,(262-math.sqrt(max(0,56*56-dx*dx))))
+    Lo.append((x,y))
+car=[poly(Up),poly(Lo),f"M64 262 L64 268 L{Lo[0][0]} {Lo[0][1]}",f"M728 262 L728 268",
+ ("M236 196 L304 150 L370 134 L434 134 L486 152 L526 196 Z","a"),("M370 134 L372 196","a"),("M236 196 H620","a"),
+ ("M96 214 Q150 226 232 222","f"),("M548 176 L586 198 L700 218","f"),
+ ("M120 244 H690","g"),("M644 214 L668 232 L720 238","a"),("M92 250 L120 262","a")]
+car+=mesh(Up,Lo,84,712,22)
+car+=wheel(196,262,42)+wheel(572,262,42)
+car+=[("M40 296 H740","g"),("M80 312 H700","g"),("M130 328 H640","g")]
 out['automotive']=mk(car)
 # ---- NAVE
-ship=["M36 232 H604 L566 296 H86 Z",
- "M170 232 V190 H372 L412 232","M240 190 V150 H340 L362 190","M300 150 V64 L336 80 L300 96",
- ("M36 246 H592","f"),("M44 260 H580","f"),("M56 276 H570","f"),
- ("M120 232 L106 296","f"),("M200 232 L190 296","f"),("M280 232 L276 296","f"),("M360 232 L362 296","f"),("M440 232 L448 296","f"),("M520 232 L534 296","f"),
- ("M196 204 H212 V218 H196 Z","a"),("M232 204 H248 V218 H232 Z","a"),("M268 204 H284 V218 H268 Z","a"),("M304 204 H320 V218 H304 Z","a"),("M340 204 H356 V218 H340 Z","a"),
- ("M256 160 H284 V176 H256 Z","a"),("M296 160 H324 V176 H296 Z","a"),
- ("M20 316 Q55 302 90 316 T160 316 T230 316 T300 316 T370 316 T440 316 T510 316 T580 316 T640 316","g w2"),
- ("M0 336 Q35 322 70 336 T140 336 T210 336 T280 336 T350 336 T420 336 T490 336 T560 336 T630 336","g w2")]
+Deck=cr([(40,226),(160,234),(330,238),(520,232),(650,218),(722,190)],12)
+Keel=cr([(40,226),(64,276),(140,304),(330,312),(520,302),(640,274),(722,190)],12)
+ship=[poly(Deck),poly(Keel),
+ ("M200 238 V190 H340 L376 238","a"),("M248 190 V150 H336 L356 190","a"),("M292 150 V74 L330 92 L292 108","a"),("M270 150 L330 150","a"),
+ ("M170 238 V206 H200","a"),("M376 238 V212 H440 V238","a"),
+ ("M214 206 H228 V220 H214 Z","a"),("M244 206 H258 V220 H244 Z","a"),("M274 206 H288 V220 H274 Z","a"),("M304 206 H318 V220 H304 Z","a"),("M334 206 H348 V220 H334 Z","a"),
+ ("M262 164 H280 V178 H262 Z","a"),("M300 164 H318 V178 H300 Z","a"),("M268 90 L316 90","f"),("M280 120 L336 120","f"),
+ ("M480 238 V206 H560 V238","f"),("M500 206 V186 H540 V206","f")]
+ship+=mesh(Deck,Keel,60,700,26,(.2,.4,.6,.8))
+ship+=[("M10 330 Q45 316 80 330 T150 330 T220 330 T290 330 T360 330 T430 330 T500 330 T570 330 T640 330 T710 330 T780 330","g w2"),("M0 348 Q35 334 70 348 T140 348 T210 348 T280 348 T350 348 T420 348 T490 348 T560 348 T630 348 T700 348","g w2")]
 out['nautical']=mk(ship)
 # ---- INSOLE
 foot="M300 40 C360 36 380 80 372 140 C366 190 380 240 360 290 C346 330 300 340 270 320 C240 300 236 240 244 190 C250 140 236 80 300 40 Z"
@@ -78,5 +121,5 @@ sh=["M80 270 H560","M80 236 H552","M560 270 Q574 252 552 236","M80 270 Q68 252 8
 for x in range(92,540,28):
     sh.append((f"M{x} 236 L{x+28} 270","f")); sh.append((f"M{x+28} 236 L{x} 270","f"))
 out['custom-production']=mk(sh)
-open('lib/wireframes.ts','w').write('// Disegni al tratto per la sezione Settori (generati da scripts/web/genwf.py)\nexport const WF: Record<string, string> = '+json.dumps(out)+'\n')
+open('/home/user/layerloop3D/web/lib/wireframes.ts','w').write('// Disegni al tratto per la sezione Settori (generati da scripts/web/genwf.py)\nexport const WF: Record<string, string> = '+json.dumps(out)+'\n')
 print({k:len(v) for k,v in out.items()})

@@ -103,20 +103,17 @@ export function printersHtml(printers: any[]) {
   return `<section class="wrap printers" id="stampanti" aria-label="Le stampanti Layerloop">${cards}${mvScript}</section>`
 }
 
-// ---------------- settori: elenco + disegno al tratto + stampante consigliata
+// ---------------- settori: scena a scorrimento (disegno al tratto che si trasforma, info a destra)
 export function sectorsHtml(sectors: any[], on: string[] = [], machine = '') {
-  const first = Math.max(0, sectors.findIndex((s) => on.includes(s.name)))
-  const items = sectors.map((s, i) => {
-    const href = sectorHref(s)
-    return `<li><button type="button" class="sx-item${i === first ? ' on' : ''}" data-k="${esc(s.slug)}" data-i="${i}" aria-pressed="${i === first}"><span class="sx-i">A${String(i + 1).padStart(2, '0')}</span><span class="sx-n">${esc(s.name)}</span><span class="sx-ar" aria-hidden="true">↗</span>${on.includes(s.name) && machine ? `<em>Con Layerloop ${esc(machine)}</em>` : ''}<span class="sx-d">${esc(s.summary)}${href ? ` <a class="sx-go" href="${esc(href)}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>Scopri il settore →</a>` : ''}</span></button></li>`
-  }).join('')
-  const groups = sectors.map((s, i) => `<g class="wf${i === first ? ' on' : ''}" data-k="${esc(s.slug)}">${WF[s.slug] || ''}</g>`).join('')
-  const recs = sectors.map((s, i) => {
+  const n = sectors.length
+  const groups = sectors.map((s, i) => `<g class="wf${i === 0 ? ' on' : ''}" data-k="${esc(s.slug)}"${['automotive', 'nautical'].includes(s.slug) ? '' : ' transform="translate(70 0)"'}>${WF[s.slug] || ''}</g>`).join('')
+  const panes = sectors.map((s, i) => {
     const p = s.printers?.[0]
-    return `<a class="sx-rec${i === first ? ' on' : ''}" data-k="${esc(s.slug)}" href="${p ? `/stampanti/${p.slug}` : '#'}"><small>Stampante consigliata</small><b>Layerloop ${esc(p?.name || '')}</b><u>→</u></a>`
+    const href = sectorHref(s)
+    return `<div class="sx-pane${i === 0 ? ' on' : ''}" data-k="${esc(s.slug)}"><span class="sx-i">A${String(i + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}</span><h3>${esc(s.name)}</h3><p>${esc(s.summary)}</p>${on.includes(s.name) && machine ? `<em>Con Layerloop ${esc(machine)}</em>` : ''}${p ? `<a class="sx-rec" href="/stampanti/${p.slug}"><small>Stampante consigliata</small><b>Layerloop ${esc(p.name)}</b><u>→</u></a>` : ''}${href ? `<a class="sx-go" href="${esc(href)}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>Scopri il settore →</a>` : ''}</div>`
   }).join('')
-  return `<div class="sx" data-first="${first}"><ul class="sx-list" role="group" aria-label="Settori">${items}</ul>
-<div class="sx-stage" aria-hidden="true"><svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"><g class="sx-float">${groups}</g></svg><div class="sx-recs">${recs}</div></div></div>`
+  const ticks = sectors.map((s, i) => `<li><button type="button" class="sx-tick${i === 0 ? ' on' : ''}" data-k="${esc(s.slug)}" data-i="${i}" aria-pressed="${i === 0}"><span>A${String(i + 1).padStart(2, '0')}</span>${esc(s.name)}</button></li>`).join('')
+  return `<div class="sxp" data-n="${n}"><div class="sxp-in"><div class="sx-stage" aria-hidden="true"><svg viewBox="0 0 780 360" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g class="sx-float">${groups}</g></svg></div><div class="sx-info" aria-live="polite">${panes}</div><ol class="sx-ticks" role="group" aria-label="Settori">${ticks}</ol></div></div>`
 }
 
 // ---------------- materiali (lista verticale)

@@ -25,13 +25,19 @@
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){feat.classList.remove('pre');e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.35});
     [].forEach.call(feat.children,function(c){io.observe(c)});
   }
-  // settori: selezione, disegno al tratto e stampante consigliata
-  [].forEach.call(document.querySelectorAll('.sx'),function(w){
-    var items=[].slice.call(w.querySelectorAll('.sx-item')),gs=[].slice.call(w.querySelectorAll('.wf')),recs=[].slice.call(w.querySelectorAll('.sx-rec'));
-    function pick(k){items.forEach(function(b){var on=b.dataset.k===k;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
-      gs.forEach(function(g){g.classList.toggle('on',g.dataset.k===k)});recs.forEach(function(r){r.classList.toggle('on',r.dataset.k===k)})}
-    items.forEach(function(b){b.addEventListener('click',function(e){if(e.target.closest('a'))return;pick(b.dataset.k)});
-      b.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover)').matches)pick(b.dataset.k)})});
+  // settori: scena a scorrimento (il disegno si trasforma, le info compaiono a destra)
+  [].forEach.call(document.querySelectorAll('.sxp'),function(sec){
+    var ticks=[].slice.call(sec.querySelectorAll('.sx-tick')),gs=[].slice.call(sec.querySelectorAll('.wf')),panes=[].slice.call(sec.querySelectorAll('.sx-pane')),n=ticks.length,cur=-1;
+    function pick(i){if(i===cur)return;cur=i;var k=ticks[i].dataset.k;
+      ticks.forEach(function(b){var on=b.dataset.k===k;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+      gs.forEach(function(g){g.classList.toggle('on',g.dataset.k===k)});panes.forEach(function(p){p.classList.toggle('on',p.dataset.k===k)})}
+    function upd(){var r=sec.getBoundingClientRect(),total=sec.offsetHeight-innerHeight;if(total<=0)return;
+      var p=Math.min(.9999,Math.max(0,-r.top/total));pick(Math.floor(p*n))}
+    addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+    ticks.forEach(function(b){b.addEventListener('click',function(){
+      var i=+b.dataset.i,top=sec.getBoundingClientRect().top+scrollY,total=sec.offsetHeight-innerHeight;
+      if(matchMedia('(max-width:900px)').matches){pick(i);return}
+      var y=top+(i+.5)/n*total;window.__lenis?window.__lenis.scrollTo(y):scrollTo({top:y,behavior:'smooth'})})});
   });
   [].forEach.call(document.querySelectorAll('.pc'),function(card){
     var mv=card.querySelector('model-viewer');if(!mv)return;

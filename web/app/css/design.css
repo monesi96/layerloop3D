@@ -275,3 +275,35 @@ html body .pc:not(.wide){overflow:hidden;padding-bottom:0!important}
 html body .pc:not(.wide) .shot{margin:auto calc(-1 * clamp(34px,4.4vw,60px)) 0!important;padding:clamp(24px,3vw,40px) 0 0;height:clamp(380px,42vw,600px);display:flex;align-items:flex-end;justify-content:center;position:relative;width:auto}
 html body .pc:not(.wide) .shot img{display:block;height:100%;width:auto;max-width:100%;object-fit:contain;object-position:center bottom;-webkit-mask-image:none!important;mask-image:none!important;filter:none!important;margin:0}
 html body .pc:not(.wide) .shot:has(img[alt*="XE"]) img{width:100%;height:100%;object-fit:cover;object-position:center bottom}
+
+/* ---------- settori: scena fissa a scorrimento ---------- */
+html body .sect .sect-box>h2{margin-bottom:clamp(40px,6vh,80px)}
+.sxp{position:relative;height:calc(100vh * (var(--n,6) * .62 + 1));margin-top:clamp(20px,4vh,60px)}
+.sxp-in{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);grid-template-rows:1fr auto;column-gap:clamp(24px,4vw,72px);padding:clamp(86px,12vh,120px) 0 clamp(20px,3vh,36px)}
+.sxp .sx-stage{grid-row:1;position:relative;min-height:0;border:1px solid rgba(255,255,255,.12);overflow:hidden;color:rgba(255,255,255,.72);
+  background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/56px 56px}
+.sxp .sx-stage svg{position:absolute;inset:4% 3%;width:94%;height:92%;overflow:visible}
+.sx-info{grid-row:1;position:relative;display:grid;align-items:center}
+.sx-pane{grid-area:1/1;opacity:0;pointer-events:none;transform:translateY(22px);transition:opacity .45s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.sx-pane.on{opacity:1;pointer-events:auto;transform:none;transition-delay:.25s}
+.sx-pane .sx-i{display:block;font:500 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;color:var(--teal);margin-bottom:22px}
+.sx-pane h3{font:400 clamp(2.4rem,5vw,4.6rem)/.98 var(--font);letter-spacing:-.035em;text-transform:none;margin:0 0 20px;color:#fff}
+.sx-pane p{font-size:1.05rem;line-height:1.6;color:rgba(255,255,255,.72);max-width:38ch;margin:0}
+.sx-pane em{display:block;margin-top:14px;font:600 10.5px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:var(--teal)}
+.sx-pane .sx-rec{display:flex;margin-top:clamp(28px,5vh,48px);width:max-content;max-width:100%}
+.sx-pane .sx-go{display:inline-block;margin-top:18px;color:rgba(255,255,255,.75);text-decoration:none;font-size:.95rem;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:3px}
+.sx-pane .sx-go:hover{color:var(--teal);border-color:var(--teal)}
+.sx-ticks{grid-column:1/-1;grid-row:2;list-style:none;margin:clamp(18px,3vh,32px) 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0 clamp(10px,1.4vw,22px)}
+.sx-tick{display:block;width:100%;text-align:left;background:none;border:0;border-top:1px solid rgba(255,255,255,.16);padding:14px 0 0;color:rgba(255,255,255,.38);font:500 .95rem/1.2 var(--font);cursor:pointer;transition:color .4s,border-color .4s}
+.sx-tick span{display:block;font:500 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;margin-bottom:8px}
+.sx-tick:hover{color:rgba(255,255,255,.8)}.sx-tick.on{color:#fff;border-top-color:var(--teal)}.sx-tick.on span{color:var(--teal)}
+.sx-rec{display:none}.sx-pane .sx-rec{display:flex}
+@media(max-width:900px){
+  .sxp{height:auto}
+  .sxp-in{position:static;height:auto;grid-template-columns:1fr;grid-template-rows:auto auto auto;row-gap:28px;padding:0}
+  .sxp .sx-stage{aspect-ratio:16/9;grid-row:1}.sx-info{grid-row:2;min-height:300px}.sx-ticks{grid-row:3;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+}
+.sxp-in{grid-template-columns:minmax(0,1.85fr) minmax(0,1fr)}
+.sxp .sx-stage{align-self:center;height:auto;aspect-ratio:780/430;max-height:100%}
+.sxp .sx-stage svg{inset:3%;width:94%;height:94%}
+@media(max-width:900px){.sxp-in{grid-template-columns:1fr}.sxp .sx-stage{aspect-ratio:16/10}}
