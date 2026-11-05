@@ -38,8 +38,8 @@ cd web    && npm install && npm run dev      # Sito su http://localhost:3000
 Su alcuni ambienti Node non usa il proxy di sistema: `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=<bundle>`.
 
 ## Pubblicare lo Studio
-`cd sanity && npx sanity login && npx sanity deploy` (host scelto: `layerloop.sanity.studio`).
-Aggiungi `https://layerloop.sanity.studio` e il dominio del sito tra le origini CORS del progetto (sanity.io/manage → API → CORS).
+`cd sanity && npx sanity login && npx sanity deploy` (host scelto: `layerloop-cms.sanity.studio`).
+Aggiungi `https://layerloop-cms.sanity.studio` e il dominio del sito tra le origini CORS del progetto (sanity.io/manage → API → CORS).
 
 ## Vercel
 - Root directory: `web`
