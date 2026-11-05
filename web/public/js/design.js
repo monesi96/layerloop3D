@@ -1,31 +1,23 @@
-/* Interazioni del design system: sfondo che sale con le sezioni nere, card 3D che seguono il mouse */
+/* Design system: sfondo (palle che salgono prima della scena 30°) e card 3D che seguono il mouse */
 (function(){
-  var bg=document.querySelector('.bg');
+  var bg=document.querySelector('.bg'),axes=document.getElementById('axes');
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // 1) quando la sezione diventa nera (#111) le palle salgono insieme e liberano lo sfondo
-  var solids=[].slice.call(document.querySelectorAll('.sv,.duo,.footer'));
-  if(bg&&!reduce){
-    var vh=innerHeight;addEventListener('resize',function(){vh=innerHeight});
-    var cur=0,prevT=0,dir=0;
-    (function tick(){
-      var target=0;
-      solids.forEach(function(el){
-        var r=el.getBoundingClientRect();
-        var enter=Math.min(1,Math.max(0,(vh-r.top)/(vh*.7)));
-        var leave=Math.min(1,Math.max(0,r.bottom/(vh*.7)));
-        target=Math.max(target,Math.min(enter,leave));
-      });
-      target=Math.max(target,window.__bgLift||0);
-      // uscita: salgono fuori da sopra; rientro: ricompaiono da sotto (salto invisibile da +1 a -1)
-      if(target<prevT-.002&&cur>.45){cur=-.85}
-      prevT=target;
-      cur+=(target-cur)*.06;
-      bg.style.setProperty('--lift',cur.toFixed(4));
-      bg.style.setProperty('--al',Math.abs(cur).toFixed(4));
-      requestAnimationFrame(tick);
-    })();
+  if(bg&&axes&&!reduce){
+    var vh=innerHeight,top=0,raf=0;
+    function measure(){vh=innerHeight;top=axes.getBoundingClientRect().top+scrollY}
+    function ease(t){return t*t*(3-2*t)}
+    function update(){raf=0;
+      // da quando la scena entra in basso (1.15vh) a quando arriva in cima (0.1vh): una sola salita, legata allo scroll
+      var d=top-scrollY;
+      var p=Math.min(1,Math.max(0,(vh*1.15-d)/(vh*1.05)));
+      bg.style.setProperty('--lift',ease(p).toFixed(4));
+    }
+    function req(){if(!raf)raf=requestAnimationFrame(update)}
+    measure();update();
+    addEventListener('scroll',req,{passive:true});
+    addEventListener('resize',function(){measure();req()});
+    addEventListener('load',function(){measure();req()});
   }
-  // 2) la macchina 3D nelle card ruota seguendo il mouse
   [].forEach.call(document.querySelectorAll('.pc'),function(card){
     var mv=card.querySelector('model-viewer');if(!mv)return;
     card.addEventListener('mousemove',function(e){
