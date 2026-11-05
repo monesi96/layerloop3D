@@ -18,6 +18,21 @@
     addEventListener('resize',function(){measure();req()});
     addEventListener('load',function(){measure();req()});
   }
+  // icone al tratto: si disegnano quando entrano in vista
+  var feat=document.querySelector('.feat');
+  if(feat&&'IntersectionObserver' in window&&!reduce){
+    feat.classList.add('pre');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){feat.classList.remove('pre');e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.35});
+    [].forEach.call(feat.children,function(c){io.observe(c)});
+  }
+  // settori: selezione, disegno al tratto e stampante consigliata
+  [].forEach.call(document.querySelectorAll('.sx'),function(w){
+    var items=[].slice.call(w.querySelectorAll('.sx-item')),gs=[].slice.call(w.querySelectorAll('.wf')),recs=[].slice.call(w.querySelectorAll('.sx-rec'));
+    function pick(k){items.forEach(function(b){var on=b.dataset.k===k;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+      gs.forEach(function(g){g.classList.toggle('on',g.dataset.k===k)});recs.forEach(function(r){r.classList.toggle('on',r.dataset.k===k)})}
+    items.forEach(function(b){b.addEventListener('click',function(e){if(e.target.closest('a'))return;pick(b.dataset.k)});
+      b.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover)').matches)pick(b.dataset.k)})});
+  });
   [].forEach.call(document.querySelectorAll('.pc'),function(card){
     var mv=card.querySelector('model-viewer');if(!mv)return;
     card.addEventListener('mousemove',function(e){

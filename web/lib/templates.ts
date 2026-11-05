@@ -1,5 +1,6 @@
 // Generatori di markup (stessa struttura HTML/CSS delle pagine statiche approvate), alimentati dai dati Sanity.
 import {PICTO} from './picto'
+import {WF} from './wireframes'
 
 export const esc = (s: any) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 export const nl2br = (s: string) => esc(s).replace(/\n/g, '<br>')
@@ -37,7 +38,7 @@ export function headerHtml(settings: any, printers: any[], sectors: any[], mater
     return `<a href="${esc(l.href)}"${l.external ? ' target="_blank" rel="noopener"' : ''}>${esc(l.label)}</a>`
   }).join('')
   const cta = settings?.headerCta
-  const pr = printers.map((p) => `<a class="mm-card" href="/stampanti/${p.slug}"${opts.active === p.slug ? ' aria-current="page"' : ''}><span class="im"><img src="${cdn(p.cardImage || p.heroImage, 500)}" alt="" loading="lazy"></span><b>${esc(p.name)}</b><small>${esc(p.tagline)}</small></a>`).join('')
+  const pr = printers.map((p) => `<a class="mm-card" href="/stampanti/${p.slug}"${opts.active === p.slug ? ' aria-current="page"' : ''}><span class="im"><img src="${cdn(p.menuImage || p.cardImage || p.heroImage, 700)}" alt="Layerloop ${esc(p.name)}" loading="lazy"></span><b>${esc(p.name)}</b><small>${esc(p.tagline)}</small></a>`).join('')
   const se = sectors.map((s) => { const h = sectorHref(s) || '/#settori'; return `<a class="mm-row" href="${esc(h)}"${h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}><b>${esc(s.name)}</b><small>${esc(s.summary)}</small><u>→</u></a>` }).join('')
   const ma = materials.map((m) => `<a class="mm-chip" href="/materiali#${m.id}">${esc(m.n)}</a>`).join('')
   const ca = cases.slice(0, 3).map((c) => `<a class="mm-row" href="/case-study/${c.slug}"><b>${esc(c.title)}</b><u>→</u></a>`).join('')
@@ -51,15 +52,24 @@ export function headerHtml(settings: any, printers: any[], sectors: any[], mater
 ${cta ? `<a class="btn" href="${esc(cta.href)}">${esc(cta.label)}</a>` : ''}<button class="mnu" type="button" aria-expanded="false" aria-controls="shn">Menu</button></div>${mega}</header>`
 }
 
+const SOCIAL: Record<string, string> = {
+  LinkedIn: '<path d="M5 9h3.2v10H5zM6.6 4.6a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM10.4 9h3v1.4h.1c.5-.9 1.6-1.7 3.2-1.7 3.2 0 3.8 2.1 3.8 4.9V19h-3.2v-4.8c0-1.2 0-2.6-1.6-2.6s-1.8 1.2-1.8 2.5V19h-3.2z"/>',
+  Instagram: '<rect x="4.5" y="4.5" width="15" height="15" rx="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.6" cy="7.4" r="1.1"/>',
+  Facebook: '<path d="M13.4 20v-7h2.4l.4-2.8h-2.8V8.6c0-.8.3-1.4 1.4-1.4h1.5V4.7c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2h-2.4V13h2.4v7z"/>',
+  YouTube: '<path d="M20.2 8.3c-.2-.8-.8-1.4-1.6-1.6C17.2 6.3 12 6.3 12 6.3s-5.2 0-6.6.4c-.8.2-1.4.8-1.6 1.6-.4 1.4-.4 3.7-.4 3.7s0 2.3.4 3.7c.2.8.8 1.4 1.6 1.6 1.4.4 6.6.4 6.6.4s5.2 0 6.6-.4c.8-.2 1.4-.8 1.6-1.6.4-1.4.4-3.7.4-3.7s0-2.3-.4-3.7zM10.3 14.6V9.4l4.5 2.6z"/>',
+  TikTok: '<path d="M14.2 4.5c.3 1.9 1.4 3 3.3 3.2v2.5c-1.2.1-2.3-.3-3.3-1v5.6c0 3-2.4 4.7-4.9 4.2-2-.4-3.4-2.3-3.1-4.4.3-2.3 2.4-3.8 4.7-3.4v2.6c-1-.3-2 .3-2.1 1.3-.1 1.1.9 2 2 1.7.7-.2 1.1-.8 1.1-1.5V4.5z"/>',
+  X: '<path d="M5 5h3.6l3.7 5 4.3-5h1.9l-5.3 6.2L19 19h-3.6l-4-5.4L6.800 19H4.900l5.600-6.500z"/>',
+}
 export function footerHtml(s: any) {
   const mail = s?.email || 'info@layerloop3d.com'
   const cols = (s?.footerColumns || []).map((c: any) => `<div><h4>${esc(c.title)}</h4><ul>${(c.links || []).map((l: any) => `<li><a href="${esc(l.href)}">${esc(l.label)}</a></li>`).join('')}</ul></div>`).join('')
   const seat = (s?.legalSeat || s?.address || '').split('\n').map((l: string) => esc(l)).join('<br>')
+  const social = (s?.socials || []).filter((x: any) => x?.url && SOCIAL[x.platform]).length ? `<ul class="fsoc" aria-label="Social">${(s.socials || []).filter((x: any) => x?.url && SOCIAL[x.platform]).map((x: any) => `<li><a href="${esc(x.url)}" target="_blank" rel="noopener" aria-label="${esc(x.platform)}"><svg viewBox="0 0 24 24" fill="currentColor">${SOCIAL[x.platform]}</svg></a></li>`).join('')}</ul>` : ''
   const notes = (s?.companyNotes || []).map((n: string) => `<li>${esc(n)}</li>`).join('')
   return `<footer class="footer" id="contatti"><div class="wrap">
  <div class="fcta"><div><span class="eyebrow">Layerloop</span><h2>Bring production<br>in house.</h2></div><div class="bt"><a class="btn" href="mailto:${esc(s?.demoEmail || mail)}?subject=Richiesta%20demo">Richiedi una demo</a><a class="btn ghost" href="mailto:${esc(s?.demoEmail || mail)}?subject=Parlo%20con%20un%20esperto">Parla con un esperto</a></div></div>
  <div class="foot-grid">
-  <div class="fb"><a class="flogo" href="/" aria-label="Layerloop">${PICTO}</a><p>${esc(s?.footerClaim)}</p></div>
+  <div class="fb"><a class="flogo" href="/" aria-label="Layerloop">${PICTO}</a><p>${esc(s?.footerClaim)}</p>${social}</div>
   <div><h4>Sede legale</h4><address>${seat}</address><ul class="fnotes">${notes}</ul>${s?.affiliateOffices ? `<h4 style="margin-top:22px">Sedi affiliate</h4><p>${esc(s.affiliateOffices)}</p>` : ''}</div>
   <div><h4>Contatti</h4><ul><li><a href="mailto:${esc(mail)}">${esc(mail)}</a></li>${s?.phone ? `<li><a href="tel:${esc(String(s.phone).replace(/\s/g, ''))}">${esc(s.phone)}</a></li>` : ''}</ul></div>
   ${cols}
@@ -93,16 +103,20 @@ export function printersHtml(printers: any[]) {
   return `<section class="wrap printers" id="stampanti" aria-label="Le stampanti Layerloop">${cards}${mvScript}</section>`
 }
 
-// ---------------- settori (selettore con dettaglio)
+// ---------------- settori: elenco + disegno al tratto + stampante consigliata
 export function sectorsHtml(sectors: any[], on: string[] = [], machine = '') {
-  const items = sectors.map((s, i) => `<button type="button" class="sec-item${on.includes(s.name) ? ' on' : ''}" data-i="${i}" aria-pressed="false"><b>${esc(s.name)}</b><span class="sd">${esc(s.summary)}</span>${on.includes(s.name) && machine ? `<em>Con Layerloop ${esc(machine)}</em>` : ''}</button>`).join('')
-  const data = sectors.map((s) => ({
-    n: s.name, d: s.summary, mc: (s.printers || []).map((p: any) => [p.name, `/stampanti/${p.slug}`]),
-    ml: (s.materials || []).map((m: any) => [m.id, m.name, cdn(m.img, 80)]), c: s.cases?.[0] ? [s.cases[0].title, `/case-study/${s.cases[0].slug}`] : ['', ''],
-    u: sectorHref(s),
-  }))
   const first = Math.max(0, sectors.findIndex((s) => on.includes(s.name)))
-  return `<div class="secpick" data-first="${first}" data-sec="${attr(data)}"><div class="sec-grid" role="group" aria-label="Settori">${items}</div><div class="sec-detail" aria-live="polite"></div></div>`
+  const items = sectors.map((s, i) => {
+    const href = sectorHref(s)
+    return `<li><button type="button" class="sx-item${i === first ? ' on' : ''}" data-k="${esc(s.slug)}" data-i="${i}" aria-pressed="${i === first}"><span class="sx-n">${esc(s.name)}</span>${on.includes(s.name) && machine ? `<em>Con Layerloop ${esc(machine)}</em>` : ''}<span class="sx-d">${esc(s.summary)}${href ? ` <a class="sx-go" href="${esc(href)}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>Scopri il settore →</a>` : ''}</span></button></li>`
+  }).join('')
+  const groups = sectors.map((s, i) => `<g class="wf${i === first ? ' on' : ''}" data-k="${esc(s.slug)}">${WF[s.slug] || ''}</g>`).join('')
+  const recs = sectors.map((s, i) => {
+    const p = s.printers?.[0]
+    return `<a class="sx-rec${i === first ? ' on' : ''}" data-k="${esc(s.slug)}" href="${p ? `/stampanti/${p.slug}` : '#'}"><small>Stampante consigliata</small><b>Layerloop ${esc(p?.name || '')}</b><u>→</u></a>`
+  }).join('')
+  return `<div class="sx" data-first="${first}"><ul class="sx-list" role="group" aria-label="Settori">${items}</ul>
+<div class="sx-stage" aria-hidden="true"><svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"><g class="sx-float">${groups}</g></svg><div class="sx-recs">${recs}</div></div></div>`
 }
 
 // ---------------- materiali (lista verticale)
@@ -130,7 +144,7 @@ export const heroHtml = (p: any) => `<section class="hero2"><div class="wrap">
  <div class="hero-card"><img src="${cdn(p.heroImage, 1600)}" alt="Layerloop ${esc(p.name)}"><span class="cap">Layerloop ${esc(p.name)}</span></div>
 </div></section>`
 
-export const featHtml = (items: any[]) => `<div class="feat">${(items || []).map((h) => `<div><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[iconFor(h.value)]}</svg></span><b>${esc(h.value)}</b><p>${esc(h.text)}</p></div>`).join('')}</div>`
+export const featHtml = (items: any[]) => `<div class="feat">${(items || []).map((h) => `<div><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${ICONS[iconFor(h.value)].replace(/<(path|circle)/g, '<$1 pathLength="1"')}</svg></span><b>${esc(h.value)}</b><p>${esc(h.text)}</p></div>`).join('')}</div>`
 
 export const specsHtml = (rows: any[]) => `<table class="sp"><tbody>${(rows || []).map((r) => `<tr><th>${esc(r.label)}</th><td>${esc(r.value)}</td></tr>`).join('')}</tbody></table>`
 

@@ -26,6 +26,11 @@ export const siteSettings = defineType({
       preview: {select: {title: 'title'}},
     })]}),
     defineField({name: 'legal', title: 'Riga legale', type: 'string'}),
+    defineField({name: 'socials', title: 'Social (footer)', type: 'array', of: [defineArrayMember({
+      type: 'object', name: 'social',
+      fields: [defineField({name: 'platform', title: 'Piattaforma', type: 'string', options: {list: ['LinkedIn', 'Instagram', 'Facebook', 'YouTube', 'TikTok', 'X']}}), defineField({name: 'url', title: 'Indirizzo', type: 'url'})],
+      preview: {select: {title: 'platform', subtitle: 'url'}},
+    })]}),
     defineField({name: 'legalSeat', title: 'Sede legale', type: 'text', rows: 3}),
     defineField({name: 'companyNotes', title: 'Note societarie (una per riga)', type: 'array', of: [defineArrayMember({type: 'string'})]}),
     defineField({name: 'affiliateOffices', title: 'Sedi affiliate', type: 'string'}),

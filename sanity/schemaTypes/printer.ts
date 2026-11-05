@@ -16,6 +16,7 @@ export const printer = defineType({
     defineField({name: 'cardChips', title: 'Card home: chip', type: 'array', of: [defineArrayMember({type: 'string'})]}),
     defineField({name: 'cardVideo', title: 'Card home: video (parte all\'hover)', type: 'file', options: {accept: 'video/*'}}),
     defineField({name: 'cardPoster', title: 'Card home: copertina del video', type: 'mediaImage'}),
+    defineField({name: 'menuImage', title: 'Immagine megamenu (macchina intera, frontale, PNG/WebP trasparente)', type: 'mediaImage'}),
     defineField({name: 'cardImage', title: 'Immagine card (PNG/WebP con trasparenza)', type: 'mediaImage'}),
     defineField({name: 'heroImage', title: 'Immagine hero', type: 'mediaImage'}),
     defineField({name: 'heroVideo', title: 'Video hero', type: 'file', options: {accept: 'video/*'}}),

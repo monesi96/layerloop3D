@@ -4,11 +4,11 @@ const IMG = (f: string) => `"${f}": ${f}.asset->url`
 
 export type Settings = any
 
-export const getSettings = () => q(`*[_id=="siteSettings"][0]{..., headerCta, footerColumns[]{title, links[]{label, href, external}}, headerLinks[]{label, kind, href, external}, pressLogos[]{name, url, "url_img": image.asset->url}}`)
+export const getSettings = () => q(`*[_id=="siteSettings"][0]{..., headerCta, footerColumns[]{title, links[]{label, href, external}}, headerLinks[]{label, kind, href, external}, pressLogos[]{name, url, "url_img": image.asset->url}, socials[]{platform, url}}`)
 
 export const getPrinters = () => q(`*[_type=="printer"]|order(order asc){
   _id, name, "slug": slug.current, tagline, headline, lead, chips, cardTitle, cardText, cardChips,
-  ${IMG('cardImage')}, ${IMG('heroImage')}, ${IMG('cardPoster')}, "cardVideo": cardVideo.asset->url, "model3d": model3d.asset->url,
+  ${IMG('cardImage')}, ${IMG('heroImage')}, ${IMG('menuImage')}, ${IMG('cardPoster')}, "cardVideo": cardVideo.asset->url, "model3d": model3d.asset->url,
   highlights[]{value, text}, specs[]{label, value}, tourSteps[]{title, text, "image": image.asset->url, "alt": image.alt},
   sectionTitle, sectionText, ${IMG('sectionImage')}, points[]{title, text}, gallery[]{"src": asset->url, caption, alt},
   revealTitle, revealText, ${IMG('revealImage')}, optionTitle, optionText, ${IMG('optionImage')},
