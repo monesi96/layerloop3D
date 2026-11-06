@@ -328,3 +328,9 @@ html body .sect .sect-box>h2{margin-bottom:clamp(40px,6vh,80px)}
 .m3-pin model-viewer{left:24%;width:76%;inset:0 0 0 24%}
 .m3-pin::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#111 0%,rgba(17,17,17,.85) 18%,rgba(17,17,17,0) 42%),linear-gradient(0deg,rgba(17,17,17,.8) 0%,rgba(17,17,17,0) 30%);z-index:2}
 @media(max-width:700px){.m3-pin model-viewer{left:0;width:100%;inset:0}}
+
+/* Wireframe settori (vettorizzati): il disegno si forma tratto per tratto, da sinistra a destra, in modo lineare */
+.sxp .wf path{stroke:var(--teal);stroke-dasharray:1;stroke-dashoffset:1;opacity:0;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .35s linear,opacity .3s}
+.sxp .wf.on path{stroke-dashoffset:0;opacity:.92;transition:stroke-dashoffset calc(var(--d,600)*1ms) linear calc(var(--i,0)*1ms),opacity .25s linear calc(var(--i,0)*1ms)}
+.sxp .wf.on{filter:drop-shadow(0 0 5px rgba(65,201,192,.35))}
+.sxp .sx-float{animation:none}

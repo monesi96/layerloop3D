@@ -106,14 +106,14 @@ export function printersHtml(printers: any[]) {
 // ---------------- settori: scena a scorrimento (disegno al tratto che si trasforma, info a destra)
 export function sectorsHtml(sectors: any[], on: string[] = [], machine = '') {
   const n = sectors.length
-  const groups = sectors.map((s, i) => `<g class="wf${i === 0 ? ' on' : ''}" data-k="${esc(s.slug)}"${['automotive', 'nautical'].includes(s.slug) ? '' : ' transform="translate(70 0)"'}>${WF[s.slug] || ''}</g>`).join('')
+  const groups = sectors.map((s, i) => `<g class="wf${i === 0 ? ' on' : ''}" data-k="${esc(s.slug)}">${WF[s.slug] || ''}</g>`).join('')
   const panes = sectors.map((s, i) => {
     const p = s.printers?.[0]
     const href = sectorHref(s)
     return `<div class="sx-pane${i === 0 ? ' on' : ''}" data-k="${esc(s.slug)}"><span class="sx-i">A${String(i + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}</span><h3>${esc(s.name)}</h3><p>${esc(s.summary)}</p>${on.includes(s.name) && machine ? `<em>Con Layerloop ${esc(machine)}</em>` : ''}${p ? `<a class="sx-rec" href="/stampanti/${p.slug}"><small>Stampante consigliata</small><b>Layerloop ${esc(p.name)}</b><u>→</u></a>` : ''}${href ? `<a class="sx-go" href="${esc(href)}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>Scopri il settore →</a>` : ''}</div>`
   }).join('')
   const ticks = sectors.map((s, i) => `<li><button type="button" class="sx-tick${i === 0 ? ' on' : ''}" data-k="${esc(s.slug)}" data-i="${i}" aria-pressed="${i === 0}"><span>A${String(i + 1).padStart(2, '0')}</span>${esc(s.name)}</button></li>`).join('')
-  return `<div class="sxp" data-n="${n}"><div class="sxp-in"><div class="sx-stage" aria-hidden="true"><svg viewBox="0 0 780 360" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g class="sx-float">${groups}</g></svg></div><div class="sx-info" aria-live="polite">${panes}</div><ol class="sx-ticks" role="group" aria-label="Settori">${ticks}</ol></div></div>`
+  return `<div class="sxp" data-n="${n}"><div class="sxp-in"><div class="sx-stage" aria-hidden="true"><svg viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><g class="sx-float">${groups}</g></svg></div><div class="sx-info" aria-live="polite">${panes}</div><ol class="sx-ticks" role="group" aria-label="Settori">${ticks}</ol></div></div>`
 }
 
 // ---------------- materiali (lista verticale)
