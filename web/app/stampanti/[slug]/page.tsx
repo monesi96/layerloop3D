@@ -46,7 +46,7 @@ export default async function PrinterPage({params}: {params: Promise<{slug: stri
   }
   const modelCms: string = localFile(await q(`*[_type=="printer" && slug.current==$s][0].model3d.asset->url`, {s: slug}))
   // il modello di Next è anche nel sito (public/models): stesso dominio, nessun CORS, nessuna dipendenza esterna
-  const model: string = modelCms && slug === 'next' ? '/models/next-200.glb' : modelCms
+  const model: string = modelCms && slug === 'next' ? '/models/next-200-v2.glb' : modelCms
   if (slug === 'next' && model) main = replaceSection(main, '<section class="tour"', scene3dHtml(model, `${p.cardImage}?auto=format&w=900`, (p.tourSteps || []).map((x: any) => ({title: x.title, text: x.text}))))
   const scripts = slug === 'next' ? ['/js/next.js', ...(model ? ['/js/m3d.js'] : [])] : ['/js/extend.js']
   return (

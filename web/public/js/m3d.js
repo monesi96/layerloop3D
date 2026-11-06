@@ -11,7 +11,7 @@
     // sosta: i primi 28% restano fermi sul passo, poi transizione morbida
     t=Math.min(1,Math.max(0,(t-.28)/.62));t=ease(t);
     var a=poses[i],b=poses[i+1],o=[];
-    for(var k=0;k<7;k++){var x=a[k],y=b[k];
+    for(var k=0;k<8;k++){var x=a[k],y=b[k];
       if(k===0){ // orbita piu' breve
         var d=((y-x+540)%360)-180;y=x+d}
       o.push(x+(y-x)*t)}
@@ -20,7 +20,15 @@
     mv.cameraOrbit=c[0].toFixed(2)+'deg '+c[1].toFixed(2)+'deg '+c[2].toFixed(3)+'m';
     mv.cameraTarget=c[3].toFixed(3)+'m '+c[4].toFixed(3)+'m '+c[5].toFixed(3)+'m';
     mv.fieldOfView=c[6].toFixed(2)+'deg';
+    shell(c[7]);
     if(mv.jumpCameraToGoal)mv.jumpCameraToGoal()}
+  var shMat=null,smMat=null,shA=-1;
+  function shell(a){ // carrozzeria trasparente quando la camera entra nella macchina
+    if(!ready)return;if(!shMat){var ms=mv.model&&mv.model.materials||[];for(var i=0;i<ms.length;i++){if(ms[i].name==='outer')shMat=ms[i];if(ms[i].name==='smoke')smMat=ms[i]}}
+    if(!shMat||Math.abs(a-shA)<.01)return;shA=a;
+    shMat.setAlphaMode(a>.985?'OPAQUE':'BLEND');
+    shMat.pbrMetallicRoughness.setBaseColorFactor([.56,.545,.50,a]);
+    if(smMat){smMat.setAlphaMode('BLEND');smMat.pbrMetallicRoughness.setBaseColorFactor([.55,.58,.60,.47*a])}}
   function progress(){var r=sec.getBoundingClientRect(),total=sec.offsetHeight-innerHeight;return total>0?Math.min(1,Math.max(0,-r.top/total)):0}
   function setActive(p){
     var i=Math.min(n-1,Math.round(p*(n-1)));
@@ -29,7 +37,7 @@
   function frame(){
     raf=0;var p=progress();tgt=pose(p);setActive(p);
     var k=reduce?1:.14,moving=false;
-    for(var j=0;j<7;j++){var d=tgt[j]-cur[j];if(Math.abs(d)>.001){moving=true}cur[j]+=d*k}
+    for(var j=0;j<8;j++){var d=tgt[j]-cur[j];if(Math.abs(d)>.001){moving=true}cur[j]+=d*k}
     apply(cur);if(moving)raf=requestAnimationFrame(frame)}
   function req(){if(!raf)raf=requestAnimationFrame(frame)}
   addEventListener('scroll',req,{passive:true});addEventListener('resize',req);
