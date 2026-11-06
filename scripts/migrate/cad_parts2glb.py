@@ -21,7 +21,7 @@ cab=[box('CAB_corpo',-30,752,-214,214,zb+22,CB),
      box('CAB_zoccolo',-14,740,-200,200,CB,CB+14)]
 for xx in (20,700):
     for yy in (-175,175): cab.append(cyl('CAB_ruota',xx,yy,CB+14,zb+CAB_H,26))
-cab.append({'name':'CAB_logo','P':np.array([[260,-215,CB-330],[40,-215,CB-330],[40,-215,CB-330+114],[260,-215,CB-330+114]],float),'I':np.array([[0,1,2],[0,2,3]]),'i':-1,'uv':np.array([[0,1],[1,1],[1,0],[0,0]],float)})
+cab.append({'name':'CAB_logo','P':np.array([[753,110,zb+300],[753,-110,zb+300],[753,-110,zb+300+114],[753,110,zb+300+114]],float),'I':np.array([[0,1,2],[0,2,3]]),'i':-1,'uv':np.array([[0,1],[1,1],[1,0],[0,0]],float)})
 # tappeto (nastro) attorno ai due rulli
 def stadium(xa,xb,zc,R,n=64):
     pts=[]

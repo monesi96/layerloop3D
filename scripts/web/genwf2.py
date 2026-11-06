@@ -18,6 +18,7 @@ for slug, f in MAP.items():
         q = T(p)
         cx = sum(a for a, b in q) / len(q); cy = sum(b for a, b in q) / len(q)
         items.append((cx + cy * .15, q, p['l'] * s))
+    items.sort(key=lambda t: -t[2]); items = items[:420]  # solo i tratti piu' lunghi: leggerezza
     items.sort(key=lambda t: t[0])  # il disegno si forma da sinistra a destra
     N = len(items); html = []
     for i, (_, q, L) in enumerate(items):
