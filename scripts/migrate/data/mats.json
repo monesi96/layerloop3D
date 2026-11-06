@@ -1,0 +1,319 @@
+[
+ {
+  "id": "pla",
+  "n": "LAYPLA",
+  "a": "PLA",
+  "m": [
+   "XE",
+   "NEXT",
+   "EXTEND"
+  ],
+  "key": "Facilità di stampa",
+  "d": "Uno dei materiali più conosciuti per la stampa 3D: resiste alle deformazioni ed è il più facile da stampare. È un acido polilattico di origine vegetale, completamente ecocompatibile. Non richiede il piano riscaldato, non emette odori né vapori in stampa e i pezzi sono compostabili. Si presta alla post-produzione ed è disponibile in diversi colori.",
+  "t": [
+   "Origine vegetale",
+   "Compostabile",
+   "Senza odori",
+   "Nessun piano riscaldato",
+   "Post-produzione",
+   "Più colori"
+  ],
+  "f": [
+   "std",
+   "bio"
+  ],
+  "c": [
+   "#f2f2ee",
+   "#9fd8cf"
+  ]
+ },
+ {
+  "id": "plat",
+  "n": "LAYPLA Alto Impatto",
+  "a": "PLA Tough",
+  "m": [
+   "XE",
+   "NEXT",
+   "EXTEND"
+  ],
+  "key": "Resistenza all’impatto",
+  "d": "La versione tecnica del PLA, con elevata resistenza all’impatto e all’usura e buona flessibilità: si flette senza compromettere la struttura. È molto usato nel settore industriale e automotive.",
+  "t": [
+   "Resistenza all’impatto",
+   "Resistenza all’usura",
+   "Si flette senza rompersi",
+   "Industria e automotive"
+  ],
+  "f": [
+   "std"
+  ],
+  "c": [
+   "#c9cdd0",
+   "#6f7a80"
+  ]
+ },
+ {
+  "id": "petg",
+  "n": "LAYPETG",
+  "a": "PETG",
+  "m": [
+   "XE",
+   "NEXT",
+   "EXTEND"
+  ],
+  "key": "Tenacità senza camera chiusa",
+  "d": "La versione modificata del PET, dove la “G” sta per glicole modificato. È più flessibile e resistente del PLA ma più semplice da stampare dell’ABS, e permette la stampa a camera aperta perché non emette vapori tossici.",
+  "t": [
+   "Più resistente del PLA",
+   "Più semplice dell’ABS",
+   "Stampa a camera aperta",
+   "Nessun vapore tossico"
+  ],
+  "f": [
+   "std"
+  ],
+  "c": [
+   "#bfe6ff",
+   "#3a86b8"
+  ]
+ },
+ {
+  "id": "nylon",
+  "n": "LAYLON",
+  "a": "Nylon",
+  "m": [
+   "EXTEND"
+  ],
+  "key": "Forza e flessibilità",
+  "d": "I filamenti in nylon si distinguono per forza e flessibilità e sono adatti a oggetti che lavorano a compressione o torsione. Richiedono una lavorazione più complessa rispetto agli altri filamenti, per questo danno il meglio in camera calda.",
+  "t": [
+   "Forza e flessibilità",
+   "Compressione e torsione",
+   "Resistenza all’usura",
+   "Lavorazione avanzata"
+  ],
+  "f": [
+   "tech"
+  ],
+  "c": [
+   "#f4efe3",
+   "#c9bfa6"
+  ]
+ },
+ {
+  "id": "pa12cf",
+  "n": "LAYPA12CF",
+  "a": "Nylon 12 CF",
+  "m": [
+   "EXTEND"
+  ],
+  "key": "Rigidità e leggerezza",
+  "d": "Nylon 12 caricato in fibra di carbonio: rapporto rigidità/peso elevato, stabilità dimensionale e minore sensibilità all’umidità rispetto al PA6. Con LAYPA12CF su Layerloop EXTEND abbiamo stampato un’ala di drone da 110 cm in un unico pezzo.",
+  "t": [
+   "Fibra di carbonio",
+   "Rigidità/peso",
+   "Stabilità dimensionale",
+   "Meno sensibile all’umidità",
+   "Aerospace"
+  ],
+  "f": [
+   "comp",
+   "tech"
+  ],
+  "c": [
+   "#3a3a3a",
+   "#0d0d0d"
+  ]
+ },
+ {
+  "id": "asa",
+  "n": "LAYASA",
+  "a": "ASA",
+  "m": [
+   "NEXT",
+   "EXTEND"
+  ],
+  "key": "Resistenza ai raggi UV",
+  "d": "L’ASA (acrilonitrile stirene acrilato) è una termoplastica multiuso resistente ai raggi UV. È simile all’ABS con alcune migliorie: proprietà meccaniche ottimizzate ed estetica superiore. Disponibile in oltre 10 colori.",
+  "t": [
+   "Resistente ai raggi UV",
+   "Per esterni",
+   "Migliore estetica dell’ABS",
+   "10+ colori"
+  ],
+  "f": [
+   "tech"
+  ],
+  "c": [
+   "#5b6066",
+   "#24272a"
+  ]
+ },
+ {
+  "id": "abs",
+  "n": "LAYABS",
+  "a": "ABS",
+  "m": [
+   "EXTEND"
+  ],
+  "key": "Parti funzionali",
+  "d": "Il tecnopolimero classico per parti funzionali: buona tenacità, resistenza al calore superiore al PLA e ottima lavorabilità in post-produzione. Dà il meglio in camera calda, che ne limita il ritiro.",
+  "t": [
+   "Tenace",
+   "Post-produzione",
+   "Camera calda consigliata"
+  ],
+  "f": [
+   "tech"
+  ],
+  "c": [
+   "#ece6d6",
+   "#b9ae95"
+  ]
+ },
+ {
+  "id": "tpu",
+  "n": "LAYFLEX",
+  "a": "TPU",
+  "m": [
+   "XE",
+   "NEXT",
+   "EXTEND"
+  ],
+  "key": "Effetto gomma",
+  "d": "Il TPU nella variante Layerloop Layflex è un materiale simile alla gomma, disponibile in 3 durezze Shore da 80A a 60D. È il materiale di solette, ortesi e componenti che devono flettersi e ammortizzare.",
+  "t": [
+   "Simile alla gomma",
+   "3 durezze Shore",
+   "80A – 60D",
+   "Solette e ortesi"
+  ],
+  "f": [
+   "flex"
+  ],
+  "c": [
+   "#2fb3a6",
+   "#145a54"
+  ]
+ },
+ {
+  "id": "gpro",
+  "n": "LAYGREEN PRO",
+  "a": "CPE",
+  "m": [
+   "XE",
+   "NEXT"
+  ],
+  "key": "Bio ad alte prestazioni",
+  "d": "Filamento della gamma BIO Performance, sviluppato per applicazioni ad alte prestazioni meccaniche e termiche. Ha un’ottima resistenza alla flessione, stabilità dimensionale in stampa e un risultato estetico eccellente.",
+  "t": [
+   "Biodegradabile DIN EN ISO 14855",
+   "Inodore",
+   "Contatto alimentare",
+   "Approvato FDA",
+   "Stabilità dimensionale"
+  ],
+  "f": [
+   "bio"
+  ],
+  "c": [
+   "#b9e4a8",
+   "#3f8a4c"
+  ]
+ },
+ {
+  "id": "gcarb",
+  "n": "LAYGREEN CARBON",
+  "a": "CPE Carbon",
+  "m": [
+   "NEXT",
+   "EXTEND"
+  ],
+  "key": "Bio + fibra di carbonio",
+  "d": "Nato dalla richiesta dei nostri clienti di un materiale biodegradabile, realizzato con risorse sostenibili, con le prestazioni della fibra di carbonio: leggerezza, maggiore resistenza alle alte temperature e modulo di Young oltre 7 GPa.",
+  "t": [
+   "Vicat fino a 165°C",
+   "10% fibra di carbonio",
+   "Modulo di Young > 7 GPa",
+   "REACH & RoHS",
+   "Resistente UV come l’ASA"
+  ],
+  "f": [
+   "bio",
+   "comp",
+   "ht"
+  ],
+  "c": [
+   "#2f4a35",
+   "#0c140e"
+  ]
+ },
+ {
+  "id": "pp",
+  "n": "LAYPP",
+  "a": "Polipropilene",
+  "m": [
+   "EXTEND"
+  ],
+  "key": "Leggerezza e abrasione",
+  "d": "Polimero semicristallino con elevato carico di rottura, bassa densità e resistenza all’abrasione.",
+  "t": [
+   "Elevato carico di rottura",
+   "Bassa densità",
+   "Resistenza all’abrasione"
+  ],
+  "f": [
+   "tech"
+  ],
+  "c": [
+   "#f7f7f2",
+   "#d6dbd6"
+  ]
+ },
+ {
+  "id": "pps",
+  "n": "LAYPPS",
+  "a": "Polifenilensolfuro",
+  "m": [
+   "EXTEND"
+  ],
+  "key": "Alte temperature",
+  "d": "Tecnopolimero ad alte prestazioni per ambienti gravosi, caratterizzato da una resistenza al calore HDT di 190°C secondo ISO 75.",
+  "t": [
+   "HDT 190°C (ISO 75)",
+   "Alte temperature",
+   "Ambienti gravosi"
+  ],
+  "f": [
+   "ht",
+   "tech"
+  ],
+  "c": [
+   "#d9b98a",
+   "#8a6234"
+  ]
+ },
+ {
+  "id": "ppscf",
+  "n": "LAYPPS CF",
+  "a": "PPS Carbon Fiber",
+  "m": [
+   "EXTEND"
+  ],
+  "key": "Calore estremo e rigidità",
+  "d": "PPS caricato in fibra di carbonio: la versione più rigida della famiglia, con una resistenza al calore HDT di 220°C secondo ISO 75.",
+  "t": [
+   "HDT 220°C (ISO 75)",
+   "Fibra di carbonio",
+   "Rigidità"
+  ],
+  "f": [
+   "ht",
+   "comp"
+  ],
+  "c": [
+   "#463a2c",
+   "#0e0b08"
+  ]
+ }
+]

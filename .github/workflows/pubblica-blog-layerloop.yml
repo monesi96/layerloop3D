@@ -1,4 +1,4 @@
-# Pubblica su WordPress gli articoli Layerloop approvati.
+# Pubblica su Sanity (CMS del nuovo sito) gli articoli Layerloop approvati.
 # L'approvazione è il merge della PR aperta dall'agente: solo allora parte la pubblicazione.
 name: Pubblica blog Layerloop
 
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install markdown pyyaml
+      - run: pip install markdown pyyaml beautifulsoup4
       - name: Articoli modificati
         id: files
         run: |
@@ -41,10 +41,11 @@ jobs:
       - name: Pubblica
         if: steps.files.outputs.list != ''
         env:
-          WP_URL: ${{ secrets.WP_URL }}
-          WP_USER: ${{ secrets.WP_USER }}
-          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
-          WP_CATEGORY: ${{ vars.WP_CATEGORY }}
+          SANITY_PROJECT: 5033nuuu
+          SANITY_DATASET: production
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          BLOG_CATEGORY: ${{ vars.BLOG_CATEGORY }}
           MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY || secrets.MAILCHIMP }}
           MAILCHIMP_LIST_ID: ${{ vars.MAILCHIMP_LIST_ID }}
           MAILCHIMP_AUDIENCE: ${{ vars.MAILCHIMP_AUDIENCE }}
@@ -53,4 +54,4 @@ jobs:
           MAILCHIMP_REPLY_TO: ${{ vars.MAILCHIMP_REPLY_TO }}
           MAILCHIMP_FROM_NAME: ${{ vars.MAILCHIMP_FROM_NAME }}
           NEWSLETTER: ${{ inputs.newsletter || 'si' }}
-        run: python layerloop-blog/scripts/publish_wp.py ${{ steps.files.outputs.list }}
+        run: python layerloop-blog/scripts/publish_sanity.py ${{ steps.files.outputs.list }}

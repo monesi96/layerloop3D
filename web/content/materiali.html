@@ -1,0 +1,126 @@
+
+
+
+
+<!--@header--><main>
+  <!-- HERO: sostituire src e poster con il video definitivo -->
+  <section class="hero">
+    <div class="hero-video" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="metadata" poster="">
+        <source src="video/materiali-hero.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <h1>Materials that<br>print beyond.</h1>
+        <div>
+          <p class="lead">Dal PLA ai compositi in fibra di carbonio, fino ai polimeri per alte temperature. Scegli il materiale: ti mostriamo quale Layerloop lo porta in produzione nella tua azienda.</p>
+          <div class="hero-cta"><a class="btn" href="#libreria" data-scroll>Esplora i materiali</a><a class="btn ghost" href="#find" data-scroll>Trova la tua Layerloop</a></div>
+        </div>
+      </div>
+      <ul class="hero-stats">
+        <li><b>13</b><span>filamenti Layerloop</span></li>
+        <li><b>80A–60D</b><span>durezze Layflex TPU</span></li>
+        <li><b>220°C</b><span>HDT del LAYPPS CF</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- LIBRERIA MATERIALI: sezione chiara -->
+  <section class="light sec" id="libreria" aria-labelledby="lib-t">
+    <div class="wrap sec-intro">
+      <h2 class="h2" id="lib-t">From polymers to advanced materials.</h2>
+      <p class="lead">Dalle bioplastiche facili da stampare ai tecnopolimeri caricati in fibra di carbonio. Ogni filamento è pensato per la stampa a nastro con asse inclinato a 30°: prototipi, ricambi e produzione continua.</p>
+    </div>
+    <nav class="fambar" aria-label="Famiglie di materiali"><div class="wrap fambar-in" id="filters"></div></nav>
+    <div class="wrap lib-grid">
+      <div class="panel"><div class="spec" id="spec" aria-live="polite"></div></div>
+      <div class="list">
+        <div class="thumbs" id="thumbs" aria-hidden="true"></div>
+        <ul class="names" id="names"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATRICE: sezione scura -->
+  <section class="sec" aria-labelledby="mx-t">
+    <div class="wrap">
+      <div class="sec-intro">
+        <h2 class="h2" id="mx-t">Which Layerloop for which material.</h2>
+        <p class="lead" style="color:rgba(255,255,255,.75)">Ogni materiale e le macchine che lo stampano, in un colpo d'occhio. Clicca una riga per aprire la scheda.</p>
+      </div>
+      <div class="mx-wrap">
+        <table class="mx">
+          <thead><tr><th scope="col">Materiale</th><th scope="col">Famiglia</th><th scope="col">Punto di forza</th><th scope="col" class="m">XE</th><th scope="col" class="m">NEXT</th><th scope="col" class="m">EXTEND</th></tr></thead>
+          <tbody id="mx"></tbody>
+        </table>
+      </div>
+      <p class="note">Compatibilità indicativa: la gamma materiali varia da modello a modello. Per la configurazione esatta consulta la scheda tecnica della macchina o parla con un tecnico Layerloop.</p>
+    </div>
+  </section>
+
+  <!-- CONFIGURATORE: sezione chiara -->
+  <section class="light sec" id="find" aria-labelledby="fd-t">
+    <div class="wrap">
+      <div class="sec-intro">
+        <h2 class="h2" id="fd-t">Your part. Your Layerloop.</h2>
+        <p class="lead">Tre risposte e ti diciamo quale stampante e quali materiali fanno per la tua produzione.</p>
+      </div>
+      <div class="steps-cfg">
+        <div>
+          <p class="q" id="q1">Cosa produci?</p>
+          <div class="opts" role="radiogroup" aria-labelledby="q1" data-g="use">
+            <button type="button" role="radio" data-k="custom">Pezzi su misura<small>Plantari, ortesi, socket, pezzi unici</small></button>
+            <button type="button" role="radio" data-k="proto">Prototipi e ricambi<small>Iterazioni rapide, ricambi on demand</small></button>
+            <button type="button" role="radio" data-k="series">Produzione in serie<small>Lotti continui, 24/7, senza operatore</small></button>
+            <button type="button" role="radio" data-k="large">Pezzi grandi o lunghi<small>Componenti oltre l'ingombro della macchina</small></button>
+            <button type="button" role="radio" data-k="tooling">Attrezzature e maschere<small>Dime, jig e fixture per il reparto</small></button>
+            <button type="button" role="radio" data-k="outdoor">Parti per esterni<small>Esposte a sole e intemperie</small></button>
+          </div>
+        </div>
+        <div>
+          <p class="q" id="q2">Cosa deve garantire il pezzo?</p>
+          <div class="opts four" role="radiogroup" aria-labelledby="q2" data-g="need">
+            <button type="button" role="radio" data-k="easy">Facilità ed estetica<small>Stampa semplice, buona finitura</small></button>
+            <button type="button" role="radio" data-k="impact">Resistenza agli urti<small>Parti funzionali che lavorano</small></button>
+            <button type="button" role="radio" data-k="flex">Flessibilità<small>Effetto gomma, ammortizzazione</small></button>
+            <button type="button" role="radio" data-k="stiff">Rigidità e leggerezza<small>Fibra di carbonio</small></button>
+            <button type="button" role="radio" data-k="heat">Alte temperature<small>Calore, ambienti gravosi</small></button>
+            <button type="button" role="radio" data-k="uv">Resistenza UV<small>Colore e forma all'esterno</small></button>
+            <button type="button" role="radio" data-k="wear">Usura e abrasione<small>Compressione, torsione, attrito</small></button>
+            <button type="button" role="radio" data-k="green">Sostenibilità<small>Biodegradabile, contatto alimentare</small></button>
+          </div>
+        </div>
+        <div>
+          <p class="q" id="q3">Quanto è grande il pezzo?</p>
+          <div class="opts" role="radiogroup" aria-labelledby="q3" data-g="size">
+            <button type="button" role="radio" data-k="s">Piccolo<small>Sta in una mano</small></button>
+            <button type="button" role="radio" data-k="m">Medio<small>Fino a qualche decina di centimetri</small></button>
+            <button type="button" role="radio" data-k="l">Più lungo della macchina<small>Il nastro lo fa avanzare</small></button>
+          </div>
+        </div>
+      </div>
+      <div class="result" aria-live="polite">
+        <div>
+          <div class="r-names" id="r-names"></div>
+          <p class="r-text" id="r-text"></p>
+          <ul class="r-why" id="r-why"></ul>
+          <p class="r-alt" id="r-alt"></p>
+        </div>
+        <div class="r-right">
+          <div id="r-mats" style="display:flex;flex-direction:column;gap:10px"></div>
+          <div class="r-ctas"><a class="btn" href="#contatti" data-scroll id="r-demo">Richiedi una demo</a><a class="btn ghost" href="#contatti" data-scroll>Invia il tuo file</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHIUSURA: sezione scura -->
+  
+
+  <!--@footer-->
+
+  
+</main>
+
+
