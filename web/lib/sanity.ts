@@ -26,3 +26,6 @@ export const fileUrl = (f: any): string => {
 export async function q<T = any>(query: string, params: Record<string, any> = {}): Promise<T> {
   return client.fetch<T>(query, params, {next: {revalidate: 60}})
 }
+
+/** Indirizzo dei file del CMS servito dal nostro dominio (vedi rewrites in next.config.ts) */
+export const localFile = (u: string) => (u || '').replace(/^https:\/\/cdn\.sanity\.io\/files\/[^/]+\/[^/]+\//, '/cms-files/')

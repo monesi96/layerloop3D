@@ -1,10 +1,11 @@
 import './../../css/next.css'
 import './../../css/design.css'
 import {notFound} from 'next/navigation'
-import {q} from '@/lib/sanity'
+import {q, localFile} from '@/lib/sanity'
 import type {Metadata} from 'next'
 import './../../css/model.css'
 import {Shell, Raw, fragment, loadShared} from '@/lib/shell'
+import {scene3dHtml} from '@/lib/scene3d'
 import {modelSectionHtml, headerHtml, footerHtml, sectorsHtml, materialsHtml, casesHtml, printerPageHtml, featHtml, specsHtml, heroHtml} from '@/lib/templates'
 
 export const revalidate = 60
@@ -34,7 +35,8 @@ export default async function PrinterPage({params}: {params: Promise<{slug: stri
   if (slug === 'next') {
     // pagina Next: scene interattive (tour, rullo) conservate; testi e dati dal CMS
     const steps = JSON.stringify((p.tourSteps || []).map((s: any) => [s.title, s.text, s.image ? `${s.image}?auto=format&w=1400` : '', s.alt || s.title]))
-    main = fragment('next')
+    const base = fragment('next')
+    main = base
       .replace('<!--@header-->', '').replace('<!--@footer-->', '')
       .replace('<!--@sectors-->', sec).replace('<!--@materials-->', mat).replace('<!--@cases-->', cs)
       .replace(/data-steps='[^']*'/, `data-steps='${steps.replace(/'/g, '&#39;')}'`)
@@ -42,11 +44,14 @@ export default async function PrinterPage({params}: {params: Promise<{slug: stri
   } else {
     main = printerPageHtml(p, {sectors: sec, materials: mat, cases: cs})
   }
-  const model: string = await q(`*[_type=="printer" && slug.current==$s][0].model3d.asset->url`, {s: slug})
-  const scripts = slug === 'next' ? ['/js/next.js'] : ['/js/extend.js']
+  const modelCms: string = localFile(await q(`*[_type=="printer" && slug.current==$s][0].model3d.asset->url`, {s: slug}))
+  // il modello di Next è anche nel sito (public/models): stesso dominio, nessun CORS, nessuna dipendenza esterna
+  const model: string = modelCms && slug === 'next' ? '/models/next-200.glb' : modelCms
+  if (slug === 'next' && model) main = replaceSection(main, '<section class="tour"', scene3dHtml(model, `${p.cardImage}?auto=format&w=900`, (p.tourSteps || []).map((x: any) => ({title: x.title, text: x.text}))))
+  const scripts = slug === 'next' ? ['/js/next.js', ...(model ? ['/js/m3d.js'] : [])] : ['/js/extend.js']
   return (
     <Shell header={headerHtml(settings, printers, sectors, materials, cases, {active: slug})} footer={footerHtml(settings)} scripts={scripts}>
-      <Raw html={model ? withModel(main, model, p.name) : main} />
+      <Raw html={model && slug !== 'next' ? withModel(main, model, p.name) : main} />
     </Shell>
   )
 }
@@ -57,4 +62,21 @@ function withModel(main: string, model: string, name: string) {
   const marker = main.includes('<section class="tour"') ? '<section class="tour"' : '<section class="wrap sec-t"'
   const i = main.indexOf(marker)
   return i > 0 ? main.slice(0, i) + block + main.slice(i) : main + block
+}
+
+function replaceSection(html: string, open: string, repl: string) {
+  const i = html.indexOf(open)
+  if (i < 0) return html
+  let depth = 0
+  const re = /<(\/?)section\b/g
+  re.lastIndex = i
+  let m: RegExpExecArray | null
+  while ((m = re.exec(html))) {
+    depth += m[1] ? -1 : 1
+    if (depth === 0) {
+      const j = html.indexOf('>', m.index) + 1
+      return html.slice(0, i) + repl + html.slice(j)
+    }
+  }
+  return html
 }

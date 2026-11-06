@@ -2,6 +2,12 @@ import type {NextConfig} from 'next'
 
 const nextConfig: NextConfig = {
   images: {remotePatterns: [{protocol: 'https', hostname: 'cdn.sanity.io'}]},
+  // i file del CMS (modelli 3D, video, PDF) passano dal nostro dominio: niente problemi di CORS nel browser
+  async rewrites() {
+    const pid = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '5033nuuu'
+    const ds = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
+    return [{source: '/cms-files/:path*', destination: `https://cdn.sanity.io/files/${pid}/${ds}/:path*`}]
+  },
   async redirects() {
     // vecchi URL WordPress -> nuovi percorsi
     return [
