@@ -20,7 +20,8 @@ on:
 
 jobs:
   pubblica:
-    if: github.event_name == 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch
+    # Pubblica dal branch del blog (o dal default del repo): sempre col merge delle PR del blog
+    if: github.event_name == 'workflow_dispatch' || github.ref_name == 'claude/smartlab3d-blog-design-9nrzp6' || github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
